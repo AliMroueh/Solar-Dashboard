@@ -10,6 +10,6 @@ const inverterSchema = new mongoose.Schema({
 }
 );
 
-const Inverter = mongoose.model("Inverter", userSchema);
+const Inverter = mongoose.model("Inverter", inverterSchema);
 
 export default Inverter;

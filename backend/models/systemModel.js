@@ -4,7 +4,7 @@ const systemSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'Category'
+        ref: 'User'
     },
     SolarPanelId : {
         type: mongoose.Schema.Types.ObjectId,
@@ -30,6 +30,6 @@ const systemSchema = new mongoose.Schema({
 }
 );
 
-const System = mongoose.model("System", userSchema);
+const System = mongoose.model("System", systemSchema);
 
 export default System;

@@ -10,6 +10,6 @@ const solarSchema = new mongoose.Schema({
 }
 );
 
-const Solar = mongoose.model("Solar", userSchema);
+const Solar = mongoose.model("Solar", solarSchema);
 
 export default Solar;

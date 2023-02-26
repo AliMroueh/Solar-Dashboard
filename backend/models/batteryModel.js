@@ -10,6 +10,6 @@ const batterySchema = new mongoose.Schema({
 }
 );
 
-const Battery = mongoose.model("Battery", userSchema);
+const Battery = mongoose.model("Battery", batterySchema);
 
 export default Battery;
