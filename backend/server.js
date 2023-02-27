@@ -1,10 +1,11 @@
 import express from "express";
 import mongoose from "mongoose";
+import batteryRouter from "./routers/batteryRouter.js";
 import userRouter from "./routers/userRouter.js";
 
 const app = express();
-
-mongoose.connect('mongodb://localhost/solar', {
+mongoose.connect('mongodb+srv://mhmd:1234@solar-dashboard.6gzozas.mongodb.net/solar-dashboard?retryWrites=true&w=majority',{
+// mongoose.connect('mongodb://localhost/solar', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
@@ -12,7 +13,7 @@ mongoose.connect('mongodb://localhost/solar', {
   .catch(err => console.log(err));
 
 app.use('/api/users', userRouter);
-
+app.use('/api/batteries', batteryRouter);
 app.get('/', (req, res) => {
     res.send('Server is ready');
 });

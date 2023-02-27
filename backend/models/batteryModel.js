@@ -1,9 +1,17 @@
 import mongoose from "mongoose";
 
 const batterySchema = new mongoose.Schema({
-    type: {type: String, required: true},
-    capacity: {type: String, required: true, unique: true},
-    description: {type: String, required: true},
+    type: {type: String,
+         required: true},
+
+    capacity: {type: String,
+         required: true,
+          unique: true},
+
+    batteryImage:{type:String},
+
+    description: {type: String,
+         required: true},
 },
 {
     timestamps: true,
