@@ -121,7 +121,7 @@ inverterRouter.delete('/inverter/delete/:id', async (req, res) => {
         });
 
         await Inverter.findByIdAndRemove(req.params.id);
-        res.status(201).json({ message: 'Solar removed' });
+        res.status(201).json({ message: 'inverter removed' });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Server error' });
