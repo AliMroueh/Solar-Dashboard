@@ -1,14 +1,13 @@
-import Solar from "../models/solarModel.js";
+import Inverter from "../models/inverterModel.js";
 import shortid from 'shortid';
 import { body, validationResult } from 'express-validator';
 import express from 'express';
-const solarRouter = express.Router();
+const inverterRouter = express.Router();
 import path from "path";
 import multer from 'multer';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
-// import { isAdmin } from '../utils.js';
-// import passport from 'passport';
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -23,8 +22,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-solarRouter.post("/create",
-    upload.single("solarImage"),
+inverterRouter.post("/create",
+    upload.single("inverterImage"),
     [
         // Validate the name field
         body('type', 'Please Enter A Type').trim().notEmpty(),
@@ -39,7 +38,7 @@ solarRouter.post("/create",
         }
 
         // Create the category object
-        const solarObj = {
+        const inverterObj = {
             type: req.body.type,
             description: req.body.description,
             strength: req.body.strength
@@ -47,12 +46,12 @@ solarRouter.post("/create",
 
         // Add the categoryImage field if a file was uploaded
         if (req.file) {
-            solarObj.solarImage = 'http://localhost:5000/public/' + req.file.filename;
+            inverterObj.inverterImage = 'http://localhost:5000/public/' + req.file.filename;
         }
 
         // Save the category to the database
-        const sol = new Solar(solarObj);
-        sol.save((error, solar) => {
+        const inv = new Inverter(solarObj);
+        inv.save((error, solar) => {
             if (error) return res.status(400).json({ error });
             if (solar) {
                 return res.status(201).json({ solar });
@@ -62,29 +61,29 @@ solarRouter.post("/create",
 );
 
 
-solarRouter.put('/solar/update/:id', upload.single("solarImage"), async (req, res) => {
-    const solar = await Solar.findById(req.params.id);
+inverterRouter.put('/inverter/update/:id', upload.single("inverterImage"), async (req, res) => {
+    const inverter = await Inverter.findById(req.params.id);
 
-    if (solar) {
-        solar.name = req.body.name || solar.type;
-        solar.strength = req.body.strength || solar.strength;
-        solar.description = req.body.description || solar.description;
+    if (inverter) {
+        inverter.name = req.body.name || inverter.type;
+        inverter.strength = req.body.strength || inverter.strength;
+        inverter.description = req.body.description || inverter.description;
 
         if (req.file) {
             // Extract the filename from the categoryImage URL
-            const oldImagePath = path.join(path.dirname(__dirname), "uploads/") + solar.solarImage.split('/').pop();
+            const oldImagePath = path.join(path.dirname(__dirname), "uploads/") + inverter.inverterImage.split('/').pop();
             fs.unlinkSync(oldImagePath); // Delete the old image
-            solar.solarImage = 'http://localhost:5000/public/' + req.file.filename;
+            inverter.inverterImage = 'http://localhost:5000/public/' + req.file.filename;
         }
 
-        const updatedSolar = await solar.save();
+        const updatedInverter = await inverter.save();
 
         res.send({
-            _id: updatedSolar._id,
-            type: updatedSolar.type,
-            description: updatedSolar.description,
-            strength: updatedSolar.strength,
-            solarImage: updatedSolar.solarImage,
+            _id: updatedInverter._id,
+            type: updatedInverter.type,
+            description: updatedInverter.description,
+            strength: updatedInverter.strength,
+            inverterImage: updatedInverter.inverterImage,
         });
     } else {
         res.status(401).send({ message: "Unknown id" });
@@ -92,13 +91,13 @@ solarRouter.put('/solar/update/:id', upload.single("solarImage"), async (req, re
 });
 
 
-solarRouter.get('/get', (req, res) => {
-    Solar.find().exec((err, categories) => {
+inverterRouter.get('/get', (req, res) => {
+    Inverter.find().exec((err, inverter) => {
         if (err) {
             res.json({ message: err.message });
         } else {
 
-            res.send(solar)
+            res.send(inverter)
 
         }
     })
@@ -106,22 +105,22 @@ solarRouter.get('/get', (req, res) => {
 
 
 
-solarRouter.delete('/solar/delete/:id', async (req, res) => {
+inverterRouter.delete('/inverter/delete/:id', async (req, res) => {
     try {
-        const solar = await Solar.findById(req.params.id);
-        if (!solar) {
-            return res.status(404).json({ message: 'solar not found' });
+        const inverter = await Inverter.findById(req.params.id);
+        if (!inverter) {
+            return res.status(404).json({ message: 'inverter not found' });
         }
 
         // Remove the battery image from the server file system
-        const imagePath = path.join(path.dirname(__dirname), "uploads/") + solar.solarImage.split('/').pop();
+        const imagePath = path.join(path.dirname(__dirname), "uploads/") + inverter.inverterImage.split('/').pop();
         fs.unlinkSync(imagePath, (err) => {
             if (err) {
                 console.error(err);
             }
         });
 
-        await Solar.findByIdAndRemove(req.params.id);
+        await Inverter.findByIdAndRemove(req.params.id);
         res.status(201).json({ message: 'Solar removed' });
     } catch (err) {
         console.error(err);
@@ -129,4 +128,4 @@ solarRouter.delete('/solar/delete/:id', async (req, res) => {
     }
 });
 
-export default solarRouter;
+export default inverterRouter;
