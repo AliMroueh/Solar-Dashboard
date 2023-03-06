@@ -93,7 +93,7 @@ solarRouter.put('/solar/update/:id', upload.single("solarImage"), async (req, re
 
 
 solarRouter.get('/get', (req, res) => {
-    Solar.find().exec((err, categories) => {
+    Solar.find().exec((err, solar) => {
         if (err) {
             res.json({ message: err.message });
         } else {
