@@ -1,18 +1,18 @@
-import React from "react";
+
 import { navLinks } from "./NavDB";
-// import { useRecoilState } from "recoil";
 import { activeNavItemState } from "./ActiveNavBarAtom";
 import { useRecoilState } from "recoil";
+import {Link} from 'react-router-dom'
 
 function NavBar() {
   return (
     <nav className="col-span-2 border-r border-gray-200 min-h-[90vh] w-[80px] xl:w-[250px] pt-8 px-1 flex flex-col items-start justify-between">
       <div className="space-y-8 w-full ">
-        {navLinks.slice(0, 2).map((link) => (
+        {navLinks.slice(0, 5).map((link) => (
           <NavItem link={link} key={link.id} />
         ))}
         <div className="w-full border-t border-gray-200" />
-        {navLinks.slice(2, 3).map((link) => (
+        {navLinks.slice(5, 6).map((link) => (
           <NavItem link={link} key={link.id} />
         ))}
       </div>
@@ -28,13 +28,14 @@ function NavBar() {
     </nav>
   );
 }
-type Link = {
+type Link1 = {
     id: number;
+    link: string;
     icon: JSX.Element;
     title: string;
   }
-function NavItem({ link }: { link: Link }) {
-  const [activeNav, setActiveNav] = useRecoilState(activeNavItemState);
+function NavItem({ link }: { link: Link1 }) {
+  const [activeNav, setActiveNav] = useRecoilState<number>(activeNavItemState);
   return (
     <div
       onClick={() => setActiveNav(link.id)}
@@ -50,7 +51,7 @@ function NavItem({ link }: { link: Link }) {
           activeNav === link.id && "text-black "
         }} `}
       >
-        {link.title}
+        <Link to={link.link}>{link.title}</Link>
       </h1>
     </div>
   );

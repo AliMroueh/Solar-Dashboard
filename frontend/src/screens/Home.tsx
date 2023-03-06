@@ -12,10 +12,7 @@ export default function Home() {
 //   .catch(error => console.error(error));
   return (
     <div>
-        <Header />
-        <div className='w-full min-h-[90vh] grid grid-cols-12'>
-          <NavBar />
-          </div>
+      hello world
     </div>
   )
 }
