@@ -13,13 +13,13 @@ export const navLinks = [
   {
     id: 1,
     title: "Solar Panel",
-    link:"/solarPanel",
+    link:"/solarPanels",
     icon: <UserIcon className="nav-icon" />,
   },
   {
     id: 2,
     title: "Solar Battery",
-    link:"/solarBattery",
+    link:"/solarBatteries",
     icon: <UserIcon className="nav-icon" />,
   },
   {
