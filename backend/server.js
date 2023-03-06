@@ -18,8 +18,8 @@ mongoose.connect(`mongodb+srv://traboulsi:databasemongo@cluster0.zcaxve0.mongodb
 
 app.use('/api/users', userRouter);
 app.use('/api/batteries', batteryRouter);
-app.use('/api/solar', solarRouter);
-app.use('/api/inverter', inverterRouter);
+app.use('/api/solars', solarRouter);
+app.use('/api/inverters', inverterRouter);
 app.use('/api/clients', clientRouter);
 app.get('/', (req, res) => {
     res.send('Server is ready');

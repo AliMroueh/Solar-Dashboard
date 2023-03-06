@@ -1,7 +1,7 @@
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import thunk from "redux-thunk";
 import { addSolarReducer, deleteSolarReducer, getallSolarReducer, updateSolarReducer } from "./reducers/solarReducer";
-
+import { addInverterReducer, deleteInverterReducer, getallInverterReducer, updateInverterReducer } from "./reducers/inverterReducer";
 
 const initialState = {
     // userSignin: {
@@ -17,7 +17,12 @@ const reducer = combineReducers({
     addSolar:addSolarReducer,
     updateSolar:updateSolarReducer,
     deleteSolar:deleteSolarReducer,
+    getallInverter:getallInverterReducer,
+    addInverter:addInverterReducer,
+    updateInverter:updateInverterReducer,
+    deleteInverter:deleteInverterReducer,
 })
+
 
 
 
