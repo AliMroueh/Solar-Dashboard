@@ -1,10 +1,13 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./screens/Home";
 
 function App() {
   return (
-    <div>
-        <Home />
-    </div>
+    <BrowserRouter>
+    <Routes>
+      <Route index element={<Home />}/>
+    </Routes>
+    </BrowserRouter>
   );
 }
 
