@@ -84,7 +84,7 @@ export const deleteInverterReducer = (state = {}, action: { type: any; payload: 
             return { loading: true, ...state }
 
         case DELETE_INVERTER_SUCCESS:
-            return { loading: false, success:?true }
+            return { loading: false, success:true }
 
         case DELETE_INVERTER_FAILURE:
             return { loading: false, error: action.payload }
