@@ -22,7 +22,7 @@ import {
 
 } from '../constants/solarConstants'
 
-export const getallSolarReducer = (state = { solar: [] }, action) => {
+export const getallSolarReducer = (state = { solar: [] }, action: { type: any; payload: any }) => {
     switch (action.type) {
         case GET_ALL_SOLAR_REQUEST:
             return { loading: true, solar: [] }
@@ -41,7 +41,7 @@ export const getallSolarReducer = (state = { solar: [] }, action) => {
 
 //Add
 
-export const addSolarReducer = (state = { solar: [] }, action) => {
+export const addSolarReducer = (state = { solar: [] }, action: { type: any; payload: any; }) => {
     switch (action.type) {
         case ADD_NEW_SOLAR_REQUEST:
             return { loading: true, ...state }
@@ -58,7 +58,7 @@ export const addSolarReducer = (state = { solar: [] }, action) => {
 
 
 //update
-export const updateSolarReducer = (state = { solar: [] }, action) => {
+export const updateSolarReducer = (state = { solar: [] }, action: { type: any; payload: any; }) => {
     switch (action.type) {
         case UPDATE_SOLAR_REQUEST:
             return { loading: true, ...state }
@@ -78,7 +78,7 @@ export const updateSolarReducer = (state = { solar: [] }, action) => {
 
 /// delete
 
-export const deleteSolarReducer = (state = {}, action) => {
+export const deleteSolarReducer = (state = {}, action: { type: any; payload: any; }) => {
     switch (action.type) {
         case DELETE_SOLAR_REQUEST:
             return { loading: true, ...state }
