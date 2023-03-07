@@ -23,7 +23,7 @@ import {
 
 
 
-export const getallInverterAction = () => async (dispatch) => {
+export const getallInverterAction = () => async (dispatch: (arg0: { type: string; payload?: any; }) => void) => {
     dispatch({ type: GET_ALL_INVERTER_REQUEST })
 
     try {
@@ -34,7 +34,7 @@ export const getallInverterAction = () => async (dispatch) => {
             type: GET_ALL_INVERTER_SUCCESS,
             payload: data,
         })
-    } catch (error) {
+    } catch (error:any) {
 
         dispatch({
             type: GET_ALL_INVERTER_FAILURE,
@@ -45,7 +45,7 @@ export const getallInverterAction = () => async (dispatch) => {
 
 //insert category
 
-export const addInverterAction = (info) => async (dispatch, getState) => {
+export const addInverterAction = (info: any) => async (dispatch: (arg0: { type: string; payload?: any; }) => void, getState: () => { userSignin: { userInfo: any; }; }) => {
     dispatch({ type: ADD_NEW_INVERTER_REQUEST })
 
     const { userSignin: { userInfo } } = getState();
@@ -61,7 +61,7 @@ export const addInverterAction = (info) => async (dispatch, getState) => {
             type: ADD_NEW_INVERTER_SUCCESS,
             payload: data,
         })
-    } catch (error) {
+    } catch (error:any) {
 
         dispatch({
             type: ADD_NEW_INVERTER_FAILURE,
@@ -73,7 +73,7 @@ export const addInverterAction = (info) => async (dispatch, getState) => {
 
 
 // UPDATE 
-export const updateInverterAction = (id, info) => async (dispatch, getState) => {
+export const updateInverterAction = (id: any, info: any) => async (dispatch: (arg0: { type: string; payload?: any; }) => void, getState: () => { userSignin: { userInfo: any; }; }) => {
 
     dispatch({ type: UPDATE_INVERTER_REQUEST })
     const { userSignin: { userInfo } } = getState();
@@ -87,7 +87,7 @@ export const updateInverterAction = (id, info) => async (dispatch, getState) => 
             type: UPDATE_INVERTER_SUCCESS,
             payload: data,
         })
-    } catch (error) {
+    } catch (error:any) {
 
         dispatch({
             type: UPDATE_INVERTER_FAILURE,
@@ -99,7 +99,7 @@ export const updateInverterAction = (id, info) => async (dispatch, getState) => 
 
 
 //DELTE
-export const deleteInverterAction = (id) => async (dispatch, getState) => {
+export const deleteInverterAction = (id: any) => async (dispatch: (arg0: { type: string; payload?: any; }) => void, getState: () => { userSignin: { userInfo: any; }; }) => {
     dispatch({ type: DELETE_INVERTER_REQUEST })
     const { userSignin: { userInfo } } = getState();
     try {
@@ -113,7 +113,7 @@ export const deleteInverterAction = (id) => async (dispatch, getState) => {
             type: DELETE_INVERTER_SUCCESS,
             payload: data,
         })
-    } catch (error) {
+    } catch (error:any) {
 
         dispatch({
             type: DELETE_INVERTER_FAILURE,
