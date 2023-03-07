@@ -12,15 +12,10 @@ export default function SolarPanels() {
         <table className='shadow-2x1 font-[Poppins] border-2 border-cyan-200 mt-4 w-full'>
           <thead className='text-white'>
             <tr>
-          <th className='py-3 bg-cyan-800'>Hospital cases</th>
-          <th className='py-3 bg-cyan-800'>Propable cases</th>
-          <th className='py-3 bg-cyan-800'>Propable death</th>
-          <th className='py-3 bg-cyan-800'>Confirm cases</th>
-          <th className='py-3 bg-cyan-800'>Confirm death</th>
-          <th className='py-3 bg-cyan-800'>Total cases</th>
-          <th className='py-3 bg-cyan-800'>Total deaths</th>
-          <th className='py-3 bg-cyan-800'>case 0-9</th>
-          <th className='py-3 bg-cyan-800'>case 80-older</th>
+          <th className='py-3 bg-cyan-800'>Id</th>
+          <th className='py-3 bg-cyan-800'>Type</th>
+          <th className='py-3 bg-cyan-800'>Capacity</th>
+          <th className='py-3 bg-cyan-800'>Description</th>
           </tr>
           </thead>
           <tbody>
@@ -29,11 +24,6 @@ export default function SolarPanels() {
               <td className='py-3 px-6'>3</td>
               <td className='py-3 px-6'>sm</td>
               <td className='py-3 px-6'>yoga</td>
-              <td className='py-3 px-6'>boga</td>
-              <td className='py-3 px-6'>boga</td>
-              <td className='py-3 px-6'>boga</td>
-              <td className='py-3 px-6'>boga</td>
-              <td className='py-3 px-6'>boga</td>
             </tr>
           </tbody>
         </table>
