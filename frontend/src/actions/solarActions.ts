@@ -1,4 +1,5 @@
 import axios from "axios";
+import { stringify } from "querystring";
 import {
     GET_ALL_SOLAR_REQUEST,
     GET_ALL_SOLAR_SUCCESS,
@@ -23,7 +24,7 @@ import {
 
 
 
-export const getallSolarAction = () => async (dispatch) => {
+export const getallSolarAction = () => async (dispatch: (arg0: { type: string; payload?: any; }) => void) => {
     dispatch({ type: GET_ALL_SOLAR_REQUEST })
 
     try {
@@ -45,7 +46,7 @@ export const getallSolarAction = () => async (dispatch) => {
 
 //insert category
 
-export const addSolarAction = (info) => async (dispatch, getState) => {
+export const addSolarAction = (info: any) => async (dispatch: (arg0: { type: string; payload?: any; }) => void, getState: () => { userSignin: { userInfo: any; }; }) => {
     dispatch({ type: ADD_NEW_SOLAR_REQUEST })
 
     const { userSignin: { userInfo } } = getState();
@@ -73,7 +74,7 @@ export const addSolarAction = (info) => async (dispatch, getState) => {
 
 
 // UPDATE 
-export const updateSolarAction = (id, info) => async (dispatch, getState) => {
+export const updateSolarAction = (id: any, info: any) => async (dispatch: (arg0: { type: string; payload?: any; }) => void, getState: () => { userSignin: { userInfo: any; }; }) => {
 
     dispatch({ type: UPDATE_SOLAR_REQUEST })
     const { userSignin: { userInfo } } = getState();
@@ -86,6 +87,7 @@ export const updateSolarAction = (id, info) => async (dispatch, getState) => {
         dispatch({
             type: UPDATE_SOLAR_SUCCESS,
             payload: data,
+        
         })
     } catch (error) {
 
@@ -99,7 +101,7 @@ export const updateSolarAction = (id, info) => async (dispatch, getState) => {
 
 
 //DELTE
-export const deleteSolarAction = (id) => async (dispatch, getState) => {
+export const deleteSolarAction = (id: any) => async (dispatch: (arg0: { type: string; payload?: any; }) => void, getState: () => { userSignin: { userInfo: any; }; }) => {
     dispatch({ type: DELETE_SOLAR_REQUEST })
     const { userSignin: { userInfo } } = getState();
     try {
