@@ -35,7 +35,7 @@ export const getallSolarAction = () => async (dispatch: (arg0: { type: string; p
             type: GET_ALL_SOLAR_SUCCESS,
             payload: data,
         })
-    } catch (error) {
+    } catch (error:any) {
 
         dispatch({
             type: GET_ALL_SOLAR_FAILURE,
@@ -62,7 +62,7 @@ export const addSolarAction = (info: any) => async (dispatch: (arg0: { type: str
             type: ADD_NEW_SOLAR_SUCCESS,
             payload: data,
         })
-    } catch (error) {
+    } catch (error:any) {
 
         dispatch({
             type: ADD_NEW_SOLAR_FAILURE,
@@ -89,7 +89,7 @@ export const updateSolarAction = (id: any, info: any) => async (dispatch: (arg0:
             payload: data,
         
         })
-    } catch (error) {
+    } catch (error:any) {
 
         dispatch({
             type: UPDATE_SOLAR_FAILURE,
@@ -115,7 +115,7 @@ export const deleteSolarAction = (id: any) => async (dispatch: (arg0: { type: st
             type: DELETE_SOLAR_SUCCESS,
             payload: data,
         })
-    } catch (error) {
+    } catch (error:any) {
 
         dispatch({
             type: DELETE_SOLAR_FAILURE,

@@ -22,7 +22,7 @@ import {
 
 } from '../constants/inverterConstants'
 
-export const getallInverterReducer = (state = { inverter: [] }, action) => {
+export const getallInverterReducer = (state = { inverter: [] }, action: { type: any; payload: any }) => {
     switch (action.type) {
         case GET_ALL_INVERTER_REQUEST:
             return { loading: true, inverter: [] }
@@ -41,7 +41,7 @@ export const getallInverterReducer = (state = { inverter: [] }, action) => {
 
 //Add
 
-export const addInverterReducer = (state = { inverter: [] }, action) => {
+export const addInverterReducer = (state = { inverter: [] }, action: { type: any; payload: any }) => {
     switch (action.type) {
         case ADD_NEW_INVERTER_REQUEST:
             return { loading: true, ...state }
@@ -58,7 +58,7 @@ export const addInverterReducer = (state = { inverter: [] }, action) => {
 
 
 //update
-export const updateInverterReducer = (state = { inverter: [] }, action) => {
+export const updateInverterReducer = (state = { inverter: [] }, action: { type: any; payload: any }) => {
     switch (action.type) {
         case UPDATE_INVERTER_REQUEST:
             return { loading: true, ...state }
@@ -78,13 +78,13 @@ export const updateInverterReducer = (state = { inverter: [] }, action) => {
 
 /// delete
 
-export const deleteInverterReducer = (state = {}, action) => {
+export const deleteInverterReducer = (state = {}, action: { type: any; payload: any }) => {
     switch (action.type) {
         case DELETE_INVERTER_REQUEST:
             return { loading: true, ...state }
 
         case DELETE_INVERTER_SUCCESS:
-            return { loading: false, success: true }
+            return { loading: false, success:true }
 
         case DELETE_INVERTER_FAILURE:
             return { loading: false, error: action.payload }
