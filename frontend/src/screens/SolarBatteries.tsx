@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -40,9 +39,9 @@ export default function SolarPanels() {
   
   
   
-    const deleteHandler = (id: any) => {
-      dispatch(deleteSolarAction(id))
-    }
+    // const deleteHandler = (id: any) => {
+    //   dispatch(deleteSolarAction(id))
+    // }
   
     if (!loading) {
       console.log(solar)
@@ -92,7 +91,7 @@ export default function SolarPanels() {
                   <button
                     type="button"
                     className="delete"
-                    onClick={() => deleteHandler(row._id)}
+                    
                   >
                     Delete
                   </button>

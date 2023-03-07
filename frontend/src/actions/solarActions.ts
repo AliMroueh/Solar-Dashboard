@@ -1,6 +1,7 @@
 import axios from "axios";
 import { stringify } from "querystring";
 import { Dispatch } from "redux";
+
 import {
     GET_ALL_SOLAR_REQUEST,
     GET_ALL_SOLAR_SUCCESS,
@@ -24,26 +25,71 @@ import {
 } from '../constants/solarConstants'
 
 
+interface GetAllSolarRequestAction {
+    type: 'GET_ALL_SOLAR_REQUEST';
+  }
+  
+  interface GetAllSolarSuccessAction {
+    type: 'GET_ALL_SOLAR_SUCCESS';
+    payload: Solar[];
+  }
+  
+  interface GetAllSolarFailAction {
+    type: 'GET_ALL_SOLAR_FAILURE';
+    payload: {
+      error: string;
+    };
+  }
+  
+  type SolarAction = GetAllSolarRequestAction | GetAllSolarSuccessAction | GetAllSolarFailAction;
+  
+  // Define the Solar type
+  interface Solar {
+    id: number;
+    type: string;
+    strength: string;
+    description: number;
+    solarImage:string
+  }
 
-export const getallSolarAction = () => async (dispatch:Dispatch) => {
-    dispatch({ type: GET_ALL_SOLAR_REQUEST })
-
+  export const getallSolarAction = () => async (dispatch: Dispatch<SolarAction>) => {
+    dispatch({ type: 'GET_ALL_SOLAR_REQUEST' });
+  
     try {
-
-        const { data } = await axios.get('/api/solar/get')
-
-        dispatch({
-            type: GET_ALL_SOLAR_SUCCESS,
-            payload: data,
-        })
+      const { data } = await axios.get<{ solars: Solar[] }>('/api/solar/get');
+  
+      dispatch({
+        type: 'GET_ALL_SOLAR_SUCCESS',
+        payload: data.solars,
+      });
     } catch (error:any) {
-
-        dispatch({
-            type: GET_ALL_SOLAR_FAILURE,
-            payload: error.response && error.response.data.message ? error.response.data.message : error.message
-        })
+      dispatch({
+        type: 'GET_ALL_SOLAR_FAILURE',
+        payload: {
+          error: error.response && error.response.data.message ? error.response.data.message : error.message,
+        },
+      });
     }
-}
+  };
+// export const getallSolarAction = () => async (dispatch) => {
+//     dispatch({ type: GET_ALL_SOLAR_REQUEST })
+
+//     try {
+
+//         const { data } = await axios.get('/api/solar/get')
+
+//         dispatch({
+//             type: GET_ALL_SOLAR_SUCCESS,
+//             payload: data,
+//         })
+//     } catch (error:any) {
+
+//         dispatch({
+//             type: GET_ALL_SOLAR_FAILURE,
+//             payload: error.response && error.response.data.message ? error.response.data.message : error.message
+//         })
+//     }
+// }
 
 //insert category
 
@@ -127,3 +173,11 @@ export const deleteSolarAction = (id: any) => async (dispatch: (arg0: { type: st
 
 
 
+// new
+
+
+
+// Define the action types and their payloads
+
+
+// Define the getallSolarAction function
