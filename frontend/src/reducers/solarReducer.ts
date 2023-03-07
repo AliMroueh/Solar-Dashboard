@@ -58,7 +58,7 @@ export const addSolarReducer = (state = { solar: [] }, action: { type: any; payl
 
 
 //update
-export const updateSolarReducer = (state = { solar: [] }, action: { type: any; payload: any; }) => {
+export const updateSolarReducer = (state = { solar: [] }, action: { type: string; payload: string | []; }) => {
     switch (action.type) {
         case UPDATE_SOLAR_REQUEST:
             return { loading: true, ...state }
@@ -78,7 +78,7 @@ export const updateSolarReducer = (state = { solar: [] }, action: { type: any; p
 
 /// delete
 
-export const deleteSolarReducer = (state = {}, action: { type: any; payload: any; }) => {
+export const deleteSolarReducer = (state = {}, action: { type: string; payload: string | []; }) => {
     switch (action.type) {
         case DELETE_SOLAR_REQUEST:
             return { loading: true, ...state }
