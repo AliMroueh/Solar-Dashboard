@@ -1,4 +1,6 @@
 import axios from "axios";
+import { Dispatch } from "redux";
+
 import {
     GET_ALL_INVERTER_REQUEST,
     GET_ALL_INVERTER_SUCCESS,
@@ -23,7 +25,7 @@ import {
 
 
 
-export const getallInverterAction = () => async (dispatch: (arg0: { type: string; payload?: any; }) => void) => {
+export const getallInverterAction = () => async (dispatch: Dispatch) => {
     dispatch({ type: GET_ALL_INVERTER_REQUEST })
 
     try {
@@ -45,7 +47,7 @@ export const getallInverterAction = () => async (dispatch: (arg0: { type: string
 
 //insert category
 
-export const addInverterAction = (info: any) => async (dispatch: (arg0: { type: string; payload?: any; }) => void, getState: () => { userSignin: { userInfo: any; }; }) => {
+export const addInverterAction = (info: any) => async (dispatch: Dispatch, getState: () => { userSignin: { userInfo: any; }; }) => {
     dispatch({ type: ADD_NEW_INVERTER_REQUEST })
 
     const { userSignin: { userInfo } } = getState();
@@ -73,7 +75,7 @@ export const addInverterAction = (info: any) => async (dispatch: (arg0: { type: 
 
 
 // UPDATE 
-export const updateInverterAction = (id: any, info: any) => async (dispatch: (arg0: { type: string; payload?: any; }) => void, getState: () => { userSignin: { userInfo: any; }; }) => {
+export const updateInverterAction = (id: any, info: any) => async (dispatch:Dispatch, getState: () => { userSignin: { userInfo: any; }; }) => {
 
     dispatch({ type: UPDATE_INVERTER_REQUEST })
     const { userSignin: { userInfo } } = getState();
@@ -99,7 +101,7 @@ export const updateInverterAction = (id: any, info: any) => async (dispatch: (ar
 
 
 //DELTE
-export const deleteInverterAction = (id: any) => async (dispatch: (arg0: { type: string; payload?: any; }) => void, getState: () => { userSignin: { userInfo: any; }; }) => {
+export const deleteInverterAction = (id: any) => async (dispatch:Dispatch, getState: () => { userSignin: { userInfo: any; }; }) => {
     dispatch({ type: DELETE_INVERTER_REQUEST })
     const { userSignin: { userInfo } } = getState();
     try {
