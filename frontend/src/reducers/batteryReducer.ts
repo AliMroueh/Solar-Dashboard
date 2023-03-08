@@ -17,7 +17,7 @@ import {
 
 
 
- interface BatteryState  {
+export interface BatteryState  {
     loading: boolean;
     batteries: any[];
     error?: string;

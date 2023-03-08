@@ -3,7 +3,9 @@ import Header from "./components/Header";
 import NavBar from "./components/NavBar";
 import Home from "./screens/Home";
 import SolarPanels from "./screens/SolarPanels";
-import SolarBatteries from "./screens/SolarBatteries";
+// import SolarBatteries from "./screens/SolarBatteries";
+import AddSolarBatteryPanels from "./screens/AddBatteryPanel";
+import AdminSolarBatteries from "./screens/AdminSolarBatteries";
 
 function App() {
   return (
@@ -15,7 +17,9 @@ function App() {
           <Routes>
             <Route index element={<Home />}/>
             <Route path="/solarPanels" element={<SolarPanels />}/>
-            <Route path="/solarBatteries" element={<SolarBatteries />}/>
+            <Route path="/solarBatteries" element={<AdminSolarBatteries />}/>
+            <Route path="/addbattery" element={<AddSolarBatteryPanels />}/>
+            {/* <Route path="/batteries" element={<AdminSolarBatteries />}/> */}
           </Routes>
         </div> 
       </div>
