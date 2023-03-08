@@ -3,6 +3,7 @@ import thunk from "redux-thunk";
 // import { addSolarReducer, deleteSolarReducer, getallSolarReducer, updateSolarReducer } from "./reducers/solarReducer";
 import { addInverterReducer, deleteInverterReducer, getallInverterReducer, updateInverterReducer } from "./reducers/inverterReducer";
 import { getAllBatteriesReducer,addBatteryReducer,updateBatteryReducer,deleteBatteryReducer } from "./reducers/batteryReducer";
+import { getAllClientsReducer,addClientReducer,updateClientReducer,deleteClientReducer } from "./reducers/clientReducer";
 const initialState = {
     // userSignin: {
     //     userInfo: localStorage.getItem("userInfo")
@@ -24,7 +25,12 @@ const reducer = combineReducers({
     getAllBatteries:getAllBatteriesReducer,
     addBattery:addBatteryReducer,
     updateBattery:updateBatteryReducer,
-    deleteBattery:deleteBatteryReducer
+    deleteBattery:deleteBatteryReducer,
+    getAllClients:getAllClientsReducer,
+    addClient:addClientReducer,
+    updateClient:updateClientReducer,
+    deleteClient:deleteClientReducer
+
 
 
 })
