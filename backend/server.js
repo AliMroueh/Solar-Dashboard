@@ -8,7 +8,7 @@ import inverterRouter from "./routers/inverterRouter.js";
 
 
 const app = express();
-mongoose.connect(`mongodb+srv://traboulsi:databasemongo@cluster0.zcaxve0.mongodb.net/?retryWrites=true&w=majority`, {
+mongoose.connect(`mongodb+srv://mhmd:1234@solar-dashboard.6gzozas.mongodb.net/solar-dashboard?retryWrites=true&w=majority`, {
     // mongoose.connect('mongodb://localhost/solar', {
     useNewUrlParser: true,
     useUnifiedTopology: true
