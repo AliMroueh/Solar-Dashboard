@@ -1,6 +1,7 @@
 import axios from "axios";
-import { stringify } from "querystring";
 import { Dispatch } from "redux";
+import { ThunkDispatch } from "redux-thunk";
+import { AnyAction } from 'redux';
 
 import {
     GET_ALL_SOLAR_REQUEST,
@@ -56,7 +57,7 @@ interface GetAllSolarRequestAction {
     dispatch({ type: 'GET_ALL_SOLAR_REQUEST' });
   
     try {
-      const { data } = await axios.get<{ solars: Solar[] }>('/api/solar/get');
+      const { data } = await axios.get<{ solars: Solar[] }>('/api/solars/get');
   
       dispatch({
         type: 'GET_ALL_SOLAR_SUCCESS',
@@ -73,22 +74,22 @@ interface GetAllSolarRequestAction {
   };
 
 
-export const addSolarAction = (info: any) => async (dispatch:Dispatch, getState: () => { userSignin: { userInfo: any; }; }) => {
+
+  // insert solar
+
+export const addSolarAction =  (info: any) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+
     dispatch({ type: ADD_NEW_SOLAR_REQUEST })
 
-    const { userSignin: { userInfo } } = getState();
+   
     try {
 
-        const { data } = await axios.post(`/api/solar/create`, info, {
-            headers: { Authorization: `Bearer ${userInfo.token}` },
-            // headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` } 
-        })
-
-
-        dispatch({
+        const { data } = await axios.post(`/api/solars/create`, info);
+            
+          dispatch({
             type: ADD_NEW_SOLAR_SUCCESS,
             payload: data,
-        })
+        });
     } catch (error:any) {
 
         dispatch({
@@ -99,56 +100,51 @@ export const addSolarAction = (info: any) => async (dispatch:Dispatch, getState:
 }
 
 
+// edit 
 
-// UPDATE 
-export const updateSolarAction = (id: any, info: any) => async (dispatch:Dispatch, getState: () => { userSignin: { userInfo: any; }; }) => {
+export const updateSolarAction = (id: Number, info:[]) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+    
+  dispatch({ type: UPDATE_SOLAR_REQUEST });
 
-    dispatch({ type: UPDATE_SOLAR_REQUEST })
-    const { userSignin: { userInfo } } = getState();
-    try {
+  
 
+  try {
+    const { data } = await axios.put(`/api/solars/solar/update/${id}`, info, {
+     
+    });
 
-        const { data } = await axios.put(`/api/solars/solar/update/${id}`, info, { headers: { Authorization: `Bearer ${userInfo.token}` }, })
+    dispatch({
+      type: UPDATE_SOLAR_SUCCESS,
+      payload: data,
+    });
+  } catch (error: any) {
+    dispatch({
+      type: UPDATE_SOLAR_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
 
-
-        dispatch({
-            type: UPDATE_SOLAR_SUCCESS,
-            payload: data,
-        
-        })
-    } catch (error:any) {
-
-        dispatch({
-            type: UPDATE_SOLAR_FAILURE,
-            payload: error.response && error.response.data.message ? error.response.data.message : error.message
-        })
-    }
-}
-
-
-
-//DELTE
-export const deleteSolarAction = (id: any) => async (dispatch:Dispatch, getState: () => { userSignin: { userInfo: any; }; }) => {
-    dispatch({ type: DELETE_SOLAR_REQUEST })
-    const { userSignin: { userInfo } } = getState();
-    try {
-
-
-        const { data } = await axios.delete(`/api/solars/delete/${id}`, { headers: { Authorization: `Bearer ${userInfo.token}` }, })
-
-
-
-        dispatch({
-            type: DELETE_SOLAR_SUCCESS,
-            payload: data,
-        })
-    } catch (error:any) {
-
-        dispatch({
-            type: DELETE_SOLAR_FAILURE,
-            payload: error.response && error.response.data.message ? error.response.data.message : error.message
-        })
-    }
+export const deleteSolarAction = (id: Number) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+  dispatch({ type: DELETE_SOLAR_REQUEST })
+  
+  try {
+    const { data } = await axios.delete(`/api/solars/delete/${id}`, {
+      
+    });
+    dispatch({
+      type: DELETE_SOLAR_SUCCESS,
+      payload: data,
+    })
+  } catch (error:any) {
+    dispatch({
+      type: DELETE_SOLAR_FAILURE,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message
+    })
+  }
 }
 
 
