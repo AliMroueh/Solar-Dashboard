@@ -32,7 +32,7 @@ export default function SolarPanels() {
     }
   
     const addHandler = () => {
-      navigate('/addproduct')
+      navigate('/addsolar')
     }
   
   

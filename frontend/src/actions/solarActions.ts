@@ -45,7 +45,7 @@ interface GetAllSolarRequestAction {
   
   // Define the Solar type
   interface Solar {
-    id: number;
+    // id: number;
     type: string;
     strength: string;
     description: number;
@@ -154,7 +154,7 @@ export const deleteSolarAction = (id: any) => async (dispatch: (arg0: { type: st
     try {
 
 
-        const { data } = await axios.delete(`/api/solars/solar/delete/${id}`, { headers: { Authorization: `Bearer ${userInfo.token}` }, })
+        const { data } = await axios.delete(`/api/solars/delete/${id}`, { headers: { Authorization: `Bearer ${userInfo.token}` }, })
 
 
 
@@ -173,11 +173,4 @@ export const deleteSolarAction = (id: any) => async (dispatch: (arg0: { type: st
 
 
 
-// new
 
-
-
-// Define the action types and their payloads
-
-
-// Define the getallSolarAction function
