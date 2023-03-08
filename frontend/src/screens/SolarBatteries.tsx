@@ -35,10 +35,6 @@ export default function SolarPanels() {
       navigate('/addsolar')
     }
   
-  
-  
-  
-  
     // const deleteHandler = (id: any) => {
     //   dispatch(deleteSolarAction(id))
     // }
@@ -62,7 +58,7 @@ export default function SolarPanels() {
           <th className='py-3 bg-cyan-800'>Propable death</th>
           <th className='py-3 bg-cyan-800'>Confirm cases</th>
           <th className='py-3 bg-cyan-800'>Confirm death</th>
-          <th className='py-3 bg-cyan-800'>Total cases</th>
+          <th className='py-3 bg-cyan-800'>Total cases</th>  
           <th className='py-3 bg-cyan-800'>Total deaths</th>
           <th className='py-3 bg-cyan-800'>case 0-9</th>
           <th className='py-3 bg-cyan-800'>Action</th>

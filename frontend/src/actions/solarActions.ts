@@ -71,29 +71,9 @@ interface GetAllSolarRequestAction {
       });
     }
   };
-// export const getallSolarAction = () => async (dispatch) => {
-//     dispatch({ type: GET_ALL_SOLAR_REQUEST })
 
-//     try {
 
-//         const { data } = await axios.get('/api/solar/get')
-
-//         dispatch({
-//             type: GET_ALL_SOLAR_SUCCESS,
-//             payload: data,
-//         })
-//     } catch (error:any) {
-
-//         dispatch({
-//             type: GET_ALL_SOLAR_FAILURE,
-//             payload: error.response && error.response.data.message ? error.response.data.message : error.message
-//         })
-//     }
-// }
-
-//insert category
-
-export const addSolarAction = (info: any) => async (dispatch: (arg0: { type: string; payload?: any; }) => void, getState: () => { userSignin: { userInfo: any; }; }) => {
+export const addSolarAction = (info: any) => async (dispatch:Dispatch, getState: () => { userSignin: { userInfo: any; }; }) => {
     dispatch({ type: ADD_NEW_SOLAR_REQUEST })
 
     const { userSignin: { userInfo } } = getState();
@@ -121,7 +101,7 @@ export const addSolarAction = (info: any) => async (dispatch: (arg0: { type: str
 
 
 // UPDATE 
-export const updateSolarAction = (id: any, info: any) => async (dispatch: (arg0: { type: string; payload?: any; }) => void, getState: () => { userSignin: { userInfo: any; }; }) => {
+export const updateSolarAction = (id: any, info: any) => async (dispatch:Dispatch, getState: () => { userSignin: { userInfo: any; }; }) => {
 
     dispatch({ type: UPDATE_SOLAR_REQUEST })
     const { userSignin: { userInfo } } = getState();
@@ -148,7 +128,7 @@ export const updateSolarAction = (id: any, info: any) => async (dispatch: (arg0:
 
 
 //DELTE
-export const deleteSolarAction = (id: any) => async (dispatch: (arg0: { type: string; payload?: any; }) => void, getState: () => { userSignin: { userInfo: any; }; }) => {
+export const deleteSolarAction = (id: any) => async (dispatch:Dispatch, getState: () => { userSignin: { userInfo: any; }; }) => {
     dispatch({ type: DELETE_SOLAR_REQUEST })
     const { userSignin: { userInfo } } = getState();
     try {
