@@ -20,27 +20,24 @@ import {
     DELETE_SOLAR_SUCCESS,
     DELETE_SOLAR_FAILURE,
 
-    GET_ONE_SOLAR_REQUEST,
-    GET_ONE_SOLAR_SUCCESS,
-    GET_ONE_SOLAR_FAILURE
 } from '../constants/solarConstants'
 
 
 
 
   export const getallSolarAction = () => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
-    dispatch({ type: 'GET_ALL_SOLARS_REQUEST' });
+    dispatch({ type: GET_ALL_SOLARS_REQUEST });
   
     try {
       const { data } = await axios.get('/api/solars/get');
   
       dispatch({
-        type: 'GET_ALL_SOLARS_SUCCESS',
+        type: GET_ALL_SOLARS_SUCCESS,
         payload: data.solars,
       });
     } catch (error:any) {
       dispatch({
-        type: 'GET_ALL_SOLARS_FAILURE',
+        type: GET_ALL_SOLARS_FAILURE,
         payload: {
           error: error.response && error.response.data.message ? error.response.data.message : error.message,
         },

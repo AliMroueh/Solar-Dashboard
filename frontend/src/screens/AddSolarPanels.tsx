@@ -51,7 +51,7 @@ export default function AddSolarPanels() : JSX.Element{
           const formData = new FormData();
     
           if (solarImage && solarImage.length > 0) {
-            formData.append('batteryImage', solarImage[0]);
+            formData.append('solarImage', solarImage[0]);
           }
           formData.append('type', type);
           formData.append('strength', strength);

@@ -1,14 +1,12 @@
+import express from 'express';
 import Solar from "../models/solarModel.js";
 import shortid from 'shortid';
 import { body, validationResult } from 'express-validator';
-import express from 'express';
-const solarRouter = express.Router();
 import path from "path";
 import multer from 'multer';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
-// import { isAdmin } from '../utils.js';
-// import passport from 'passport';
+const solarRouter = express.Router();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
