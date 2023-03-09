@@ -1,5 +1,8 @@
 import axios from 'axios';
 import { Dispatch } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { AnyAction } from 'redux';
+
 import {
   GET_ALL_BATTERIES_REQUEST,
   GET_ALL_BATTERIES_SUCCESS,
@@ -15,7 +18,9 @@ import {
   DELETE_BATTERY_FAILURE
 } from '../constants/batteryConstants';
 
-export const getAllBatteriesAction = () => async (dispatch: Dispatch) => {
+
+
+export const getAllBatteriesAction = () => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
   dispatch({ type: GET_ALL_BATTERIES_REQUEST });
 
   try {
@@ -36,15 +41,13 @@ export const getAllBatteriesAction = () => async (dispatch: Dispatch) => {
   }
 };
 
-export const addNewBatteryAction = (info: any) => async (dispatch: Dispatch) => {
+export const addNewBatteryAction = (info: any) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     dispatch({ type: ADD_NEW_BATTERY_REQUEST });
   
     
     
     try {
-      const { data } = await axios.post(`/api/batteries/create`, info, {
-      
-      });
+      const { data } = await axios.post(`/api/batteries/create`, info);
   
       dispatch({
         type: ADD_NEW_BATTERY_SUCCESS,
@@ -61,10 +64,8 @@ export const addNewBatteryAction = (info: any) => async (dispatch: Dispatch) => 
     }
   };
 
-  export const updateBatteryAction = (id: Number, info:[]) => async (
-    dispatch: Dispatch,
+  export const updateBatteryAction = (id: Number, info:[]) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     
-  ) => {
     dispatch({ type: UPDATE_BATTERY_REQUEST });
   
     
@@ -89,7 +90,7 @@ export const addNewBatteryAction = (info: any) => async (dispatch: Dispatch) => 
     }
   };
   
-  export const deleteBatteryAction = (id: Number) => async (dispatch: Dispatch) => {
+  export const deleteBatteryAction = (id: Number) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     dispatch({ type: DELETE_BATTERY_REQUEST })
     
     try {
