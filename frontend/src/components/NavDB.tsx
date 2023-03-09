@@ -19,7 +19,7 @@ export const navLinks = [
   {
     id: 2,
     title: "Solar Battery",
-    link:"/solarBatteries",
+    link:"/AddSolarPanels",
     icon: <UserIcon className="nav-icon" />,
   },
   {

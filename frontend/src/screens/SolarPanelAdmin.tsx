@@ -21,11 +21,11 @@ export default function SolarPanels() {
       pageNumber = 1,
     } = useParams();
   
-    useEffect(() => {
-      dispatch(getallSolarAction())
+    // useEffect(() => {
+    //   dispatch(getallSolarAction())
   
   
-    }, [dispatch, success])
+    // }, [dispatch, success])
   
     if (!loading) {
       console.log(solar)

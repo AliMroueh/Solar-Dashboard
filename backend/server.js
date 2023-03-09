@@ -6,7 +6,7 @@ import userRouter from "./routers/userRouter.js";
 import solarRouter from "./routers/solarRouter.js";
 import inverterRouter from "./routers/inverterRouter.js";
 
-
+// mongodb+srv://yasser:database@main.twjbt8n.mongodb.net/solar-system?retryWrites=true&w=majority`
 const app = express();
 mongoose.connect(`mongodb+srv://mhmd:1234@solar-dashboard.6gzozas.mongodb.net/solar-dashboard?retryWrites=true&w=majority`, {
     // mongoose.connect('mongodb://localhost/solar', {

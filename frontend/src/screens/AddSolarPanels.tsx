@@ -116,16 +116,15 @@ export default function AddSolarPanels() : JSX.Element{
           <label htmlFor='file'>Add Image</label>
           <input
             id='file'
-           
+           name='solarImage'
+           type="file"
+           required
+           alt='solarImage'
+           accept="image/*"
             className='p-2 rounded-lg bg-gray-700 mt-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
-            type='file'
-            
-            onChange={e => setSolarImage(e.target.files)}
-
-              
-              
           
-          />
+            onChange={e => setSolarImage(e.target.files)}
+                    />
         </div>
         <div className='flex justify-between text-gray-400 py-2'>
           Already have an account?{' '}
