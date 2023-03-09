@@ -25,7 +25,7 @@ import {
 
 
 
- interface SolarState  {
+ export interface SolarState  {
     loading: boolean;
     solars: any[];
     error?: string;
