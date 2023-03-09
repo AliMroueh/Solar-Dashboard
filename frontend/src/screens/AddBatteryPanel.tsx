@@ -79,7 +79,7 @@ export default function AddSolarBatteryPanels() : JSX.Element{
 
 
 <div className='bg-cyan-800  flex flex-col justify-center w-full col-span-10'>
-      <form className='w-11/12 mx-auto rounded-lg bg-cyan-900 p-8 px-8' onSubmit={insertHandler} >
+      <form className='w-11/12 mx-auto rounded-lg bg-cyan-900 p-8 px-8'  onSubmit={insertHandler}  >
         <h2 className='text-4xl text-white font-bold text-center'>Add Battery</h2>
         <div className='flex flex-col text-gray-400 py-2'>
           <label htmlFor='type'>Type</label>
@@ -118,14 +118,9 @@ export default function AddSolarBatteryPanels() : JSX.Element{
           <label htmlFor='file'>Add Image</label>
           <input
             id='file'
-           
             className='p-2 rounded-lg bg-gray-700 mt-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
             type='file'
-            
-            onChange={e => setBatteryImage(e.target.files)}
-
-              
-              
+            onChange={e => setBatteryImage(e.target.files)}  
           
           />
         </div>

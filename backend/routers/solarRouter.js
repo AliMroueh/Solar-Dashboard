@@ -23,8 +23,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-solarRouter.post("/create",
-    upload.single("solarImage"),
+solarRouter.post("/create", upload.single("solarImage"),
     [
         // Validate the name field
         body('type', 'Please Enter A Type').trim().notEmpty(),

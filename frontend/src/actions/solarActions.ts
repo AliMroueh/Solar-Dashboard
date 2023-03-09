@@ -4,9 +4,9 @@ import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from 'redux';
 
 import {
-    GET_ALL_SOLAR_REQUEST,
-    GET_ALL_SOLAR_SUCCESS,
-    GET_ALL_SOLAR_FAILURE,
+    GET_ALL_SOLARS_REQUEST,
+    GET_ALL_SOLARS_SUCCESS,
+    GET_ALL_SOLARS_FAILURE,
 
     ADD_NEW_SOLAR_REQUEST,
     ADD_NEW_SOLAR_SUCCESS,
@@ -26,46 +26,21 @@ import {
 } from '../constants/solarConstants'
 
 
-interface GetAllSolarRequestAction {
-    type: 'GET_ALL_SOLAR_REQUEST';
-  }
-  
-  interface GetAllSolarSuccessAction {
-    type: 'GET_ALL_SOLAR_SUCCESS';
-    payload: Solar[];
-  }
-  
-  interface GetAllSolarFailAction {
-    type: 'GET_ALL_SOLAR_FAILURE';
-    payload: {
-      error: string;
-    };
-  }
-  
-  type SolarAction = GetAllSolarRequestAction | GetAllSolarSuccessAction | GetAllSolarFailAction;
-  
-  // Define the Solar type
-  interface Solar {
-    // id: number;
-    type: string;
-    strength: string;
-    description: number;
-    solarImage:string
-  }
 
-  export const getallSolarAction = () => async (dispatch: Dispatch<SolarAction>) => {
-    dispatch({ type: 'GET_ALL_SOLAR_REQUEST' });
+
+  export const getallSolarAction = () => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+    dispatch({ type: 'GET_ALL_SOLARS_REQUEST' });
   
     try {
-      const { data } = await axios.get<{ solars: Solar[] }>('/api/solars/get');
+      const { data } = await axios.get('/api/solars/get');
   
       dispatch({
-        type: 'GET_ALL_SOLAR_SUCCESS',
+        type: 'GET_ALL_SOLARS_SUCCESS',
         payload: data.solars,
       });
     } catch (error:any) {
       dispatch({
-        type: 'GET_ALL_SOLAR_FAILURE',
+        type: 'GET_ALL_SOLARS_FAILURE',
         payload: {
           error: error.response && error.response.data.message ? error.response.data.message : error.message,
         },
@@ -80,10 +55,7 @@ interface GetAllSolarRequestAction {
 export const addSolarAction =  (info: any) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
 
     dispatch({ type: ADD_NEW_SOLAR_REQUEST })
-
-   
     try {
-
         const { data } = await axios.post(`/api/solars/create`, info);
             
           dispatch({
