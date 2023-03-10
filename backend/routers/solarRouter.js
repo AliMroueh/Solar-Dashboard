@@ -59,7 +59,7 @@ solarRouter.post("/create", upload.single("solarImage"),
 );
 
 
-solarRouter.put('/solar/update/:id', upload.single("solarImage"), async (req, res) => {
+solarRouter.put('/update/:id', upload.single("solarImage"), async (req, res) => {
     const solar = await Solar.findById(req.params.id);
 
     if (solar) {
@@ -103,7 +103,7 @@ solarRouter.get('/get', (req, res) => {
 
 
 
-solarRouter.delete('/solar/delete/:id', async (req, res) => {
+solarRouter.delete('/delete/:id', async (req, res) => {
     try {
         const solar = await Solar.findById(req.params.id);
         if (!solar) {

@@ -2,11 +2,12 @@ import Inverter from "../models/inverterModel.js";
 import shortid from 'shortid';
 import { body, validationResult } from 'express-validator';
 import express from 'express';
-const inverterRouter = express.Router();
 import path from "path";
 import multer from 'multer';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
+
+const inverterRouter = express.Router();
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -50,18 +51,18 @@ inverterRouter.post("/create",
         }
 
         // Save the category to the database
-        const inv = new Inverter(solarObj);
-        inv.save((error, solar) => {
+        const inv = new Inverter(inverterObj);
+        inv.save((error, inverter) => {
             if (error) return res.status(400).json({ error });
-            if (solar) {
-                return res.status(201).json({ solar });
+            if (inverter) {
+                return res.status(201).json({ inverter });
             }
         });
     }
 );
 
 
-inverterRouter.put('/inverter/update/:id', upload.single("inverterImage"), async (req, res) => {
+inverterRouter.put('/update/:id', upload.single("inverterImage"), async (req, res) => {
     const inverter = await Inverter.findById(req.params.id);
 
     if (inverter) {
@@ -105,7 +106,7 @@ inverterRouter.get('/get', (req, res) => {
 
 
 
-inverterRouter.delete('/inverter/delete/:id', async (req, res) => {
+inverterRouter.delete('/delete/:id', async (req, res) => {
     try {
         const inverter = await Inverter.findById(req.params.id);
         if (!inverter) {

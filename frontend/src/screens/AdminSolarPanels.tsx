@@ -68,7 +68,6 @@ export default function AdminSolarPanels(): JSX.Element {
 
   return (
     <div className='bg-cyan-800  flex flex-col justify-start w-full col-span-10 p-5' >
-      {/* onClick={() => addHandler()} */}
       <button className='w-auto p-4 bg-gray-900 text-slate-200 rounded-md self-end' onClick={() => addHandler()}>
         Add Panels
         </button>
@@ -86,13 +85,13 @@ export default function AdminSolarPanels(): JSX.Element {
           </thead>
           <tbody>
           {solars.map((row, index) => (
-            <tr className='hover:bg-cyan-100 bg-cyan-300 cursor-pointer duration-300'>
+            <tr key={index} className='hover:bg-cyan-100 bg-cyan-300 cursor-pointer duration-300'>
               <td className='py-3 px-6'>{row._id.toString()}</td>
                 <td className='py-3 px-6'>{row.type}</td>
                 <td className='py-3 px-6'>{row.strength}</td>
                 <td className='py-3 px-6'>{row.description}</td>
               <td>
-              <Link to={`/updatesolar/${row._id}?type=${row.type}?strength=${row.strength}?description=${row.description}`}>
+              <Link to={`/edit/${row._id}?type=${row.type}?strength=${row.strength}?description=${row.description}`}>
                     <button type='button' className='edit'>
                       Edit
                     </button>

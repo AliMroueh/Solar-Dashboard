@@ -61,7 +61,7 @@ export default function AdminSolarInverter(): JSX.Element {
   }
 
   const addHandler = () => {
-    navigate('/AddSolarPanels');
+    navigate('/AddSolarInverter');
   };
 
   const deleteHandler = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: Number) => {
@@ -85,17 +85,20 @@ export default function AdminSolarInverter(): JSX.Element {
               <th className='py-3 bg-cyan-800'>Type</th>
               <th className='py-3 bg-cyan-800'>strength</th>
               <th className='py-3 bg-cyan-800'>Description</th>
+              <th className='py-3 bg-cyan-800'>Option</th>
           </tr>
           </thead>
           <tbody>
           {inverters.map((row, index) => (
-            <tr className='hover:bg-cyan-100 bg-cyan-300 cursor-pointer duration-300'>
+            <tr key={index} className='hover:bg-cyan-100 bg-cyan-300 cursor-pointer duration-300'>
               <td className='py-3 px-6'>{row._id.toString()}</td>
                 <td className='py-3 px-6'>{row.type}</td>
                 <td className='py-3 px-6'>{row.strength}</td>
                 <td className='py-3 px-6'>{row.description}</td>
+                
+                
               <td>
-              <Link to={`/updatesolar/${row._id}?type=${row.type}?strength=${row.strength}?description=${row.description}`}>
+              <Link to={`/edit/${row._id}?type=${row.type}?strength=${row.strength}?description=${row.description}`}>
                     <button type='button' className='edit'>
                       Edit
                     </button>
