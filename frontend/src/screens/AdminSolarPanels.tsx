@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { addSolarAction,  getallSolarAction, deleteSolarAction } from '../actions/solarActions';
+import { getAllSolarsAction, deleteSolarAction } from '../actions/solarActions';
 import { SolarState } from '../reducers/solarReducer';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
@@ -22,7 +22,7 @@ interface GetallSolarsState {
   solars: Solar[];
 }
 interface GetSolarStateWithAllSolars extends SolarState {
-    getAllSolar: GetallSolarsState;
+    getAllSolars: GetallSolarsState;
     
   }
   interface DeleteSolarStateWithAllSolars extends SolarState {
@@ -41,15 +41,16 @@ export default function AdminSolarPanels(): JSX.Element {
   const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
      
   const navigate = useNavigate();
-  const getAllSolars = useSelector<GetSolarStateWithAllSolars, GetallSolarsState>((state) => state.getAllSolar);
+  const getAllSolars = useSelector<GetSolarStateWithAllSolars, GetallSolarsState>((state) => state.getAllSolars);
 
   const { loading, error, solars } = getAllSolars;
 
-  const deleteBattery = useSelector<DeleteSolarStateWithAllSolars, DeleteSolarState>((state) => state.deleteSolar);
-  const { loading: loadingDel, success, error: errorDel } = deleteBattery;
+
+  const deleteSolar = useSelector<DeleteSolarStateWithAllSolars, DeleteSolarState>((state) => state.deleteSolar);
+  const { loading: loadingDel, success, error: errorDel } = deleteSolar;
 
   useEffect(() => {
-    dispatch(getallSolarAction());
+    dispatch(getAllSolarsAction());
   }, [dispatch, success]);
 
   if (!loading) {
@@ -57,7 +58,7 @@ export default function AdminSolarPanels(): JSX.Element {
   }
 
   const addHandler = () => {
-    navigate('/addbattery');
+    navigate('/AddSolarPanels');
   };
 
   const deleteHandler = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: Number) => {
@@ -66,8 +67,11 @@ export default function AdminSolarPanels(): JSX.Element {
   };
 
   return (
-    <div className='bg-cyan-800  flex flex-col justify-start w-full col-span-10 p-5'>
-      <button className='w-auto p-4 bg-gray-900 text-slate-200 rounded-md self-end'>Add Panels</button>
+    <div className='bg-cyan-800  flex flex-col justify-start w-full col-span-10 p-5' >
+      {/* onClick={() => addHandler()} */}
+      <button className='w-auto p-4 bg-gray-900 text-slate-200 rounded-md self-end' onClick={() => addHandler()}>
+        Add Panels
+        </button>
      {loading ? (
         <div>loading...</div>
       ) : (
@@ -81,14 +85,14 @@ export default function AdminSolarPanels(): JSX.Element {
           </tr>
           </thead>
           <tbody>
-          {solars.map((row,index) =>(
-            <tr key={index} className='hover:bg-cyan-100 bg-cyan-300 cursor-pointer duration-300'>
+          {solars.map((row, index) => (
+            <tr className='hover:bg-cyan-100 bg-cyan-300 cursor-pointer duration-300'>
               <td className='py-3 px-6'>{row._id.toString()}</td>
                 <td className='py-3 px-6'>{row.type}</td>
                 <td className='py-3 px-6'>{row.strength}</td>
                 <td className='py-3 px-6'>{row.description}</td>
               <td>
-              <Link to={`/updatebattery/${row._id}?type=${row.type}?capacity=${row.strength}?description=${row.description}`}>
+              <Link to={`/updatesolar/${row._id}?type=${row.type}?strength=${row.strength}?description=${row.description}`}>
                     <button type='button' className='edit'>
                       Edit
                     </button>

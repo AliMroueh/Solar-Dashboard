@@ -23,14 +23,12 @@ import {
 } from '../constants/solarConstants'
 
 
-
-
-  export const getallSolarAction = () => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+// get solar
+  export const getAllSolarsAction = () => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     dispatch({ type: GET_ALL_SOLARS_REQUEST });
   
     try {
       const { data } = await axios.get('/api/solars/get');
-  
       dispatch({
         type: GET_ALL_SOLARS_SUCCESS,
         payload: data.solars,

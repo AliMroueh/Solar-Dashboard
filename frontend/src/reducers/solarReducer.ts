@@ -1,4 +1,3 @@
-import { getallSolarAction } from '../actions/solarActions';
 import {
     GET_ALL_SOLARS_REQUEST,
     GET_ALL_SOLARS_SUCCESS,
@@ -16,9 +15,6 @@ import {
     DELETE_SOLAR_SUCCESS,
     DELETE_SOLAR_FAILURE,
   } from '../constants/solarConstants';
-  
-
-
 
  export interface SolarState  {
     loading: boolean;
@@ -33,13 +29,14 @@ import {
     error: undefined
   };
   
- export const getAllSolarReducer = (
+ export const getAllSolarsReducer = (
     state: SolarState = initialState,
     action: any
+  
   ): SolarState => {
     switch (action.type) {
       case GET_ALL_SOLARS_REQUEST:
-        return { ...state, loading: true };
+        return { ...state, loading:true };
   
       case GET_ALL_SOLARS_SUCCESS:
         return { ...state, loading: false, solars: action.payload };

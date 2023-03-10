@@ -3,7 +3,8 @@ import Header from "./components/Header";
 import NavBar from "./components/NavBar";
 import Home from "./screens/Home";
 import AddSolarPanels from "./screens/AddSolarPanels";
-import AdminSolarPanels from "./screens/AdminSolarPanel";
+import AdminSolarPanels from "./screens/AdminSolarPanels";
+import AdminSolarBatteries from "./screens/AdminSolarBatteries";
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
             <Route index element={<Home />}/>
             <Route path="/AddSolarPanels" element={<AddSolarPanels />}/>
             <Route path="/AdminSolarPanels" element={<AdminSolarPanels/>}/>
+            <Route path="/AdminSolarBatteries" element={<AdminSolarBatteries/>}/>
 
           </Routes>
         </div> 
