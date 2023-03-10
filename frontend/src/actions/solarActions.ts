@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Dispatch } from "redux";
 import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from 'redux';
 
@@ -52,7 +51,6 @@ export const addSolarAction =  (info: any) => async (dispatch: ThunkDispatch<{},
     dispatch({ type: ADD_NEW_SOLAR_REQUEST })
     try {
         const { data } = await axios.post(`/api/solars/create`, info);
-            
           dispatch({
             type: ADD_NEW_SOLAR_SUCCESS,
             payload: data,
@@ -70,11 +68,7 @@ export const addSolarAction =  (info: any) => async (dispatch: ThunkDispatch<{},
 // edit 
 
 export const updateSolarAction = (id: Number, info:[]) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
-    
   dispatch({ type: UPDATE_SOLAR_REQUEST });
-
-  
-
   try {
     const { data } = await axios.put(`/api/solars/solar/update/${id}`, info, {
      
