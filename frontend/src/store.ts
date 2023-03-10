@@ -19,10 +19,13 @@ const reducer = combineReducers({
     addSolar:addSolarReducer,
     updateSolar:updateSolarReducer,
     deleteSolar:deleteSolarReducer,
-    getallInverter:getAllInverterReducer,
+
+
+    getAllInverter:getAllInverterReducer,
     addInverter:addInverterReducer,
     updateInverter:updateInverterReducer,
     deleteInverter:deleteInverterReducer,
+
     getAllBatteries:getAllBatteriesReducer,
     addBattery:addBatteryReducer,
     updateBattery:updateBatteryReducer,

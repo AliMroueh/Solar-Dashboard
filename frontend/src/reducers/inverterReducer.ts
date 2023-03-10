@@ -1,8 +1,8 @@
-import { getallInverterAction } from '../actions/inverterActions';
+
 import {
-    GET_ALL_INVERTER_REQUEST,
-    GET_ALL_INVERTER_SUCCESS,
-    GET_ALL_INVERTER_FAILURE,
+    GET_ALL_INVERTERS_REQUEST,
+    GET_ALL_INVERTERS_SUCCESS,
+    GET_ALL_INVERTERS_FAILURE,
 
     ADD_NEW_INVERTER_REQUEST,
     ADD_NEW_INVERTER_SUCCESS,
@@ -17,15 +17,13 @@ import {
     DELETE_INVERTER_FAILURE,
 
 
-    GET_ONE_INVERTER_REQUEST,
-    GET_ONE_INVERTER_SUCCESS,
-    GET_ONE_INVERTER_FAILURE
+  
   } from '../constants/inverterConstants';
   
 
 
 
- interface InverterState  {
+ export interface InverterState  {
     loading: boolean;
     inverters: any[];
     error?: string;
@@ -43,13 +41,13 @@ import {
     action: any
   ): InverterState => {
     switch (action.type) {
-      case GET_ALL_INVERTER_REQUEST:
+      case GET_ALL_INVERTERS_REQUEST:
         return { ...state, loading: true };
   
-      case GET_ALL_INVERTER_SUCCESS:
+      case GET_ALL_INVERTERS_SUCCESS:
         return { ...state, loading: false, inverters: action.payload };
   
-      case GET_ALL_INVERTER_FAILURE:
+      case GET_ALL_INVERTERS_FAILURE:
         return { ...state, loading: false, error: action.payload };
   
       default:
