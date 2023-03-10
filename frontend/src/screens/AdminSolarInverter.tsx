@@ -40,7 +40,7 @@ interface GetInverterStateWithAllInverters extends InverterState {
 
 
 
-export default function AdminSolarPanels(): JSX.Element {
+export default function AdminSolarInverter(): JSX.Element {
   const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
      
   const navigate = useNavigate();

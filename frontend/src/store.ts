@@ -30,6 +30,7 @@ const reducer = combineReducers({
     addBattery:addBatteryReducer,
     updateBattery:updateBatteryReducer,
     deleteBattery:deleteBatteryReducer,
+    
     getAllClients:getAllClientsReducer,
     addClient:addClientReducer,
     updateClient:updateClientReducer,
