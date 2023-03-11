@@ -6,6 +6,7 @@ import AddSolarPanels from "./screens/AddSolarPanels";
 import AdminSolarPanels from "./screens/AdminSolarPanels";
 import AdminSolarBatteries from "./screens/AdminSolarBatteries";
 import AdminSolarInverter from "./screens/AdminSolarInverter";
+import AddSolarInverter from "./screens/AddSolarInverter";
 
 
 function App() {
@@ -18,6 +19,8 @@ function App() {
           <Routes>
             <Route index element={<Home />}/>
             <Route path="/AddSolarPanels" element={<AddSolarPanels />}/>
+            <Route path="/AddSolarInverter" element={<AddSolarInverter />}/>
+
             <Route path="/AdminSolarPanels" element={<AdminSolarPanels/>}/>
             <Route path="/AdminSolarBatteries" element={<AdminSolarBatteries/>}/>
             <Route path="/AdminSolarInverter" element={<AdminSolarInverter/>}/>
