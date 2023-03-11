@@ -2,47 +2,47 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { addSolarAction} from '../actions/solarActions';
-import { SolarState } from '../reducers/solarReducer';
+import { addInverterAction} from '../actions/inverterActions';
+import { InverterState } from '../reducers/inverterReducer';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 
-interface Solar {
+interface Inverter {
   _id: Number;
   type: string;
-  solarImage: File;
+  inverterImage: File;
   strengh:string;
   description:string;
 }
-interface AddallSolarsState {
+interface AddallInvertersState {
    
     loading: boolean;
     error: string | null;
-    Solar: Solar[];
+    inverters: Inverter[];
   }
-  interface AddSolarStateWithAllSolars extends SolarState  {
-    addSolar: AddallSolarsState;
+  interface AddInverterStateWithAllInverters extends InverterState  {
+    addInverter: AddallInvertersState;
       
     }
-export default function AddSolarPanels() : JSX.Element{
+export default function AddSolarInverter() : JSX.Element{
 
     const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
     
     
       const [open, setOpen] = useState(false);
-      const [solarImage, setSolarImage] = useState<FileList | null>(null);
+      const [inverterImage, setInverterImage] = useState<FileList | null>(null);
 
       const [type, setType] = useState('');
       const [strength, setStrength] = useState('');
       const [description, setDescription] = useState('');
     
       
-      const addSolar = useSelector<AddSolarStateWithAllSolars, AddallSolarsState>((state) => state.addSolar);
-      const { loading, error, Solar } = addSolar;
+      const addInverter = useSelector<AddInverterStateWithAllInverters, AddallInvertersState>((state) => state.addInverter);
+      const { loading, error, inverters } = addInverter;
     
       useEffect(() => {
-        console.log(Solar);
-      }, [Solar]);
+        console.log(inverters);
+      }, [inverters]);
     
       const navigate = useNavigate();
     
@@ -50,13 +50,13 @@ export default function AddSolarPanels() : JSX.Element{
         e.preventDefault();
           const formData = new FormData();
     
-          if (solarImage && solarImage.length > 0) {
-            formData.append('solarImage', solarImage[0]);
+          if (inverterImage && inverterImage.length > 0) {
+            formData.append('inverterImage', inverterImage[0]);
           }
           formData.append('type', type);
           formData.append('strength', strength);
           formData.append('description', description);
-          dispatch(addSolarAction(formData));
+          dispatch(addInverterAction(formData));
         
         
       };
@@ -108,7 +108,7 @@ export default function AddSolarPanels() : JSX.Element{
            name='solarImage'
            type="file"
             className='p-2 rounded-lg bg-gray-700 mt-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
-            onChange={e => setSolarImage(e.target.files)}
+            onChange={e => setInverterImage(e.target.files)}
                     />
         </div>
         <div className='flex justify-between text-gray-400 py-2'>

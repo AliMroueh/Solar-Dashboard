@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { addSolarAction} from '../actions/solarActions';
+import { updateSolarAction} from '../actions/solarActions';
 import { SolarState } from '../reducers/solarReducer';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
+import { useParams} from 'react-router-dom';
 
 interface Solar {
   _id: Number;
@@ -14,17 +15,17 @@ interface Solar {
   strengh:string;
   description:string;
 }
-interface AddallSolarsState {
+interface EditallSolarsState {
    
     loading: boolean;
     error: string | null;
     Solar: Solar[];
   }
-  interface AddSolarStateWithAllSolars extends SolarState  {
-    addSolar: AddallSolarsState;
+  interface EditSolarStateWithAllSolars extends SolarState  {
+    editSolar: EditallSolarsState;
       
     }
-export default function AddSolarPanels() : JSX.Element{
+export default function EditSolarPanels() : JSX.Element{
 
     const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
     
@@ -37,16 +38,22 @@ export default function AddSolarPanels() : JSX.Element{
       const [description, setDescription] = useState('');
     
       
-      const addSolar = useSelector<AddSolarStateWithAllSolars, AddallSolarsState>((state) => state.addSolar);
-      const { loading, error, Solar } = addSolar;
+      const editSolar = useSelector<EditSolarStateWithAllSolars, EditallSolarsState>((state) => state.editSolar);
+      const { loading, error, Solar } = editSolar;
     
       useEffect(() => {
         console.log(Solar);
       }, [Solar]);
+      
+
+
+      const params = useParams();
+      const {id} = params;
+      
     
       const navigate = useNavigate();
     
-      const insertHandler = (e: React.FormEvent<HTMLFormElement>) => {
+      const updateHandler = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
           const formData = new FormData();
     
@@ -56,7 +63,7 @@ export default function AddSolarPanels() : JSX.Element{
           formData.append('type', type);
           formData.append('strength', strength);
           formData.append('description', description);
-          dispatch(addSolarAction(formData));
+          // dispatch(updateSolarAction(id,formData));
         
         
       };
@@ -66,7 +73,7 @@ export default function AddSolarPanels() : JSX.Element{
 
 
 <div className='bg-cyan-800  flex flex-col justify-center w-full col-span-10'>
-      <form className='w-11/12 mx-auto rounded-lg bg-cyan-900 p-8 px-8' onSubmit={insertHandler} >
+      <form className='w-11/12 mx-auto rounded-lg bg-cyan-900 p-8 px-8' onSubmit={updateHandler} >
         <h2 className='text-4xl text-white font-bold text-center'>Add Solar Panel</h2>
         <div className='flex flex-col text-gray-400 py-2'>
           <label htmlFor='type'>Type</label>

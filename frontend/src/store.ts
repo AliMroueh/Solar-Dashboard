@@ -15,18 +15,22 @@ const initialState = {
 const reducer = combineReducers({
     // userSignin: userSigninReducer,
     // userRegister: userRegisterReducer,
-    getallSolar:getAllSolarReducer,
+    getAllSolars:getAllSolarReducer,
     addSolar:addSolarReducer,
     updateSolar:updateSolarReducer,
     deleteSolar:deleteSolarReducer,
-    getallInverter:getAllInverterReducer,
+
+
+    getAllInverter:getAllInverterReducer,
     addInverter:addInverterReducer,
     updateInverter:updateInverterReducer,
     deleteInverter:deleteInverterReducer,
+
     getAllBatteries:getAllBatteriesReducer,
     addBattery:addBatteryReducer,
     updateBattery:updateBatteryReducer,
     deleteBattery:deleteBatteryReducer,
+    
     getAllClients:getAllClientsReducer,
     addClient:addClientReducer,
     updateClient:updateClientReducer,

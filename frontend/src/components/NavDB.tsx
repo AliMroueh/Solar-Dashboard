@@ -13,13 +13,13 @@ export const navLinks = [
   {
     id: 1,
     title: "Solar Panel",
-    link:"/solarPanels",
+    link:"/AdminSolarPanels",
     icon: <UserIcon className="nav-icon" />,
   },
   {
     id: 2,
-    title: "Solar Battery",
-    link:"/solarBatteries",
+    title: "Solar Inverter",
+    link:"/AdminSolarInverter",
     icon: <UserIcon className="nav-icon" />,
   },
   {
