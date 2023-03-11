@@ -23,15 +23,17 @@ import {
 
 
 // get solar
-  export const getAllSolarsAction = () => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+  export const getAllSolarAction = () => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     dispatch({ type: GET_ALL_SOLARS_REQUEST });
   
     try {
-      const { data } = await axios.get('/api/solars/get');
+      const { data } = await axios.get('/api/solars/get')
+
       dispatch({
         type: GET_ALL_SOLARS_SUCCESS,
-        payload: data.solars,
+        payload: data,
       });
+
     } catch (error:any) {
       dispatch({
         type: GET_ALL_SOLARS_FAILURE,
