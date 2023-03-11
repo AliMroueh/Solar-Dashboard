@@ -64,16 +64,15 @@ export const addNewBatteryAction = (info: any) => async (dispatch: ThunkDispatch
     }
   };
 
-  export const updateBatteryAction = (id: Number, info:[]) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+  export const updateBatteryAction = (id: string, info:any) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     
     dispatch({ type: UPDATE_BATTERY_REQUEST });
   
-    
   
     try {
-      const { data } = await axios.put(`/api/batteries/battery/update/${id}`, info, {
+      const { data } = await axios.put(`/api/batteries/battery/update/${id}`, info);
        
-      });
+     
   
       dispatch({
         type: UPDATE_BATTERY_SUCCESS,
@@ -94,9 +93,7 @@ export const addNewBatteryAction = (info: any) => async (dispatch: ThunkDispatch
     dispatch({ type: DELETE_BATTERY_REQUEST })
     
     try {
-      const { data } = await axios.delete(`/api/batteries/delete/${id}`, {
-        
-      });
+      const { data } = await axios.delete(`/api/batteries/battery/delete/${id}`);
       dispatch({
         type: DELETE_BATTERY_SUCCESS,
         payload: data,

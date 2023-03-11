@@ -1,4 +1,4 @@
-import { getallSolarAction } from '../actions/solarActions';
+// import { getallSolarAction } from '../actions/solarActions';
 import {
     GET_ALL_SOLAR_REQUEST,
     GET_ALL_SOLAR_SUCCESS,

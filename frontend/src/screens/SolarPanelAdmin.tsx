@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { getallSolarAction,deleteSolarAction } from '../actions/solarActions';
+// import { getallSolarAction,deleteSolarAction } from '../actions/solarActions';
 
 
 export default function SolarPanels() {
@@ -22,7 +22,7 @@ export default function SolarPanels() {
     } = useParams();
   
     useEffect(() => {
-      dispatch(getallSolarAction())
+      // dispatch(getallSolarAction())
   
   
     }, [dispatch, success])
