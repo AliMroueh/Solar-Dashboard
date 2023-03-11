@@ -29,7 +29,7 @@ import {
     error: undefined
   };
   
- export const getAllSolarReducer = (
+ export const getAllSolarsReducer = (
     state: SolarState = initialState,
     action: any
   

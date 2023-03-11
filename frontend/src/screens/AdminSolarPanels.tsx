@@ -37,7 +37,7 @@ import { AnyAction } from 'redux';
     
    
 
-export default function AdminSolarBatteries(): JSX.Element {
+export default function AdminSolarPanles(): JSX.Element {
     const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
      
       const navigate = useNavigate();
@@ -93,7 +93,7 @@ export default function AdminSolarBatteries(): JSX.Element {
           </thead>
           <tbody>
             {solars.map((row, index) => (
-              <tr key={index} className='hover:bg-cyan-100 bg-cyan-300 cursor-pointer duration-300'>
+              <tr className='hover:bg-cyan-100 bg-cyan-300 cursor-pointer duration-300'>
                 <td className='py-3 px-6'>{row._id.toString()}</td>
                 <td className='py-3 px-6'>{row.type}</td>
                 <td className='py-3 px-6'>{row.strength}</td>
