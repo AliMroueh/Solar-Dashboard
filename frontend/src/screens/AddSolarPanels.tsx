@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { addSolarAction} from '../actions/solarActions';
-import { SolarState } from '../reducers/solarReducer';
+// import { SolarState } from '../reducers/solarReducer';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 
@@ -21,10 +21,9 @@ interface AddallSolarsState {
     error: string | null;
     Solar: Solar[];
   }
-  interface AddSolarStateWithAllSolars extends SolarState  {
-    addSolar: AddallSolarsState;
-      
-    }
+  // interface AddSolarStateWithAllSolars extends SolarState  {
+  //   addSolar: AddallSolarsState;
+  //   }
 export default function AddSolarPanels() : JSX.Element{
 
     const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
@@ -38,12 +37,12 @@ export default function AddSolarPanels() : JSX.Element{
       const [description, setDescription] = useState('');
     
       
-      const addSolar = useSelector<AddSolarStateWithAllSolars, AddallSolarsState>((state) => state.addSolar);
-      const { loading, error, Solar } = addSolar;
+      // const addSolar = useSelector<AddSolarStateWithAllSolars, AddallSolarsState>((state) => state.addSolar);
+      // const { loading, error, Solar } = addSolar;
     
-      useEffect(() => {
-        console.log(Solar);
-      }, [Solar]);
+      // useEffect(() => {
+      //   console.log(Solar);
+      // }, [Solar]);
     
       const navigate = useNavigate();
     

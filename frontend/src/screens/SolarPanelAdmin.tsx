@@ -22,7 +22,7 @@ export default function SolarPanels() {
     } = useParams();
   
     useEffect(() => {
-      dispatch(getallSolarAction())
+      // dispatch(getallSolarAction())
   
   
     }, [dispatch, success])
