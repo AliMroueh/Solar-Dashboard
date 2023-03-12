@@ -66,7 +66,7 @@ inverterRouter.put('/inverter/update/:id', upload.single("inverterImage"), async
     const inverter = await Inverter.findById(req.params.id);
 
     if (inverter) {
-        inverter.type = req.body.name || inverter.type;
+        inverter.type = req.body.type || inverter.type;
         inverter.strength = req.body.strength || inverter.strength;
         inverter.description = req.body.description || inverter.description;
 

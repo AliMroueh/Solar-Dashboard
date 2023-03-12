@@ -92,9 +92,7 @@ export const deleteSolarAction = (id: Number) => async (dispatch: ThunkDispatch<
   dispatch({ type: DELETE_SOLAR_REQUEST })
   
   try {
-    const { data } = await axios.delete(`/api/solars/solar/delete/${id}`, {
-      
-    });
+    const { data } = await axios.delete(`/api/solars/solar/delete/${id}`);
     dispatch({
       type: DELETE_SOLAR_SUCCESS,
       payload: data,

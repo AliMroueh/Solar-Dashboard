@@ -63,7 +63,7 @@ solarRouter.put('/solar/update/:id', upload.single("solarImage"), async (req, re
     const solar = await Solar.findById(req.params.id);
 
     if (solar) {
-        solar.type = req.body.name || solar.type;
+        solar.type = req.body.type || solar.type;
         solar.strength = req.body.strength || solar.strength;
         solar.description = req.body.description || solar.description;
 
