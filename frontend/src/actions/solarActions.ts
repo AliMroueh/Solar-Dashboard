@@ -72,10 +72,7 @@ export const addSolarAction =  (info: any) => async (dispatch: ThunkDispatch<{},
 export const updateSolarAction = (id: string, info:any) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
   dispatch({ type: UPDATE_SOLAR_REQUEST });
   try {
-    const { data } = await axios.put(`/api/solars/solar/update/${id}`,info, {
-     
-    });
-
+    const { data } = await axios.put(`/api/solars/solar/update/${id}`,info);
     dispatch({
       type: UPDATE_SOLAR_SUCCESS,
       payload: data,
@@ -95,7 +92,7 @@ export const deleteSolarAction = (id: Number) => async (dispatch: ThunkDispatch<
   dispatch({ type: DELETE_SOLAR_REQUEST })
   
   try {
-    const { data } = await axios.delete(`/api/solars/delete/${id}`, {
+    const { data } = await axios.delete(`/api/solars/solar/delete/${id}`, {
       
     });
     dispatch({
