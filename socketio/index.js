@@ -30,7 +30,7 @@ server.on("connection",(socket) => {
     // }
     data.push({name: data[data.length - 1].name + 1, x: Math.random() * 10, y: Math.random() * 10})
     
-    timeChange = setInterval(() => socket.emit("message", data), 1000)
+    timeChange = setInterval(() => socket.emit("message", data), 5000)
 })
 
 httpServer.listen(port);
