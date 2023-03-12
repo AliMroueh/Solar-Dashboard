@@ -17,7 +17,6 @@ import {
     DELETE_SOLAR_FAILURE,
 
 
-   
   } from '../constants/solarConstants';
   
 

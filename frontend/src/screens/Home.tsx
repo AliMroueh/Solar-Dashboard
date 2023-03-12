@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import socketIOClient from 'socket.io-client';
-import { LineChart, XAxis, Tooltip, CartesianGrid, Line } from 'recharts';
+import { LineChart, XAxis, Tooltip, CartesianGrid, Line, YAxis } from 'recharts';
 
 interface Data {
   name: string;
@@ -21,18 +21,32 @@ const Home: React.FC = () => {
 
   return (
     <div>
-      <LineChart
-        width={1500}
-        height={400}
+      {/* <LineChart
+        width={500}
+        height={700}
         data={data}
         margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
       >
-        <XAxis dataKey="name" />
-        <Tooltip />
+        <CartesianGrid strokeDasharray="3 3" />
         <CartesianGrid stroke="#f5f5f5" />
+        <XAxis dataKey="name" />
+        <YAxis yAxisId="left-axis" />
+        <Tooltip />
+        
         <Line type="monotone" dataKey="x" stroke="#ff7300" yAxisId={0} />
         <Line type="monotone" dataKey="y" stroke="#387908" yAxisId={1} />
-      </LineChart>
+      </LineChart> */}
+
+<LineChart width={1100} height={400} data={data}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis yAxisId="left-axis" />
+          <YAxis yAxisId="right-axis" orientation="right" />
+          <Line yAxisId="left-axis" dataKey="x" 
+           stroke="pink"/>
+          <Line yAxisId="right-axis" dataKey="y" 
+          stroke="blue" />
+        </LineChart>
     </div>
   );
 };
