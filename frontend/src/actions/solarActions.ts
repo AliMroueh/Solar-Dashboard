@@ -69,10 +69,10 @@ export const addSolarAction =  (info: any) => async (dispatch: ThunkDispatch<{},
 
 // edit 
 
-export const updateSolarAction = (id: Number, info:[]) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+export const updateSolarAction = (id: string, info:any) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
   dispatch({ type: UPDATE_SOLAR_REQUEST });
   try {
-    const { data } = await axios.put(`/api/solars/solar/update/${id}`, info, {
+    const { data } = await axios.put(`/api/solars/solar/update/${id}`,info, {
      
     });
 

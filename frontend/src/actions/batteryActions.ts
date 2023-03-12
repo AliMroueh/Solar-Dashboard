@@ -43,9 +43,6 @@ export const getAllBatteriesAction = () => async (dispatch: ThunkDispatch<{}, {}
 
 export const addNewBatteryAction = (info: any) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     dispatch({ type: ADD_NEW_BATTERY_REQUEST });
-  
-    
-    
     try {
       const { data } = await axios.post(`/api/batteries/create`, info);
   
@@ -67,13 +64,8 @@ export const addNewBatteryAction = (info: any) => async (dispatch: ThunkDispatch
   export const updateBatteryAction = (id: string, info:any) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     
     dispatch({ type: UPDATE_BATTERY_REQUEST });
-  
-  
     try {
       const { data } = await axios.put(`/api/batteries/battery/update/${id}`, info);
-       
-     
-  
       dispatch({
         type: UPDATE_BATTERY_SUCCESS,
         payload: data,

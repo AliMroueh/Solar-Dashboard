@@ -1,8 +1,8 @@
 // import { getallSolarAction } from '../actions/solarActions';
 import {
-    GET_ALL_SOLAR_REQUEST,
-    GET_ALL_SOLAR_SUCCESS,
-    GET_ALL_SOLAR_FAILURE,
+    GET_ALL_SOLARS_REQUEST,
+    GET_ALL_SOLARS_SUCCESS,
+    GET_ALL_SOLARS_FAILURE,
 
     ADD_NEW_SOLAR_REQUEST,
     ADD_NEW_SOLAR_SUCCESS,
@@ -17,15 +17,13 @@ import {
     DELETE_SOLAR_FAILURE,
 
 
-    GET_ONE_SOLAR_REQUEST,
-    GET_ONE_SOLAR_SUCCESS,
-    GET_ONE_SOLAR_FAILURE
+   
   } from '../constants/solarConstants';
   
 
 
 
- interface SolarState  {
+ export interface SolarState  {
     loading: boolean;
     solars: any[];
     error?: string;
@@ -43,13 +41,13 @@ import {
     action: any
   ): SolarState => {
     switch (action.type) {
-      case GET_ALL_SOLAR_REQUEST:
+      case GET_ALL_SOLARS_REQUEST:
         return { ...state, loading: true };
   
-      case GET_ALL_SOLAR_SUCCESS:
+      case GET_ALL_SOLARS_SUCCESS:
         return { ...state, loading: false, solars: action.payload };
   
-      case GET_ALL_SOLAR_FAILURE:
+      case GET_ALL_SOLARS_FAILURE:
         return { ...state, loading: false, error: action.payload };
   
       default:

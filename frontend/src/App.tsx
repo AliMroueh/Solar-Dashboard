@@ -2,14 +2,15 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import NavBar from "./components/NavBar";
 import Home from "./screens/Home";
-import SolarPanels from "./screens/AddSolarPanels";
-import SolarBatteries from "./screens/SolarPanelAdmin";
-import AddSolarBatteryPanels from "./screens/AddBatteryPanel";
-import AdminSolarBatteries from "./screens/AdminSolarBatteries";
-import UpdateBatteryPanel from "./screens/UpdateBatteryPanel";
 import AdminSolarClients from "./screens/AdminClients";
-import AddSolarClient from "./screens/AddClient";
 import UpdateSolarClient from "./screens/UpdateClient";
+import AdminSolarPanels from "./screens/AdminSolarPanels";
+import AdminSolarInverter from "./screens/AdminSolarInverter";
+import AddSolarPanels from "./screens/AddSolarPanels";
+import AddSolarInverter from "./screens/AddSolarInverter";
+import EditSolarPanels from "./screens/EditSolarPanels ";
+import UpdateBatteryPanel from "./screens/UpdateBatteryPanel";
+import AdminSolarBatteries from "./screens/AdminSolarBatteries";
 
 function App() {
   return (
@@ -22,6 +23,13 @@ function App() {
             <Route index element={<Home />}/>
             <Route path="/SolarPanels/:id" element={<UpdateSolarClient />}/>
             <Route path="/SolarBatteries" element={<AdminSolarClients />}/>
+            <Route path="/AdminSolarPanels" element={<AdminSolarPanels />}/>
+            <Route path="/AdminSolarInverter" element={<AdminSolarInverter />}/>
+            <Route path="/AdminSolarBatteries" element={<AdminSolarBatteries />}/>
+            <Route path="/AddSolarPanels" element={<AddSolarPanels />}/>
+            <Route path="/AddSolarInverter" element={<AddSolarInverter />}/>
+            <Route path="/EditSolarPanels/:id" element={<EditSolarPanels />}/>
+            <Route path="/UpdateBatteryPanel/:id" element={<UpdateBatteryPanel/>}/>
           </Routes>
         </div> 
       </div>

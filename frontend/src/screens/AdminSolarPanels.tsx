@@ -57,7 +57,7 @@ export default function AdminSolarPanles(): JSX.Element {
       }
     
       const addHandler = () => {
-        navigate('/addSolar');
+        navigate('/AddSolarPanels');
       };
     
       const deleteHandler = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: Number) => {
@@ -93,18 +93,18 @@ export default function AdminSolarPanles(): JSX.Element {
           </thead>
           <tbody>
             {solars.map((row, index) => (
-              <tr className='hover:bg-cyan-100 bg-cyan-300 cursor-pointer duration-300'>
+              <tr key={index} className='hover:bg-cyan-100 bg-cyan-300 cursor-pointer duration-300'>
                 <td className='py-3 px-6'>{row._id.toString()}</td>
                 <td className='py-3 px-6'>{row.type}</td>
                 <td className='py-3 px-6'>{row.strength}</td>
                 <td className='py-3 px-6'>{row.description}</td>
                 <td className='py-3 px-6'>
-                  <Link to={`/edit/${row._id}?type=${row.type}?strength=${row.strength}?description=${row.description}`}>
-                    <button type='button' className='edit'>
+                <Link to={`/EditSolarPanels/${row._id}?type=${row.type}&capacity=${row.strength}&description=${row.description}`}>
+                    <button type='button' className='edit w-auto p-4 bg-blue-600 ml-8 text-slate-200 rounded-md self-end'>
                       Edit
                     </button>
                   </Link>
-                  <button type='button' className='delete' onClick={(event) => deleteHandler(event, row._id)}>
+                  <button type='button' className='delete w-auto p-4 bg-red-600 mr-4 text-slate-200 rounded-md self-end' onClick={(event) => deleteHandler(event, row._id)}>
                     Delete
                   </button>
                 </td>
