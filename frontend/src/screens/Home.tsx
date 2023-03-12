@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import socketIOClient from 'socket.io-client';
-import { LineChart, XAxis, Tooltip, CartesianGrid, Line, YAxis } from 'recharts';
+import { LineChart, XAxis, Tooltip, CartesianGrid, Line, YAxis, AreaChart, Legend, Area } from 'recharts';
 
 interface Data {
   name: string;
@@ -37,7 +37,7 @@ const Home: React.FC = () => {
         <Line type="monotone" dataKey="y" stroke="#387908" yAxisId={1} />
       </LineChart> */}
 
-<LineChart width={1100} height={400} data={data}>
+{/* <LineChart width={1100} height={400} data={data}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis yAxisId="left-axis" />
@@ -46,7 +46,18 @@ const Home: React.FC = () => {
            stroke="pink"/>
           <Line yAxisId="right-axis" dataKey="y" 
           stroke="blue" />
-        </LineChart>
+        </LineChart> */}
+
+     <h1>Simple Area Chart</h1>
+       <AreaChart width={1000} height={300} data={data}>
+        <CartesianGrid></CartesianGrid>
+        <XAxis dataKey="name"></XAxis>
+        <YAxis></YAxis>
+        {/* <Tooltip> </Tooltip> */}
+        <Legend></Legend>
+        <Area type="monotone" dataKey="x" stroke="blue" fill="blue"/>
+        <Area type="monotone" dataKey="y" stroke="green" fill="green"  />
+        </AreaChart>
     </div>
   );
 };
