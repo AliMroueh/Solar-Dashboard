@@ -1,4 +1,5 @@
 
+import { isExportDeclaration } from 'typescript';
 import {
   GET_ALL_CLIENTS_REQUEST,
   GET_ALL_CLIENTS_SUCCESS,
@@ -17,7 +18,7 @@ import {
 
 
 
- interface ClientState  {
+export interface ClientState  {
     loading: boolean;
     clients: any[];
     error?: string;

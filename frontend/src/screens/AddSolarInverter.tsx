@@ -24,7 +24,7 @@ interface AddallInvertersState {
     addInverter: AddallInvertersState;
       
     }
-export default function AddSolarPanels() : JSX.Element{
+export default function AddSolarInverter() : JSX.Element{
 
     const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
     

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {  getAllSolarsAction, deleteSolarAction } from '../actions/solarActions';
+import {  getAllSolarAction, deleteSolarAction } from '../actions/solarActions';
 import { SolarState } from '../reducers/solarReducer';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
@@ -49,7 +49,7 @@ export default function AdminSolarPanles(): JSX.Element {
       const { loading: loadingDel, success, error: errorDel } = deleteBattery;
     
       useEffect(() => {
-        dispatch(getAllSolarsAction());
+        dispatch(getAllSolarAction());
       }, [dispatch, success]);
     
       if (!loading) {

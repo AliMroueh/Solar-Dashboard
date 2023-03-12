@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { Dispatch } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { AnyAction } from 'redux';
 import {
   GET_ALL_CLIENTS_REQUEST,
   GET_ALL_CLIENTS_SUCCESS,
@@ -15,7 +16,7 @@ import {
   DELETE_CLIENT_FAILURE 
 } from '../constants/clientConstants';
 
-export const getAllClientsAction = () => async (dispatch: Dispatch) => {
+export const getAllClientsAction = () => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
   dispatch({ type: GET_ALL_CLIENTS_REQUEST });
 
   try {
@@ -36,15 +37,13 @@ export const getAllClientsAction = () => async (dispatch: Dispatch) => {
   }
 };
 
-export const addClientAction = (info: any) => async (dispatch: Dispatch) => {
+export const addClientAction = (info: any) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     dispatch({ type: ADD_NEW_CLIENT_REQUEST });
   
     
     
     try {
-      const { data } = await axios.post(`/api/clients/create`, info, {
-      
-      });
+      const { data } = await axios.post(`/api/clients/create`, info);
   
       dispatch({
         type: ADD_NEW_CLIENT_SUCCESS,
@@ -61,18 +60,14 @@ export const addClientAction = (info: any) => async (dispatch: Dispatch) => {
     }
   };
 
-  export const updateClientAction = (id: Number, info:[]) => async (
-    dispatch: Dispatch,
-    
-  ) => {
+  export const updateClientAction = (id: string, info:any) => async (  dispatch: ThunkDispatch<{}, {}, AnyAction>, ) => {
+   
     dispatch({ type: UPDATE_CLIENT_REQUEST });
   
     
   
     try {
-      const { data } = await axios.put(`/api/clients/client/update/${id}`, info, {
-       
-      });
+      const { data } = await axios.put(`/api/clients/client/update/${id}`, info);
   
       dispatch({
         type: UPDATE_CLIENT_SUCCESS,
@@ -89,13 +84,11 @@ export const addClientAction = (info: any) => async (dispatch: Dispatch) => {
     }
   };
   
-  export const deleteClientAction = (id: Number) => async (dispatch: Dispatch) => {
+  export const deleteClientAction = (id: Number) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     dispatch({ type: DELETE_CLIENT_REQUEST })
     
     try {
-      const { data } = await axios.delete(`/api/clients/delete/${id}`, {
-        
-      });
+      const { data } = await axios.delete(`/api/clients/client/delete/${id}`);
       dispatch({
         type: DELETE_CLIENT_SUCCESS,
         payload: data,

@@ -2,64 +2,65 @@ import React, { useEffect } from 'react';
     import { useNavigate } from 'react-router-dom';
     import { useDispatch, useSelector } from 'react-redux';
     import { Link } from 'react-router-dom';
-    import { addNewBatteryAction, getAllBatteriesAction, deleteBatteryAction } from '../actions/batteryActions';
-    import { BatteryState } from '../reducers/batteryReducer';
+    import { addClientAction, getAllClientsAction, deleteClientAction } from '../actions/clientActions';
+    import { ClientState } from '../reducers/clientReducer';
     import { ThunkDispatch } from 'redux-thunk';
     import { AnyAction } from 'redux';
 
-    interface Battery {
-      _id: Number;
-      type:string;
-      capacity:string;
-      description:string;
-    }
-    
-    interface GetallBatteriesState {
-   
-      loading: boolean;
-      error: string | null;
-      batteries: Battery[];
-    }
-    interface GetBatteryStateWithAllBatteries extends BatteryState {
-        getAllBatteries: GetallBatteriesState;
+    interface Client {
+        _id: Number;
+        name: string;
+        clientImage: File;
+        email:string;
+        address:string;
+        phone:string;
+      }
+      interface GetallClientsState {
+         
+          loading: boolean;
+          error: string | null;
+          clients: Client[];
+        }
+    interface GetBatteryStateWithAllClients extends ClientState {
+        getAllClients: GetallClientsState;
         
       }
-      interface DeleteBatteryStateWithAllBatteries extends BatteryState {
+      interface DeleteClientStateWithAllClients extends ClientState {
        
-        deleteBattery:DeleteBatteryState;
+        deleteClient:DeleteClientState;
       }
     
-    interface DeleteBatteryState {
+    interface DeleteClientState {
       loading: boolean;
       success: boolean;
       error: string | null;
     }
 
-export default function AdminSolarBatteries(): JSX.Element {
+export default function AdminSolarClients(): JSX.Element {
     const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
      
       const navigate = useNavigate();
-      const getAllBatteries = useSelector<GetBatteryStateWithAllBatteries, GetallBatteriesState>((state) => state.getAllBatteries);
+      const getAllClients = useSelector<GetBatteryStateWithAllClients, GetallClientsState>((state) => state.getAllClients);
     
-      const { loading, error, batteries } = getAllBatteries;
+      const { loading, error, clients } = getAllClients;
     
-      const deleteBattery = useSelector<DeleteBatteryStateWithAllBatteries, DeleteBatteryState>((state) => state.deleteBattery);
-      const { loading: loadingDel, success, error: errorDel } = deleteBattery;
+      const deleteClient = useSelector<DeleteClientStateWithAllClients, DeleteClientState>((state) => state.deleteClient);
+      const { loading: loadingDel, success, error: errorDel } = deleteClient;
     
       useEffect(() => {
-        dispatch(getAllBatteriesAction());
+        dispatch(getAllClientsAction());
       }, [dispatch, success]);
     
       if (!loading) {
-        console.log(batteries);
+        console.log(clients);
       }
     
       const addHandler = () => {
-        navigate('/addbattery');
+        navigate('/addclient');
       };
     
       const deleteHandler = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: Number) => {
-        dispatch(deleteBatteryAction(id));
+        dispatch(deleteClientAction(id));
         event.preventDefault();
       };
     
@@ -111,7 +112,7 @@ export default function AdminSolarBatteries(): JSX.Element {
 
 <div className='bg-cyan-800  flex flex-col justify-start w-full col-span-10 p-5'>
       <button className='w-auto p-4 bg-gray-900 text-slate-200 rounded-md self-end' onClick={() => addHandler()}>
-        Add Panels
+        Add Clients
       </button>
       {loading ? (
         <div>loading...</div>
@@ -120,20 +121,22 @@ export default function AdminSolarBatteries(): JSX.Element {
           <thead className='text-white'>
             <tr>
               <th className='py-3 bg-cyan-800 text-center'>ID</th>
-              <th className='py-3 bg-cyan-800 text-center'>Type</th>
-              <th className='py-3 bg-cyan-800 text-center'>Capacity</th>
-              <th className='py-3 bg-cyan-800 text-center'>Description</th>
+              <th className='py-3 bg-cyan-800 text-center'>Name</th>
+              <th className='py-3 bg-cyan-800 text-center'>Email</th>
+              <th className='py-3 bg-cyan-800 text-center'>Address</th>
+              <th className='py-3 bg-cyan-800 text-center'>Phone</th>
             </tr>
           </thead>
           <tbody>
-            {batteries.map((row, index) => (
+            {clients.map((row, index) => (
               <tr key={index} className='hover:bg-cyan-100 bg-cyan-300 cursor-pointer duration-300'>
                 <td className='py-3 px-6 text-center'>{row._id.toString()}</td>
-                <td className='py-3 px-6 text-center'>{row.type}</td>
-                <td className='py-3 px-6 text-center'>{row.capacity}</td>
-                <td className='py-3 px-6 text-center'>{row.description}</td>
+                <td className='py-3 px-6 text-center'>{row.name}</td>
+                <td className='py-3 px-6 text-center'>{row.email}</td>
+                <td className='py-3 px-6 text-center'>{row.address}</td>
+                <td className='py-3 px-6 text-center'>{row.phone}</td>
                 <td className='py-3 px-6 text-center'>
-                <Link to={`/SolarPanels/${row._id}?type=${row.type}&capacity=${row.capacity}&description=${row.description}`}>
+                <Link to={`/SolarPanels/${row._id}?name=${row.name}&email=${row.email}&address=${row.address}&phone=${row.phone}`}>
                     <button type='button' className='edit w-auto p-4 bg-blue-600 ml-8 text-slate-200 rounded-md self-end'>
                       Edit
                     </button>
