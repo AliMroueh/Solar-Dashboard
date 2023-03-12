@@ -1,14 +1,12 @@
+import express from 'express';
 import Solar from "../models/solarModel.js";
 import shortid from 'shortid';
 import { body, validationResult } from 'express-validator';
-import express from 'express';
-const solarRouter = express.Router();
 import path from "path";
 import multer from 'multer';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
-// import { isAdmin } from '../utils.js';
-// import passport from 'passport';
+const solarRouter = express.Router();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -23,8 +21,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-solarRouter.post("/create",
-    upload.single("solarImage"),
+solarRouter.post("/create", upload.single("solarImage"),
     [
         // Validate the name field
         body('type', 'Please Enter A Type').trim().notEmpty(),
@@ -62,7 +59,7 @@ solarRouter.post("/create",
 );
 
 
-solarRouter.put('/solar/update/:id', upload.single("solarImage"), async (req, res) => {
+solarRouter.put('/update/:id', upload.single("solarImage"), async (req, res) => {
     const solar = await Solar.findById(req.params.id);
 
     if (solar) {
@@ -106,7 +103,7 @@ solarRouter.get('/get', (req, res) => {
 
 
 
-solarRouter.delete('/solar/delete/:id', async (req, res) => {
+solarRouter.delete('/delete/:id', async (req, res) => {
     try {
         const solar = await Solar.findById(req.params.id);
         if (!solar) {

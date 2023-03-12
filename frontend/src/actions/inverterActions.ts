@@ -1,10 +1,12 @@
 import axios from "axios";
-import { Dispatch } from "redux";
+import { AnyAction} from "redux";
+import { ThunkDispatch } from "redux-thunk";
+
 
 import {
-    GET_ALL_INVERTER_REQUEST,
-    GET_ALL_INVERTER_SUCCESS,
-    GET_ALL_INVERTER_FAILURE,
+    GET_ALL_INVERTERS_REQUEST,
+    GET_ALL_INVERTERS_SUCCESS,
+    GET_ALL_INVERTERS_FAILURE,
 
     ADD_NEW_INVERTER_REQUEST,
     ADD_NEW_INVERTER_SUCCESS,
@@ -18,28 +20,26 @@ import {
     DELETE_INVERTER_SUCCESS,
     DELETE_INVERTER_FAILURE,
 
-    GET_ONE_INVERTER_REQUEST,
-    GET_ONE_INVERTER_SUCCESS,
-    GET_ONE_INVERTER_FAILURE
+  
 } from '../constants/inverterConstants'
 
 
 
-export const getallInverterAction = () => async (dispatch: Dispatch) => {
-    dispatch({ type: GET_ALL_INVERTER_REQUEST })
+export const getAllInverterAction = () => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+    dispatch({ type: GET_ALL_INVERTERS_REQUEST })
 
     try {
 
-        const { data } = await axios.get('/api/solar/get')
+        const { data } = await axios.get('/api/inverters/get')
 
         dispatch({
-            type: GET_ALL_INVERTER_SUCCESS,
+            type: GET_ALL_INVERTERS_SUCCESS,
             payload: data,
         })
     } catch (error:any) {
 
         dispatch({
-            type: GET_ALL_INVERTER_FAILURE,
+            type: GET_ALL_INVERTERS_FAILURE,
             payload: error.response && error.response.data.message ? error.response.data.message : error.message
         })
     }
@@ -47,18 +47,13 @@ export const getallInverterAction = () => async (dispatch: Dispatch) => {
 
 //insert category
 
-export const addInverterAction = (info: any) => async (dispatch: Dispatch, getState: () => { userSignin: { userInfo: any; }; }) => {
+export const addInverterAction =  (info: any) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     dispatch({ type: ADD_NEW_INVERTER_REQUEST })
 
-    const { userSignin: { userInfo } } = getState();
+   
     try {
 
-        const { data } = await axios.post(`/api/inverter/create`, info, {
-            headers: { Authorization: `Bearer ${userInfo.token}` },
-            // headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` } 
-        })
-
-
+        const { data } = await axios.post(`/api/inverters/create`, info)
         dispatch({
             type: ADD_NEW_INVERTER_SUCCESS,
             payload: data,
@@ -75,14 +70,14 @@ export const addInverterAction = (info: any) => async (dispatch: Dispatch, getSt
 
 
 // UPDATE 
-export const updateInverterAction = (id: any, info: any) => async (dispatch:Dispatch, getState: () => { userSignin: { userInfo: any; }; }) => {
+export const updateInverterAction  = (id: Number, info:[]) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
 
     dispatch({ type: UPDATE_INVERTER_REQUEST })
-    const { userSignin: { userInfo } } = getState();
+    
     try {
 
 
-        const { data } = await axios.put(`/api/inverters/inverter/update/${id}`, info, { headers: { Authorization: `Bearer ${userInfo.token}` }, })
+        const { data } = await axios.put(`/api/inverters/inverter/update/${id}`, info)
 
 
         dispatch({
@@ -101,13 +96,13 @@ export const updateInverterAction = (id: any, info: any) => async (dispatch:Disp
 
 
 //DELTE
-export const deleteInverterAction = (id: any) => async (dispatch:Dispatch, getState: () => { userSignin: { userInfo: any; }; }) => {
+export const deleteInverterAction = (id: Number) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     dispatch({ type: DELETE_INVERTER_REQUEST })
-    const { userSignin: { userInfo } } = getState();
+   
     try {
 
 
-        const { data } = await axios.delete(`/api/inverters/inverter/delete/${id}`, { headers: { Authorization: `Bearer ${userInfo.token}` }, })
+        const { data } = await axios.delete(`/api/inverters/delete/${id}`)
 
 
 

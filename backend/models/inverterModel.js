@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const inverterSchema = new mongoose.Schema({
     type: { type: String, required: true },
-    strength: { type: String, required: true, unique: true },
+    strength: { type: String, required: true },
     description: { type: String, required: true },
     inverterImage: { type: String },
 },
