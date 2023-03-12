@@ -80,9 +80,9 @@ export default function AddSolarInverter() : JSX.Element{
           />
         </div>
         <div className='flex flex-col text-gray-400 py-2'>
-          <label htmlFor='capacity'>Capacity</label>
+          <label htmlFor='strength'>Strength</label>
           <input
-            id='capacity'
+            id='strength'
             className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
             type='text'
             value={strength}
@@ -105,7 +105,7 @@ export default function AddSolarInverter() : JSX.Element{
           <label htmlFor='file'>Add Image</label>
           <input
             id='file'
-           name='solarImage'
+           name='inverterImage'
            type="file"
             className='p-2 rounded-lg bg-gray-700 mt-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
             onChange={e => setInverterImage(e.target.files)}
