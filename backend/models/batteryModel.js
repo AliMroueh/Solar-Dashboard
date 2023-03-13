@@ -6,10 +6,12 @@ const batterySchema = new mongoose.Schema({
           required: true
      },
 
-     capacity: {
-          type: String,
-          required: true
-     },
+
+    capacity: {type: Number,
+         required: true,
+          },
+
+    
 
      batteryImage: { type: String },
 

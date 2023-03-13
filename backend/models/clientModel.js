@@ -12,7 +12,7 @@ const clientSchema = new mongoose.Schema({
 
     address: {type: String},
     
-    phone: {type: String}
+    phone: {type: Number}
 },
 {
     timestamps: true,
