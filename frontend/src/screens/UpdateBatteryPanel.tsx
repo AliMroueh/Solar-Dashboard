@@ -44,6 +44,7 @@ const Description = new URLSearchParams(location.search).get('description') ?? '
 
   const updateBattery = useSelector<UpdateBatteryStateWithAllBatteries, UpdateallBatteriesState>((state) => state.updateBattery);
   const { loading, error, batteries } = updateBattery;
+  
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 

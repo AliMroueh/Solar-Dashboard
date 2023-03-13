@@ -1,7 +1,11 @@
 import jwt from 'jsonwebtoken';
 import pkg from 'passport-jwt';
+import mg from 'mailgun-js';
 import User from './models/userModel.js';
 const { Strategy:JwtStrategy, ExtractJwt } = pkg;
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export const generateToken = user => {
     // first parameter is the user object
@@ -98,3 +102,10 @@ export const isAdmin =() => (req,res,next) => {
         return res.status(401).json({message: "no access"})
     }
 }
+
+export const mailgun = () =>
+mg({
+  apiKey: process.env.MAILGUN_API_KEY,
+  domain: process.env.MAILGUN_DOMIAN,
+});
+

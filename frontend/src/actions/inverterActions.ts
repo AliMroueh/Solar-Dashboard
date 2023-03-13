@@ -70,7 +70,7 @@ export const addInverterAction =  (info: any) => async (dispatch: ThunkDispatch<
 
 
 // UPDATE 
-export const updateInverterAction  = (id: Number, info:[]) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+export const updateInverterAction  = (id: string, info:any) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
 
     dispatch({ type: UPDATE_INVERTER_REQUEST })
     
@@ -102,7 +102,7 @@ export const deleteInverterAction = (id: Number) => async (dispatch: ThunkDispat
     try {
 
 
-        const { data } = await axios.delete(`/api/inverters/delete/${id}`)
+        const { data } = await axios.delete(`/api/inverters/inverter/delete/${id}`)
 
 
 

@@ -22,7 +22,6 @@ interface AddallSolarsState {
   }
   interface AddSolarStateWithAllSolars extends SolarState  {
     addSolar: AddallSolarsState;
-      
     }
 export default function AddSolarPanels() : JSX.Element{
 
@@ -58,7 +57,6 @@ export default function AddSolarPanels() : JSX.Element{
           formData.append('description', description);
           dispatch(addSolarAction(formData));
         
-        
       };
     
   
@@ -80,9 +78,9 @@ export default function AddSolarPanels() : JSX.Element{
           />
         </div>
         <div className='flex flex-col text-gray-400 py-2'>
-          <label htmlFor='capacity'>Capacity</label>
+          <label htmlFor='strength'>Strength</label>
           <input
-            id='capacity'
+            id='strength'
             className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
             type='text'
             value={strength}

@@ -24,8 +24,8 @@ export const navLinks = [
   },
   {
     id: 3,
-    title: "Solar Inverters",
-    link:"/solarInverters",
+    title: "Solar Batteries",
+    link:"/AdminSolarBatteries",
     icon: <UserIcon className="nav-icon" />,
   },  
   {
