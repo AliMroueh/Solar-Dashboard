@@ -29,10 +29,15 @@ const storage = multer.diskStorage({
   clientRouter.post("/create", upload.single("clientImage"),
   [
     // Validate the fields
-    body('name', 'Please Enter A Name').trim().notEmpty(),
-    body('email', 'Please Enter An Email').trim().notEmpty(),
-    body('address', 'Please Enter The Address').trim().notEmpty(),
-    body('phone', 'Please Enter The Phone Number').trim().notEmpty(),
+
+    body('name', 'Please enter a name').trim().notEmpty().isString().isLength({ max: 255 })
+      .withMessage('Name must be no more than 255 characters'),
+    body('email', 'Please enter an email').trim().notEmpty().isEmail(),
+    body('address', 'Please enter an address').trim().notEmpty().isString().isLength({ max: 500 })
+      .withMessage('Address must be no more than 500 characters'),
+    body('phone', 'Please enter a phone number').trim().notEmpty().isNumeric().isLength({ max: 20 })
+      .withMessage('Phone number must be no more than 20 digits'),
+
   ],
   async (req, res, next) => {
 

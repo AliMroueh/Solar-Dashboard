@@ -25,11 +25,12 @@ batteryRouter.post("/create", upload.single("batteryImage"),
 
   [
     // Validate the fields
-    body('type', 'Please Enter A Type').trim().notEmpty(),
-    body('capacity', 'Please Enter The Capacity').trim().notEmpty(),
-    body('description', 'Please Enter The Description').trim().notEmpty(),
-
-
+    body('type', 'Please enter a type').trim().notEmpty().isString().isLength({ max: 25 })
+    .withMessage('Type must be a string with maximum length of 25 characters'),
+    body('capacity', 'Please enter a capacity').trim().notEmpty().isNumeric().isLength({ min: 3, max: 3 })
+    .withMessage('Capacity must be a three digit number'),
+    body('description', 'Please enter a description').trim().notEmpty().isString().isLength({ max: 255 })
+    .withMessage('Description must be a string with maximum length of 255 characters'),
   ],
   (req, res) => {
     // Check for validation errors
@@ -60,6 +61,7 @@ batteryRouter.post("/create", upload.single("batteryImage"),
     });
   }
 );
+
 
 
 

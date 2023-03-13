@@ -4,7 +4,7 @@ const batterySchema = new mongoose.Schema({
     type: {type: String,
          required: true},
 
-    capacity: {type: String,
+    capacity: {type: Number,
          required: true,
           unique: true},
 
