@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import socketIOClient from 'socket.io-client';
 import { LineChart, XAxis, Tooltip, CartesianGrid, Line, YAxis, AreaChart, Legend, Area } from 'recharts';
+import { useDispatch } from 'react-redux';
+import { sendEmailAction } from '../actions/emailActions';
+import { ThunkDispatch } from 'redux-thunk';
+import { AnyAction } from 'redux';
+import { useSelector } from 'react-redux';
+import { emailState } from '../reducers/emailReducer';
+import MessageBox from '../components/MessageBox';
+import LoadingBox from '../components/LoadingBox';
 
 interface Data {
   name: string;
@@ -9,7 +17,26 @@ interface Data {
 }
 
 const Home: React.FC = () => {
+
+  interface EmailState {
+    loading: boolean;
+    error: string | null;
+    email: string;
+  }
+  interface getEmail extends emailState  {
+    sendEmail: EmailState;
+    }
+
   const [data, setData] = useState<Data[]>([]);
+
+  const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
+
+  const sendEmail = useSelector<getEmail, EmailState>((state) => state.sendEmail);
+  const { loading, error, email } = sendEmail;
+
+  useEffect(() =>{
+    dispatch(sendEmailAction())
+  },[dispatch])
 
   useEffect(() => {
     const socket = socketIOClient('http://127.0.0.1:4001/');
@@ -21,6 +48,9 @@ const Home: React.FC = () => {
 
   return (
     <div>
+      {loading && <LoadingBox></LoadingBox>}
+      {error && <MessageBox>{error}</MessageBox>}
+
       {/* <LineChart
         width={500}
         height={700}

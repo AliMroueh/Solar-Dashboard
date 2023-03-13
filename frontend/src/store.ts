@@ -5,6 +5,7 @@ import { addInverterReducer, deleteInverterReducer, getAllInverterReducer, updat
 import { getAllBatteriesReducer,addBatteryReducer,updateBatteryReducer,deleteBatteryReducer } from "./reducers/batteryReducer";
 import { getAllClientsReducer,addClientReducer,updateClientReducer,deleteClientReducer } from "./reducers/clientReducer";
 import { addSolarReducer, deleteSolarReducer, getAllSolarReducer, updateSolarReducer } from "./reducers/solarReducer";
+import { sendEmailReducer } from "./reducers/emailReducer";
 const initialState = {
     // userSignin: {
     //     userInfo: localStorage.getItem("userInfo")
@@ -34,7 +35,9 @@ const reducer = combineReducers({
     getAllClients:getAllClientsReducer,
     addClient:addClientReducer,
     updateClient:updateClientReducer,
-    deleteClient:deleteClientReducer
+    deleteClient:deleteClientReducer,
+
+    sendEmail: sendEmailReducer
 
 
 

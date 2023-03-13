@@ -1,4 +1,4 @@
-import { getAllBatteriesAction } from '../actions/batteryActions';
+
 import {
     GET_ALL_BATTERIES_REQUEST,
     GET_ALL_BATTERIES_SUCCESS,
