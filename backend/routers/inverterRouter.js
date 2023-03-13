@@ -27,9 +27,15 @@ inverterRouter.post("/create",
     upload.single("inverterImage"),
     [
         // Validate the name field
-        body('type', 'Please Enter A Type').trim().notEmpty(),
-        body('strength', 'Please Enter The strength').trim().notEmpty(),
-        body('description', 'Please Enter The Description').trim().notEmpty(),
+        // body('type', 'Please Enter A Type').trim().notEmpty(),
+        // body('strength', 'Please Enter The strength').trim().notEmpty(),
+        // body('description', 'Please Enter The Description').trim().notEmpty(),
+        body('type', 'Please enter a type').trim().notEmpty().isString().isLength({ max: 25 })
+            .withMessage('Type must be a string with maximum length of 25 characters'),
+        body('strength', 'Please enter a strength').trim().notEmpty().isNumeric().isLength({ min: 3, max: 3 })
+            .withMessage('strength must be a three digit number'),
+        body('description', 'Please enter a description').trim().notEmpty().isString().isLength({ max: 255 })
+            .withMessage('Description must be a string with maximum length of 255 characters'),
     ],
     (req, res) => {
         // Check for validation errors

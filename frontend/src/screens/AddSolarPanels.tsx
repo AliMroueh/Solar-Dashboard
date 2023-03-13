@@ -6,6 +6,7 @@ import { addSolarAction} from '../actions/solarActions';
 import { SolarState } from '../reducers/solarReducer';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
+import { useForm } from 'react-hook-form';
 
 interface Solar {
   _id: Number;
@@ -24,7 +25,7 @@ interface AddallSolarsState {
     addSolar: AddallSolarsState;
     }
 export default function AddSolarPanels() : JSX.Element{
-
+  const { register, handleSubmit, formState: { errors } } = useForm();
     const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
     
     
@@ -73,20 +74,27 @@ export default function AddSolarPanels() : JSX.Element{
             className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
             type='text'
            value={type}
-            onChange={(e) => setType(e.target.value)}
-            required
-          />
+            // onChange={(e) => setType(e.target.value)}
+            maxLength={25}
+              required
+              {...register('type', { required: true, maxLength: 25 })}
+            />
+            {errors.type && <p>This field is required and cannot exceed 25 characters.</p>}
         </div>
         <div className='flex flex-col text-gray-400 py-2'>
           <label htmlFor='strength'>Strength</label>
           <input
             id='strength'
             className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
-            type='text'
+            type='number'
             value={strength}
-            onChange={(e) => setStrength(e.target.value)}
-            required
-          />
+            // onChange={(e) => setStrength(e.target.value)}
+            min={100}
+              max={999}
+              required
+              {...register('capacity', { required: true, min: 100, max: 999 })}
+            />
+            {errors.capacity && <p>This field is required and must be between 100 and 999.</p>}
         </div>
         <div className='flex flex-col text-gray-400 py-2'>
           <label htmlFor='Description'>Description</label>
@@ -95,19 +103,24 @@ export default function AddSolarPanels() : JSX.Element{
             className='p-2 rounded-lg bg-gray-700 mt-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
             type='text'
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            // onChange={(e) => setDescription(e.target.value)}
+            maxLength={255}
             required
+            {...register('description', { required: true, maxLength: 255 })}
           />
+          {errors.description && <p>This field is required and cannot exceed 255 characters.</p>}
         </div>
         <div className='flex flex-col text-gray-400 py-2'>
           <label htmlFor='file'>Add Image</label>
           <input
             id='file'
-           name='solarImage'
+          //  name='solarImage'
            type="file"
             className='p-2 rounded-lg bg-gray-700 mt-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
-            onChange={e => setSolarImage(e.target.files)}
-                    />
+            // onChange={e => setSolarImage(e.target.files)}
+            {...register('solarImage', { required: true })}
+            />
+            {errors.solarImage && <p>This field is required.</p>}
         </div>
         <div className='flex justify-between text-gray-400 py-2'>
           Already have an account?{' '}

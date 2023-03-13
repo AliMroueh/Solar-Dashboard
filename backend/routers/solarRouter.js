@@ -29,8 +29,8 @@ solarRouter.post("/create", upload.single("solarImage"),
         // body('description', 'Please Enter The Description').trim().notEmpty(),
         body('type', 'Please enter a type').trim().notEmpty().isString().isLength({ max: 25 })
             .withMessage('Type must be a string with maximum length of 25 characters'),
-        body('capacity', 'Please enter a capacity').trim().notEmpty().isNumeric().isLength({ min: 3, max: 3 })
-            .withMessage('Capacity must be a three digit number'),
+        body('strength', 'Please enter a strength').trim().notEmpty().isNumeric().isLength({ min: 3, max: 3 })
+            .withMessage('strength must be a three digit number'),
         body('description', 'Please enter a description').trim().notEmpty().isString().isLength({ max: 255 })
             .withMessage('Description must be a string with maximum length of 255 characters'),
     ],
