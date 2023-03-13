@@ -37,7 +37,7 @@ try{
   .send(
     {
       from: 'John Doe <john@mg.yourdomain.com>',
-      to: `ali Mroueh <alimroueh822@gmail.com>`,
+      to: `ali Mroueh <alimroueh9999@gmail.com>`,
       subject: `high consumption`,
       html: '<p>5afef 2estehlak ya man</p>',
     },
