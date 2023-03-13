@@ -55,7 +55,7 @@ export default function AdminSolarBatteries(): JSX.Element {
       }
     
       const addHandler = () => {
-        navigate('/addbattery');
+        navigate('/AddBatteryPanel');
       };
     
       const deleteHandler = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: Number) => {

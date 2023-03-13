@@ -24,14 +24,14 @@ import {
 export interface BatteryState  {
     loading: boolean;
     batteries: any[];
-    error?: string;
+    error?: any[];
     success?: boolean;
   }
   
   const initialState: BatteryState = {
     loading: false,
     batteries: [],
-    error: undefined
+    error: []
   };
   
  export const getAllBatteriesReducer = (

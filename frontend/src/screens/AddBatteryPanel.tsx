@@ -8,18 +8,20 @@ import { BatteryState } from '../reducers/batteryReducer';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import { useForm } from 'react-hook-form';
+import LoadingBox from '../components/LoadingBox';
+import MessageBox from '../components/MessageBox';
 
 interface Battery {
   _id: Number;
   type: string;
   batteryImage: File;
-  capacity:string;
+  capacity:Number;
   description:string;
 }
 interface AddallBatteriesState {
    
     loading: boolean;
-    error: string | null;
+    error:  any[] | null;
     batteries: Battery[];
   }
   interface AddBatteryStateWithAllBatteries extends BatteryState  {
@@ -35,7 +37,7 @@ export default function AddSolarBatteryPanels() : JSX.Element{
       const [batteryImage, setBatteryImage] = useState<FileList | null>(null);
 
       const [type, setType] = useState('');
-      const [capacity, setCapacity] = useState('');
+      const [capacity, setCapacity] = useState<number>(3);
       const [description, setDescription] = useState('');
     
       
@@ -47,6 +49,11 @@ export default function AddSolarBatteryPanels() : JSX.Element{
       }, [batteries]);
     
       const navigate = useNavigate();
+
+       function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const newValue = parseInt(e.target.value);
+    setCapacity(newValue);
+  }
     
       const insertHandler = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -56,7 +63,7 @@ export default function AddSolarBatteryPanels() : JSX.Element{
             formData.append('batteryImage', batteryImage[0]);
           }
           formData.append('type', type);
-          formData.append('capacity', capacity);
+          formData.append('capacity', capacity.toString());
           formData.append('description', description);
          
          
@@ -64,7 +71,7 @@ export default function AddSolarBatteryPanels() : JSX.Element{
 
 
           dispatch(addNewBatteryAction(formData));
-        //   navigate('/batteries');
+          // navigate('/AdminSolarBatteries');
         
       };
     
@@ -78,10 +85,26 @@ export default function AddSolarBatteryPanels() : JSX.Element{
     //     console.log('hello')
     // }
   
-
+    // handleSubmit((data) => console.log(data))
+    if(!loading){
+      console.log(error)
+    }
     return (
       <div className='bg-cyan-800  flex flex-col justify-center w-full col-span-10'>
-        <form className='w-11/12 mx-auto rounded-lg bg-cyan-900 p-8 px-8' onSubmit={handleSubmit((data) => console.log(data))}>
+
+      {loading && <LoadingBox></LoadingBox>}
+      {error && (
+        <div>
+          {error.map((err) => (
+            <MessageBox key={err.msg} variant="danger">
+              {err.msg}
+            </MessageBox>
+          ))}
+        </div>
+      )}
+
+ 
+        <form className='w-11/12 mx-auto rounded-lg bg-cyan-900 p-8 px-8' onSubmit={insertHandler}>
           <h2 className='text-4xl text-white font-bold text-center'>Add Battery</h2>
           <div className='flex flex-col text-gray-400 py-2'>
             <label htmlFor='type'>Type</label>
@@ -89,11 +112,11 @@ export default function AddSolarBatteryPanels() : JSX.Element{
               id='type'
               className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
               type='text'
-              maxLength={25}
-              required
-              {...register('type', { required: true, maxLength: 25 })}
+              onChange={(e) => setType(e.target.value)}
+              // required
+              // {...register('type', { required: true, validate: value => value.length <= 25 })}
             />
-            {errors.type && <p>This field is required and cannot exceed 25 characters.</p>}
+            {/* {errors.type && <p>This field is required and cannot exceed 25 characters.</p>} */}
           </div>
           <div className='flex flex-col text-gray-400 py-2'>
             <label htmlFor='capacity'>Capacity</label>
@@ -101,12 +124,14 @@ export default function AddSolarBatteryPanels() : JSX.Element{
               id='capacity'
               className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
               type='number'
-              min={100}
-              max={999}
-              required
-              {...register('capacity', { required: true, min: 100, max: 999 })}
+              // value= {capacity.toString()}
+              onChange={handleInputChange}
+              // min={100}
+              // max={999}
+              // required
+              // {...register('capacity', { required: true, min: 100, max: 999 })}
             />
-            {errors.capacity && <p>This field is required and must be between 100 and 999.</p>}
+            {/* {errors.capacity && <p>This field is required and must be between 100 and 999.</p>} */}
           </div>
           <div className='flex flex-col text-gray-400 py-2'>
             <label htmlFor='Description'>Description</label>
@@ -114,11 +139,12 @@ export default function AddSolarBatteryPanels() : JSX.Element{
               id='Description'
               className='p-2 rounded-lg bg-gray-700 mt-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
               type='text'
-              maxLength={255}
-              required
-              {...register('description', { required: true, maxLength: 255 })}
+              onChange={(e) => setDescription(e.target.value)}
+              // maxLength={255}
+              // required
+              // {...register('description', { required: true, maxLength: 255 })}
             />
-            {errors.description && <p>This field is required and cannot exceed 255 characters.</p>}
+            {/* {errors.description && <p>This field is required and cannot exceed 255 characters.</p>} */}
           </div>
           <div className='flex flex-col text-gray-400 py-2'>
             <label htmlFor='file'>Add Image</label>
@@ -126,10 +152,11 @@ export default function AddSolarBatteryPanels() : JSX.Element{
               id='file'
               className='p-2 rounded-lg bg-gray-700 mt-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
               type='file'
-              required
-              {...register('batteryImage', { required: true })}
+              // required
+              onChange={e => setBatteryImage(e.target.files)}
+              // {...register('batteryImage', { required: true })}
             />
-            {errors.batteryImage && <p>This field is required.</p>}
+            {/* {errors.batteryImage && <p>This field is required.</p>} */}
           </div>
           <div className='flex justify-between text-gray-400 py-2'>
             {/* <Link className='text-teal-500 hover:font-semibold' to={`/signin`}>Sign-In</Link> */}
@@ -138,6 +165,7 @@ export default function AddSolarBatteryPanels() : JSX.Element{
             Add Battery
           </button>
         </form>
+
       </div>
     );
     }    
