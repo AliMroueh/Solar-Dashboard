@@ -29,6 +29,7 @@ function App() {
             <Route path="/AdminSolarInverter" element={<AdminSolarInverter />}/>
             <Route path="/AdminSolarBatteries" element={<AdminSolarBatteries />}/>
             <Route path="/AddSolarPanels" element={<AddSolarPanels />}/>
+            <Route path="/AddBatteryPanel" element={<AddSolarBatteryPanels />}/>
             <Route path="/AddSolarInverter" element={<AddSolarInverter />}/>
             <Route path="/AddBatteryPanel" element={<AddSolarBatteryPanels />}/>
             <Route path="/EditSolarPanels/:id" element={<EditSolarPanels />}/>
