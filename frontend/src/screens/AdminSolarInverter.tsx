@@ -13,6 +13,7 @@ interface Inverter {
   type:string;
   strength:string;
   description:string;
+  inverterImage:string;
 }
 
 interface GetallInvertersState {
@@ -20,6 +21,7 @@ interface GetallInvertersState {
   loading: boolean;
   error: string | null;
   inverters: Inverter[];
+
 }
 
 interface DeleteInverterState {
@@ -85,6 +87,7 @@ export default function AdminSolarInverter(): JSX.Element {
               <th className='py-3 bg-cyan-800'>Type</th>
               <th className='py-3 bg-cyan-800'>strength</th>
               <th className='py-3 bg-cyan-800'>Description</th>
+              <th className='py-3 bg-cyan-800 text-center'>Image</th>
               <th className='py-3 bg-cyan-800'>Option</th>
           </tr>
           </thead>
@@ -95,10 +98,9 @@ export default function AdminSolarInverter(): JSX.Element {
                 <td className='py-3 px-6'>{row.type}</td>
                 <td className='py-3 px-6'>{row.strength}</td>
                 <td className='py-3 px-6'>{row.description}</td>
-                
-                
+                <td className='py-3 px-6 text-center'><img src={row.inverterImage} alt="solar" /> </td> 
               <td>
-              <Link to={`/UpdateInverterPanel/${row._id}?type=${row.type}&strength=${row.strength}&description=${row.description}`}>
+              <Link to={`/UpdateInverterPanel/${row._id}?type=${row.type}&strength=${row.strength}&description=${row.description}&inverterImage=${row.inverterImage}`}>
                     <button type='button' className='edit w-auto p-4 bg-blue-600 ml-8 text-slate-200 rounded-md self-end'>
                       Edit
                     </button>

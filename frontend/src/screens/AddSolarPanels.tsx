@@ -27,7 +27,7 @@ interface AddallSolarsState {
     addSolar: AddallSolarsState;
     }
 export default function AddSolarPanels() : JSX.Element{
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit,  formState: { errors } } = useForm(({ mode: 'onChange' }));
     const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
     
     
@@ -53,18 +53,27 @@ export default function AddSolarPanels() : JSX.Element{
         setStrength(newValue);
       }
 
-      const insertHandler = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+      const insertHandler = (data: any) =>  {
+      
+        // e.preventDefault();
           const formData = new FormData();
     
-          if (solarImage && solarImage.length > 0) {
-            formData.append('solarImage', solarImage[0]);
+          if (data.solarImage && data.solarImage.length > 0) {
+            formData.append('solarImage', data.solarImage[0]);
           }
-          formData.append('type', type);
-          formData.append('strength', strength.toString());
-          formData.append('description', description);
+          formData.append('type', data.type);
+          formData.append('strength', data.strength.toString());
+          formData.append('description', data.description);
+      
+
           dispatch(addSolarAction(formData));
-        
+          console.log(data);
+  
+
+          navigate('/AdminSolarPanels');
+          setType('');
+          setStrength(0);
+          setDescription('');
       };
     
   
@@ -85,7 +94,7 @@ export default function AddSolarPanels() : JSX.Element{
           ))}
         </div>
       )}
-      <form className='w-11/12 mx-auto rounded-lg bg-cyan-900 p-8 px-8' onSubmit={insertHandler} >
+      <form className='w-11/12 mx-auto rounded-lg bg-cyan-900 p-8 px-8' onSubmit={handleSubmit(insertHandler)} >
         <h2 className='text-4xl text-white font-bold text-center'>Add Solar Panel</h2>
         <div className='flex flex-col text-gray-400 py-2'>
           <label htmlFor='type'>Type</label>
@@ -93,13 +102,10 @@ export default function AddSolarPanels() : JSX.Element{
             id='type'
             className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
             type='text'
-           value={type}
-             onChange={(e) => setType(e.target.value)}
-            // maxLength={25}
-            //   required
-            //   {...register('type', { required: true, maxLength: 25 })}
+            required
+              {...register('type', { required: true,  maxLength: 25 })}
             />
-            {/* {errors.type && <p>This field is required and cannot exceed 25 characters.</p>} */}
+            {errors.type && (<p className="text-red-500">This field is required and cannot exceed 25 characters.</p>)}
         </div>
         <div className='flex flex-col text-gray-400 py-2'>
           <label htmlFor='strength'>Strength</label>
@@ -107,15 +113,12 @@ export default function AddSolarPanels() : JSX.Element{
             id='strength'
             className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
             type='number'
-            value={strength}
-            onChange={handleInputChange}
-            //onChange={(e) => setStrength(e.target.value)}
-            // min={100}
-            //   max={999}
-            //   required
-            //   {...register('capacity', { required: true, min: 100, max: 999 })}
+            min={100}
+            max={999}
+            required
+            {...register('strength', { required: true, min: 100, max: 999 })}
             />
-            {/* {errors.capacity && <p>This field is required and must be between 100 and 999.</p>} */}
+           {errors.strength &&( <p className="text-red-500">This field is required and must be between 100 and 999.</p>)}
         </div>
         <div className='flex flex-col text-gray-400 py-2'>
           <label htmlFor='Description'>Description</label>
@@ -123,25 +126,21 @@ export default function AddSolarPanels() : JSX.Element{
             id='Description'
             className='p-2 rounded-lg bg-gray-700 mt-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
             type='text'
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            // maxLength={255}
-            // required
-            // {...register('description', { required: true, maxLength: 255 })}
+            maxLength={255}
+            required
+            {...register('description', { required: true, maxLength: 255 })}
           />
-          {/* {errors.description && <p>This field is required and cannot exceed 255 characters.</p>} */}
+         {errors.description && ( <p className="text-red-500">This field is required and cannot exceed 255 characters.</p>)}
         </div>
         <div className='flex flex-col text-gray-400 py-2'>
           <label htmlFor='file'>Add Image</label>
           <input
             id='file'
-          //  name='solarImage'
            type="file"
             className='p-2 rounded-lg bg-gray-700 mt-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
-             onChange={e => setSolarImage(e.target.files)}
-            // {...register('solarImage', { required: true })}
+            {...register('solarImage', { required: true })}
             />
-            {/* {errors.solarImage && <p>This field is required.</p>} */}
+          {errors.solarImage && ( <p className="text-red-500">This field is required.</p>)}
         </div>
         <div className='flex justify-between text-gray-400 py-2'>
           Already have an account?{' '}
