@@ -25,14 +25,14 @@ import {
  export interface SolarState  {
     loading: boolean;
     solars: any[];
-    error?: string;
+    error?: any[];
     success?: boolean;
   }
   
   const initialState: SolarState = {
     loading: false,
     solars: [],
-    error: undefined
+    error: []
   };
   
  export const getAllSolarReducer = (
