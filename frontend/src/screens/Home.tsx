@@ -87,6 +87,8 @@ const Home: React.FC = () => {
         <Legend></Legend>
         <Area type="monotone" dataKey="x" stroke="blue" fill="blue"/>
         <Area type="monotone" dataKey="y" stroke="green" fill="green"  />
+        <Area type="monotone" dataKey="z" stroke="red" fill="yellow"  />
+
         </AreaChart>
     </div>
   );
