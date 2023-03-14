@@ -47,7 +47,7 @@ const Home: React.FC = () => {
   }, [data]);
 
   return (
-    <div>
+    <div className='col-span-5 flex flex-col justify-center items-center'>
       {loading && <LoadingBox></LoadingBox>}
       {error && <MessageBox>{error}</MessageBox>}
 
@@ -79,6 +79,7 @@ const Home: React.FC = () => {
         </LineChart> */}
 
      <h1>Simple Area Chart</h1>
+     <div className=' w-full overflow-x-auto '>
        <AreaChart width={1000} height={300} data={data}>
         <CartesianGrid></CartesianGrid>
         <XAxis dataKey="name"></XAxis>
@@ -90,6 +91,7 @@ const Home: React.FC = () => {
         <Area type="monotone" dataKey="z" stroke="red" fill="yellow"  />
 
         </AreaChart>
+        </div>
     </div>
   );
 };
