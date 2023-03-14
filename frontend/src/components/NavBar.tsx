@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom'
 
 function NavBar() {
   return (
-    <nav className="col-span-2 border-r border-gray-200 min-h-[90vh] w-[80px] xl:w-[250px] pt-8 px-1 flex flex-col items-start justify-between">
+    <nav className="col-span-2 border-r border-gray-200 min-h-[90vh] pt-8 px-1 flex flex-col items-start justify-between">
       <div className="space-y-8 w-full ">
         {navLinks.slice(0, 5).map((link) => (
           <NavItem link={link} key={link.id} />
