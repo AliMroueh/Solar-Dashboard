@@ -53,9 +53,7 @@ export const addClientAction = (info: any) => async (dispatch: ThunkDispatch<{},
       dispatch({
         type: ADD_NEW_CLIENT_FAILURE,
         payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
+        error.response.data.errors 
       });
     }
   };

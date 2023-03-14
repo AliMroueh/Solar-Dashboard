@@ -61,7 +61,7 @@ export const addSolarAction =  (info: any) => async (dispatch: ThunkDispatch<{},
 
         dispatch({
             type: ADD_NEW_SOLAR_FAILURE,
-            payload: error.response && error.response.data.message ? error.response.data.message : error.message
+            payload:  error.response.data.errors 
         })
     }
 }
