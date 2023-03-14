@@ -33,7 +33,7 @@ const storage = multer.diskStorage({
     body('name', 'Please enter a name').trim().notEmpty().isString().isLength({ max: 255 })
       .withMessage('Name must be no more than 255 characters'),
     body('email', 'Please enter an email').trim().notEmpty().isEmail(),
-    body('address', 'Please enter an address').trim().notEmpty().isString().isLength({ max: 500 })
+    body('address', 'Please enter an address').trim().notEmpty().isString().isLength({ max: 255 })
       .withMessage('Address must be no more than 500 characters'),
     body('phone', 'Please enter a phone number').trim().notEmpty().isNumeric().isLength({ max: 20 })
       .withMessage('Phone number must be no more than 20 digits'),
@@ -149,13 +149,10 @@ clientRouter.delete('/client/delete/:id', async (req, res) => {
     }
 
     // Remove the client image from the server file system
+    if (client.clientImage) {
     const imagePath = path.join(path.dirname(__dirname), "uploads/") + client.clientImage.split('/').pop();
-    fs.unlinkSync(imagePath, (err) => {
-      if (err) {
-        console.error(err);
-      }
-    });
-
+    fs.unlinkSync(imagePath);
+    }
     await Client.findByIdAndRemove(req.params.id);
     res.status(201).json({ message: 'Client removed' });
   } catch (err) {

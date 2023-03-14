@@ -4,6 +4,7 @@ import NavBar from "./components/NavBar";
 import Home from "./screens/Home";
 import AdminSolarClients from "./screens/AdminClients";
 import UpdateSolarClient from "./screens/UpdateClient";
+import AddSolarClient from "./screens/AddClient";
 import AdminSolarPanels from "./screens/AdminSolarPanels";
 import AdminSolarInverter from "./screens/AdminSolarInverter";
 import AddSolarPanels from "./screens/AddSolarPanels";
@@ -22,12 +23,12 @@ function App() {
       <NavBar />
         <div className='grid grid-cols-1 xl:grid-cols-5 col-span-10 w-full'> 
           <Routes>
-            <Route index element={<Home />}/>
-            <Route path="/SolarPanels/:id" element={<UpdateSolarClient />}/>
-            <Route path="/SolarBatteries" element={<AdminSolarClients />}/>
+            <Route index element={<Home />}/>  
+            <Route path="/AdminClients" element={<AdminSolarClients />}/>
             <Route path="/AdminSolarPanels" element={<AdminSolarPanels />}/>
             <Route path="/AdminSolarInverter" element={<AdminSolarInverter />}/>
             <Route path="/AdminSolarBatteries" element={<AdminSolarBatteries />}/>
+            <Route path="/AddClient" element={<AddSolarClient />}/>
             <Route path="/AddSolarPanels" element={<AddSolarPanels />}/>
             <Route path="/AddBatteryPanel" element={<AddSolarBatteryPanels />}/>
             <Route path="/AddSolarInverter" element={<AddSolarInverter />}/>
@@ -35,6 +36,7 @@ function App() {
             <Route path="/EditSolarPanels/:id" element={<EditSolarPanels />}/>
             <Route path="/UpdateBatteryPanel/:id" element={<UpdateBatteryPanel/>}/>
             <Route path="/UpdateInverterPanel/:id" element={<UpdateInverterPanel/>}/>
+            <Route path="/UpdateClient/:id" element={<UpdateSolarClient />}/>
 
           </Routes>
         </div> 

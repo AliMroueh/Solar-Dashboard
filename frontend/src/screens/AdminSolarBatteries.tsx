@@ -12,6 +12,7 @@ import React, { useEffect } from 'react';
       type:string;
       capacity:string;
       description:string;
+      batteryImage:string;
     }
     
     interface GetallBatteriesState {
@@ -123,6 +124,7 @@ export default function AdminSolarBatteries(): JSX.Element {
               <th className='py-3 bg-cyan-800 text-center'>Type</th>
               <th className='py-3 bg-cyan-800 text-center'>Capacity</th>
               <th className='py-3 bg-cyan-800 text-center'>Description</th>
+              <th className='py-3 bg-cyan-800 text-center'>Image</th>
             </tr>
           </thead>
           <tbody>
@@ -132,8 +134,9 @@ export default function AdminSolarBatteries(): JSX.Element {
                 <td className='py-3 px-6 text-center'>{row.type}</td>
                 <td className='py-3 px-6 text-center'>{row.capacity}</td>
                 <td className='py-3 px-6 text-center'>{row.description}</td>
+                <td className='py-3 px-6 text-center'><img src={row.batteryImage} alt="Battery" /> </td>
                 <td className='py-3 px-6 text-center'>
-                <Link to={`/UpdateBatteryPanel/${row._id}?type=${row.type}&capacity=${row.capacity}&description=${row.description}`}>
+                <Link to={`/UpdateBatteryPanel/${row._id}?type=${row.type}&capacity=${row.capacity}&description=${row.description}&batteryImage=${row.batteryImage}`}>
                     <button type='button' className='edit w-auto p-4 bg-blue-600 ml-8 text-slate-200 rounded-md self-end'>
                       Edit
                     </button>

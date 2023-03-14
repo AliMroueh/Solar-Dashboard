@@ -10,7 +10,7 @@ import React, { useEffect } from 'react';
     interface Client {
         _id: Number;
         name: string;
-        clientImage: File;
+        clientImage: string;
         email:string;
         address:string;
         phone:string;
@@ -56,7 +56,7 @@ export default function AdminSolarClients(): JSX.Element {
       }
     
       const addHandler = () => {
-        navigate('/addclient');
+        navigate('/AddClient');
       };
     
       const deleteHandler = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: Number) => {
@@ -125,6 +125,7 @@ export default function AdminSolarClients(): JSX.Element {
               <th className='py-3 bg-cyan-800 text-center'>Email</th>
               <th className='py-3 bg-cyan-800 text-center'>Address</th>
               <th className='py-3 bg-cyan-800 text-center'>Phone</th>
+              <th className='py-3 bg-cyan-800 text-center'>Image</th>
             </tr>
           </thead>
           <tbody>
@@ -135,8 +136,9 @@ export default function AdminSolarClients(): JSX.Element {
                 <td className='py-3 px-6 text-center'>{row.email}</td>
                 <td className='py-3 px-6 text-center'>{row.address}</td>
                 <td className='py-3 px-6 text-center'>{row.phone}</td>
+                <td className='py-3 px-6 text-center'><img src={row.clientImage} alt="Client" /> </td>
                 <td className='py-3 px-6 text-center'>
-                <Link to={`/SolarPanels/${row._id}?name=${row.name}&email=${row.email}&address=${row.address}&phone=${row.phone}`}>
+                <Link to={`/UpdateClient/${row._id}?name=${row.name}&email=${row.email}&address=${row.address}&phone=${row.phone}&clientImage=${row.clientImage}`}>
                     <button type='button' className='edit w-auto p-4 bg-blue-600 ml-8 text-slate-200 rounded-md self-end'>
                       Edit
                     </button>

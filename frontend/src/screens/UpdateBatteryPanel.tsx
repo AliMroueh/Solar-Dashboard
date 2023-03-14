@@ -67,7 +67,7 @@ const Description = new URLSearchParams(location.search).get('description') ?? '
 
    
     
-    // navigate('/batteries');
+     navigate('/AdminSolarBatteries');
 
   };
 

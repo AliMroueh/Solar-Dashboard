@@ -121,12 +121,10 @@ batteryRouter.delete('/battery/delete/:id', async (req, res) => {
     }
 
     // Remove the battery image from the server file system
-    const imagePath = path.join(path.dirname(__dirname), "uploads/") + battery.batteryImage.split('/').pop();
-    fs.unlinkSync(imagePath, (err) => {
-      if (err) {
-        console.error(err);
-      }
-    });
+    if (battery.batteryImage) {
+      const imagePath = path.join(path.dirname(__dirname), "uploads/") + battery.batteryImage.split('/').pop();
+      fs.unlinkSync(imagePath);
+    }
 
     await Battery.findByIdAndRemove(req.params.id);
     res.status(201).json({ message: 'Battery removed' });
@@ -135,6 +133,7 @@ batteryRouter.delete('/battery/delete/:id', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
 
 
 
