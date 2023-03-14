@@ -69,7 +69,7 @@ export default function UpdateSolarClient() {
 
    
     
-    // navigate('/batteries');
+     navigate('/AdminClients');
 
   };
 

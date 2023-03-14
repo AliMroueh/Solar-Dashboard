@@ -21,14 +21,14 @@ import {
 export interface ClientState  {
     loading: boolean;
     clients: any[];
-    error?: string;
+    error?: any[];
     success?: boolean;
   }
   
   const initialState: ClientState = {
     loading: false,
     clients: [],
-    error: undefined
+    error: []
   };
   
  export const getAllClientsReducer = (

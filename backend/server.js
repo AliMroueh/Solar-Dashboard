@@ -6,8 +6,12 @@ import userRouter from "./routers/userRouter.js";
 import solarRouter from "./routers/solarRouter.js";
 import inverterRouter from "./routers/inverterRouter.js";
 import { mailgun } from "./utils.js";
+import path from "path";
+import { fileURLToPath } from 'url';
 
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 // mongodb+srv://mhmd:1234@solar-dashboard.6gzozas.mongodb.net/solar-dashboard?retryWrites=true&w=majority
 
 
@@ -21,7 +25,7 @@ mongoose.connect(`mongodb+srv://mhmd:1234@solar-dashboard.6gzozas.mongodb.net/so
 })
     .then(db => console.log('DB is connected'))
     .catch(err => console.log(err));
-
+app.use('/public',express.static(path.join(__dirname, 'uploads')));
 app.use('/api/users', userRouter);
 app.use('/api/batteries', batteryRouter);
 app.use('/api/solars', solarRouter);
