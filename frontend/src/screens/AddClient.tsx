@@ -110,7 +110,7 @@ export default function AddSolarClient() : JSX.Element{
             type='text'
         
             // onChange={(e) => setName(e.target.value)}
-            required
+            // required
             {...register('name', { required: true,  maxLength: 255 })}
           />
           {errors.name && (<p className="text-red-500">This field is required and cannot exceed 255 characters.</p>)}
@@ -123,7 +123,7 @@ export default function AddSolarClient() : JSX.Element{
             type='email'
           
             // onChange={(e) => setEmail(e.target.value)}
-            required
+            // required
             {...register('email', { 
               required: true, 
               pattern: EMAIL_REGEX,
@@ -144,7 +144,7 @@ export default function AddSolarClient() : JSX.Element{
             type='text'
            
             // onChange={(e) => setAddress(e.target.value)}
-            required
+            // required
             {...register('address', { required: true,  maxLength: 255 })}
           />
           {errors.address && (<p className="text-red-500">This field is required and cannot exceed 255 characters.</p>)}
@@ -157,7 +157,7 @@ export default function AddSolarClient() : JSX.Element{
             type='text'
            
             // onChange={(e) => setPhone(e.target.value)}
-            required
+            // required
             {...register('phone', { required: true,  maxLength: 999999999999999 })}
           />
           {errors.phone && (<p className="text-red-500">This field is required and cannot exceed 20 characters.</p>)}

@@ -119,7 +119,7 @@ export default function AddSolarBatteryPanels() : JSX.Element{
               className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
               type='text'
               // onChange={(e) => setType(e.target.value)}
-              required
+              // required
               {...register('type', { required: true,  maxLength: 25 })}
               
               
@@ -136,7 +136,7 @@ export default function AddSolarBatteryPanels() : JSX.Element{
               // onChange={handleInputChange}
               min={100}
               max={999}
-              required
+              // required
               {...register('capacity', { required: true, min: 100, max: 999 })}
             />
             {errors.capacity &&( <p className="text-red-500">This field is required and must be between 100 and 999.</p>)}
@@ -149,7 +149,7 @@ export default function AddSolarBatteryPanels() : JSX.Element{
               type='text'
               // onChange={(e) => setDescription(e.target.value)}
               maxLength={255}
-              required
+              // required
               {...register('description', { required: true, maxLength: 255 })}
             />
             {errors.description && ( <p className="text-red-500">This field is required and cannot exceed 255 characters.</p>)}
