@@ -12,6 +12,7 @@ import { AnyAction } from 'redux';
       type:string;
       strength:string;
       description:string;
+      solarImage:string;
     }
     
     interface GetallSolarsState {
@@ -88,6 +89,7 @@ export default function AdminSolarPanles(): JSX.Element {
               <th className='py-3 bg-cyan-800'>Type</th>
               <th className='py-3 bg-cyan-800'>Strength</th>
               <th className='py-3 bg-cyan-800'>Description</th>
+              <th className='py-3 bg-cyan-800 text-center'>Image</th>
               <th className='py-3 bg-cyan-800'>Option</th>
             </tr>
           </thead>
@@ -98,8 +100,9 @@ export default function AdminSolarPanles(): JSX.Element {
                 <td className='py-3 px-6'>{row.type}</td>
                 <td className='py-3 px-6'>{row.strength}</td>
                 <td className='py-3 px-6'>{row.description}</td>
+                <td className='py-3 px-6 text-center'><img src={row.solarImage} alt="solar" /> </td>
                 <td className='py-3 px-6'>
-                <Link to={`/EditSolarPanels/${row._id}?type=${row.type}&strength=${row.strength}&description=${row.description}`}>
+                <Link to={`/EditSolarPanels/${row._id}?type=${row.type}&strength=${row.strength}&description=${row.description}&solarImage=${row.solarImage}`}>
                     <button type='button' className='edit w-auto p-4 bg-blue-600 ml-8 text-slate-200 rounded-md self-end'>
                       Edit
                     </button>

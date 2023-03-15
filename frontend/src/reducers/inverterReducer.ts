@@ -26,14 +26,14 @@ import {
  export interface InverterState  {
     loading: boolean;
     inverters: any[];
-    error?: string;
+    error?: any[];
     success?: boolean;
   }
   
   const initialState: InverterState = {
     loading: false,
     inverters: [],
-    error: undefined
+    error: []
   };
   
  export const getAllInverterReducer = (
