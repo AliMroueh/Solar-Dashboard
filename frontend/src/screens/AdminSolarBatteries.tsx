@@ -135,9 +135,9 @@ export default function AdminSolarBatteries(): JSX.Element {
                 <td className='py-3 px-6 text-center'>{row._id.toString()}</td>
                 <td className='py-3 px-6 text-center'>{row.type}</td>
                 <td className='py-3 px-6 text-center'>{row.capacity}</td>
-                <td className='py-3 px-6 text-center'>{row.description}</td>
-                <td className='py-3 px-6 text-center xs:py-0 px-0'><img src={row.batteryImage} alt="Battery" className='w-20 xs:w-full' /> </td>
-                <td className='py-3 px-6 text-center flex xs:justify-between'>
+                <td className='py-3 px-6 text-center max-w-xs min-h-full'>{row.description}</td>
+                <td className='py-3 px-6 text-center xs:py-0 px-0'><img src={row.batteryImage} alt="Battery" className='md:w-40 xs:w-full' /> </td>
+                <td className='py-3 px-6 text-center'>
                 <Link to={`/UpdateBatteryPanel/${row._id}?type=${row.type}&capacity=${row.capacity}&description=${row.description}&batteryImage=${row.batteryImage}`}>
                     <button type='button' className='edit w-auto p-2 bg-blue-600 text-slate-200 rounded-md'>
                       Edit
