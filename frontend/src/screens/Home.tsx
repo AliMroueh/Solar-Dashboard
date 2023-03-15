@@ -34,9 +34,9 @@ const Home: React.FC = () => {
   const sendEmail = useSelector<getEmail, EmailState>((state) => state.sendEmail);
   const { loading, error, email } = sendEmail;
 
-  useEffect(() =>{
-    dispatch(sendEmailAction())
-  },[dispatch])
+  // useEffect(() =>{
+  //   dispatch(sendEmailAction())
+  // },[dispatch])
 
   useEffect(() => {
     const socket = socketIOClient('http://127.0.0.1:4001/');
