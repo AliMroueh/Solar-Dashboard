@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import NavBar from "./components/NavBar";
-import Home from "./screens/Home";
 import AdminSolarClients from "./screens/AdminClients";
 import UpdateSolarClient from "./screens/UpdateClient";
 import AddSolarClient from "./screens/AddClient";
@@ -14,6 +13,7 @@ import UpdateBatteryPanel from "./screens/UpdateBatteryPanel";
 import AdminSolarBatteries from "./screens/AdminSolarBatteries";
 import UpdateInverterPanel from "./screens/UpdateInverterPanel";
 import AddSolarBatteryPanels from "./screens/AddBatteryPanel";
+import Home from "./screens/Home";
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
       <Header />
       <div className='w-full min-h-[90vh] grid grid-cols-12'>
       <NavBar />
-        <div className='grid grid-cols-1 xl:grid-cols-5 col-span-10 w-full'> 
+        <div className='grid grid-cols-1 xl:grid-cols-5 col-span-10 w-full p-3'> 
           <Routes>
             <Route index element={<Home />}/>  
             <Route path="/AdminClients" element={<AdminSolarClients />}/>
