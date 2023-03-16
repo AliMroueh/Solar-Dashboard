@@ -1,9 +1,8 @@
 
-import {
-    GET_ALL_SYSTEMS_REQUEST,
-    GET_ALL_SYSTEMS_SUCCESS,
-    GET_ALL_SYSTEMS_FAILURE,
 
+import { GET_ALL_SYSTEMS_REQUEST,
+  GET_ALL_SYSTEMS_SUCCESS,
+GET_ALL_SYSTEMS_FAILURE,
     ADD_NEW_SYSTEM_REQUEST,
     ADD_NEW_SYSTEM_SUCCESS,
     ADD_NEW_SYSTEM_FAILURE,
@@ -15,8 +14,12 @@ import {
     DELETE_SYSTEM_REQUEST,
     DELETE_SYSTEM_SUCCESS,
     DELETE_SYSTEM_FAILURE
-    
-  } from '../constants/systemConstant;
+
+
+} from "../constants/systemConstants";
+
+
+
   
 
 
