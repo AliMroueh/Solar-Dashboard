@@ -6,15 +6,15 @@ import {Link} from 'react-router-dom'
 
 function NavBar() {
   return (
-    <nav className="col-span-2 border-r border-gray-200 min-h-[90vh] pt-8 px-1 flex flex-col items-start justify-between">
+    <nav className="col-span-2 border-r border-gray-200 min-h-[90vh] pt-8 px-1 flex flex-col items-start justify-between bg-yellow-200">
       <div className="space-y-8 w-full ">
-        {navLinks.slice(0, 5).map((link) => (
+        {navLinks.slice(0, 6).map((link) => (
           <NavItem link={link} key={link.id} />
         ))}
-        <div className="w-full border-t border-gray-200" />
-        {navLinks.slice(5, 6).map((link) => (
-          <NavItem link={link} key={link.id} />
-        ))}
+        {/* <div className="w-full border-t border-gray-200" />
+          {navLinks.slice(5, 6).map((link) => (
+            <NavItem link={link} key={link.id} />
+          ))} */}
       </div>
       {/* <div className="xl:flex flex-col hidden  items-center justify-center space-y-4 px-4 py-4 ">
         <h1 className="text-xl w-full font-medium">
@@ -45,14 +45,16 @@ function NavItem({ link }: { link: Link1 }) {
          activeNav === link.id && "border-gray-900 "
        } `}
     >
-      <span> {link.icon}</span>
-      <h1
-        className={`text-gray-600 group-hover:text-black xl:flex hidden ${
-          activeNav === link.id && "text-black "
-        }} `}
-      >
-        <Link to={link.link}>{link.title}</Link>
-      </h1>
+      <Link to={link.link} className='flex w-full'>
+        <span className="mr-5"> {link.icon}</span>
+        <h1
+          className={`text-gray-600 group-hover:text-black xl:flex hidden ${
+            activeNav === link.id && "text-black "
+          }} `}
+        >
+          {link.title}
+        </h1>
+      </Link>
     </div>
   );
 }
