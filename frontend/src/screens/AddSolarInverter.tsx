@@ -98,7 +98,7 @@ export default function AddSolarInverter() : JSX.Element{
             id='type'
             className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
             type='text'
-            required
+      
             {...register('type', { required: true,  maxLength: 25 })}
           />
           {errors.type && (<p className="text-red-500">This field is required and cannot exceed 25 characters.</p>)}
@@ -111,7 +111,7 @@ export default function AddSolarInverter() : JSX.Element{
             type='text'
             min={100}
             max={999}
-            required
+  
             {...register('strength', { required: true, min: 100, max: 999 })}
             />
            {errors.strength &&( <p className="text-red-500">This field is required and must be between 100 and 999.</p>)}
@@ -123,7 +123,6 @@ export default function AddSolarInverter() : JSX.Element{
             className='p-2 rounded-lg bg-gray-700 mt-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
             type='text'
             maxLength={255}
-            required
             {...register('description', { required: true, maxLength: 255 })}
           />
          {errors.description && ( <p className="text-red-500">This field is required and cannot exceed 255 characters.</p>)}
