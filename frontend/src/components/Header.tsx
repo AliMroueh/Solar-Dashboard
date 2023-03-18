@@ -9,7 +9,7 @@ import SearchIcon from "./SearchIcon";
 function Header() {
   return (
     <div className=" w-full py-6 
-    bg-yellow-300
+    bg-gradient-to-r from-slate-50 via-slate-50 to-slate-400
     items-center justify-between flex px-12">
       {/* search */}
       {/* <div className="w-full lg:flex hidden space-x-4 items-center justify-start py-2 visibility:hidden">
@@ -25,7 +25,7 @@ function Header() {
       {/* logo */}
       <div className="items-center w-full flex space-x-4">
         {/* <ChipIcon className="w-6 h-6" /> */}
-        <h1 className="text-xl text-gray-900 font-medium "> DevSite </h1>
+        <h1 className="text-xl text-gray-900 font-medium "> Solar System </h1>
       </div>
       {/* icons */}
       <div className="items-center justify-end space-x-6 flex w-full">
