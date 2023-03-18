@@ -9,6 +9,8 @@ import { useSelector } from 'react-redux';
 import { emailState } from '../reducers/emailReducer';
 import MessageBox from '../components/MessageBox';
 import LoadingBox from '../components/LoadingBox';
+import { BiChevronDown } from "react-icons/bi";
+import { AiOutlineSearch } from "react-icons/ai";
 
 interface Data {
   name: string;
@@ -26,8 +28,18 @@ const Home: React.FC = () => {
   interface getEmail extends emailState  {
     sendEmail: EmailState;
     }
-
+    interface Data1 {
+      name: string;
+      x: number;
+      y: number;
+      z: number;
+  }
   const [data, setData] = useState<Data[]>([]);
+  const [data1Index, setData1Index] = useState<number>(0);
+  const [inputValue, setInputValue] = useState<string>("");
+  const [selected, setSelected] = useState<string>("");
+  const [open, setOpen] = useState<boolean>(false);
+  const [users, setUsers] = useState<string[]>([]);
 
   const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
 
@@ -38,13 +50,59 @@ const Home: React.FC = () => {
   //   dispatch(sendEmailAction())
   // },[dispatch])
 
+  // useEffect(() => {
+  //   const socket = socketIOClient('http://127.0.0.1:4001/');
+  //   socket.on('message', (data: Data[]) => {
+  //     setData(data);
+  //     console.log('Data updated:', data);
+  //   });
+  // }, [data]);
+  // let timeChange: string | number | NodeJS.Timeout | undefined
+  // let dayTime: any[] = [];
+  const data1 : Data1[] = [
+    {name: '6 am', x: 5, y: 2, z: 3},
+    {name: '7 am', x: 6, y: 3, z: 3},
+    {name: '8 am', x: 6, y: 3, z: 3},
+    {name: '9 am', x: 7, y: 5, z: 3},
+    {name: '10 am', x: 9, y: 6, z: 3},
+    {name: '11 am', x: 10, y: 7, z: 3},
+    {name: '12 pm', x: 10, y: 8, z: 3},
+    {name: '1 pm', x: 10, y: 9, z: 3},
+    {name: '2 pm', x: 10, y: 8, z: 3},
+    {name: '3 pm', x: 10, y: 8, z: 3},
+    {name: '4 pm', x: 9, y: 5, z: 3},
+    {name: '5 pm', x: 9, y: 5, z: 3},
+    {name: '6 pm', x: 6, y: 4, z: 3},
+    {name: '7 pm', x: 5, y: 3, z: 3},
+    {name: '8 pm', x: 4, y: 2, z: 3},
+    {name: '9 pm', x: 3, y: 1, z: 3},
+    {name: '10 pm', x: 4, y: 2, z: 3},
+    {name: '11 pm', x: 6, y: 2, z: 3},
+    {name: '12 am', x: 4, y: 2, z: 3},
+    {name: '1 am', x: 3, y: 1, z: 3},
+    {name: '2 am', x: 2, y: 0, z: 3},
+    {name: '3 am', x: 4, y: 2, z: 3},
+    {name: '4 am', x: 3, y: 1, z: 3},
+    {name: '5 am', x: 4, y: 1, z: 3},
+]
+  // useEffect(() => {
+  //   // if(timeChange) clearInterval(timeChange)
+  //   timeChange = setInterval(() => {if(data.length < 24){
+  //     setData(data1[dayTime.length])
+  // }} , 5000)
+  // }, [data]);
+
   useEffect(() => {
-    const socket = socketIOClient('http://127.0.0.1:4001/');
-    socket.on('message', (data: Data[]) => {
-      setData(data);
-      console.log('Data updated:', data);
-    });
-  }, [data]);
+    const interval = setInterval(() => {
+      if (data.length < 24) {
+        setData((prevData) => [...prevData, data1[data1Index]]);
+        setData1Index((prevIndex) => prevIndex + 1);
+      }
+      console.log(data)
+    }, 5000);
+
+    return () => clearInterval(interval);
+  },);
 
   return (
     <div className='col-span-5 flex flex-col justify-center items-center px-4'>
@@ -199,10 +257,66 @@ const Home: React.FC = () => {
     </div>
 
   </div>
-
+     {/* Start select box */}
+     <div className="w-72 font-medium h-auto items-center self-center bg-yellow-800">
+      <div
+        onClick={() => setOpen(!open)}
+        className={`bg-yellow-600 w-full p-2 flex items-center justify-between rounded ${
+          !selected && "text-gray-700"
+        }`}
+      >
+        {selected
+          ? selected?.length > 25
+            ? selected?.substring(0, 25) + "..."
+            : selected.slice(0,10)
+          : "Select User"}
+        <BiChevronDown size={20} className={`${open && "rotate-180"}`} />
+      </div>
+      <ul
+        className={`bg-white mt-2 overflow-y-auto ${
+          open ? "max-h-60" : "max-h-0"
+        } `}
+      >
+        <div className="flex items-center px-2 sticky top-0 bg-white">
+          <AiOutlineSearch size={18} className="text-gray-700" />
+          <input
+            type="text"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value.toLowerCase())}
+            placeholder="Enter user name"
+            className="placeholder:text-gray-700 p-2 outline-none"
+          />
+        </div>
+        {users?.map((user,index) => (
+          <li
+            key={index}
+            className={`p-2 text-sm hover:bg-sky-600 hover:text-white
+            ${
+              user?.toLowerCase() === selected?.toLowerCase() &&
+              "bg-sky-600 text-white"
+            }
+            ${
+              user?.toLowerCase().startsWith(inputValue)
+                ? "block"
+                : "hidden"
+            }`}
+            onClick={() => {
+              if (user?.toLowerCase() !== selected.toLowerCase()) {
+                setSelected(user);
+                setOpen(false);
+                setInputValue("");
+              }
+            }}
+          >
+            {user.slice(0,10)}
+          </li>
+        ))}
+      </ul>
+    </div>
+     {/* End select box */}
      <h1 className='text-xl'>User Consumption</h1>
      <div className=' w-full overflow-x-auto p-10'>
-        <AreaChart width={950} height={300} data={data} className="bg-yellow-200 rounded-lg">
+        <AreaChart width={1000} height={300} data={data} className="bg-yellow-200 rounded-lg">
             <CartesianGrid className='bg-red-500'></CartesianGrid>
             <XAxis dataKey="name"></XAxis>
             <YAxis></YAxis>
