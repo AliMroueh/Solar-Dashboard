@@ -70,48 +70,12 @@ export default function AdminSolarClients(): JSX.Element {
     
   
   return (
-//     <div className='bg-cyan-800  flex flex-col justify-start w-full col-span-10 p-5'>
-        
-//             <button className='w-auto p-4 bg-gray-900 text-slate-200 rounded-md self-end'>Add Panels</button>
-      
-//         <p>error</p>
-       
-//         <table className='shadow-2x1 font-[Poppins] border-2 border-cyan-200 mt-4 w-full'>
-//           <thead className='text-white'>
-//             <tr>
-//           <th className='py-3 bg-cyan-800'>Hospital cases</th>
-//           <th className='py-3 bg-cyan-800'>Propable cases</th>
-//           <th className='py-3 bg-cyan-800'>Propable death</th>
-//           <th className='py-3 bg-cyan-800'>Confirm cases</th>
-//           <th className='py-3 bg-cyan-800'>Confirm death</th>
-//           <th className='py-3 bg-cyan-800'>Total cases</th>
-//           <th className='py-3 bg-cyan-800'>Total deaths</th>
-//           <th className='py-3 bg-cyan-800'>case 0-9</th>
-//           <th className='py-3 bg-cyan-800'>Action</th>
-//           </tr>
-//           </thead>
-//           <tbody>
-          
-//             <tr className='hover:bg-cyan-100 bg-cyan-300 cursor-pointer duration-300'>
-//               <td className='py-3 px-6'></td>
-//               <td className='py-3 px-6'>3</td>
-//               <td className='py-3 px-6'>sm</td>
-//               <td className='py-3 px-6'>yoga</td>
-//               <td className='py-3 px-6'>boga</td>
-//               <td className='py-3 px-6'>boga</td>
-//               <td className='py-3 px-6'>boga</td>
-//               <td className='py-3 px-6'>boga</td>
-//               </tr>
-
-                  
-//           </tbody>
-//         </table>
-
-// </div>
 
 
-<div className='bg-cyan-800  flex flex-col justify-start w-full col-span-10 p-5'>
-      <button className='w-auto p-4 bg-gray-900 text-slate-200 rounded-md self-end' onClick={() => addHandler()}>
+
+
+<div className='bg-white  flex flex-col justify-start w-full col-span-10 p-5'>
+      <button className='w-auto p-4 bg-orange-400 text-xl text-white font-semibold rounded-md self-end' onClick={() => addHandler()}>
         Add Clients
       </button>
       {loading ? (
@@ -120,17 +84,17 @@ export default function AdminSolarClients(): JSX.Element {
         <table className='shadow-2x1 font-[Poppins] border-2 border-cyan-200 mt-4 w-full'>
           <thead className='text-white'>
             <tr>
-              <th className='py-3 bg-cyan-800 text-center'>ID</th>
-              <th className='py-3 bg-cyan-800 text-center'>Name</th>
-              <th className='py-3 bg-cyan-800 text-center'>Email</th>
-              <th className='py-3 bg-cyan-800 text-center'>Address</th>
-              <th className='py-3 bg-cyan-800 text-center'>Phone</th>
-              <th className='py-3 bg-cyan-800 text-center'>Image</th>
+              <th className='py-3 bg-orange-400 font-bold text-lg text-center'>ID</th>
+              <th className='py-3 bg-orange-400 font-bold text-lg text-center'>Name</th>
+              <th className='py-3 bg-orange-400 font-bold text-lg text-center'>Email</th>
+              <th className='py-3 bg-orange-400 font-bold text-lg text-center'>Address</th>
+              <th className='py-3 bg-orange-400 font-bold text-lg text-center'>Phone</th>
+              <th className='py-3 bg-orange-400 font-bold text-lg text-center'>Image</th>
             </tr>
           </thead>
           <tbody>
             {clients.map((row, index) => (
-              <tr key={index} className='hover:bg-cyan-100 bg-cyan-300 cursor-pointer duration-300'>
+              <tr key={index} className='hover:bg-yellow-100 bg-yellow-300 cursor-pointer duration-300'>
                 <td className='py-3 px-6 text-center'>{row._id.toString()}</td>
                 <td className='py-3 px-6 text-center'>{row.name}</td>
                 <td className='py-3 px-6 text-center'>{row.email}</td>
@@ -139,7 +103,7 @@ export default function AdminSolarClients(): JSX.Element {
                 <td className='py-3 px-6 text-center'><img src={row.clientImage} alt="Client" /> </td>
                 <td className='py-3 px-6 text-center'>
                 <Link to={`/UpdateClient/${row._id}?name=${row.name}&email=${row.email}&address=${row.address}&phone=${row.phone}&clientImage=${row.clientImage}`}>
-                    <button type='button' className='edit w-auto p-4 bg-blue-600 ml-8 text-slate-200 rounded-md self-end'>
+                    <button type='button' className='edit w-auto p-4 bg-green-600 ml-8 text-slate-200 rounded-md self-end'>
                       Edit
                     </button>
                   </Link>
@@ -157,5 +121,3 @@ export default function AdminSolarClients(): JSX.Element {
 };
 
 
-
- 

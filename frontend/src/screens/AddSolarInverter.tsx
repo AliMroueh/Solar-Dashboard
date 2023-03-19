@@ -76,7 +76,7 @@ export default function AddSolarInverter() : JSX.Element{
   return (
 
 
-<div className='bg-cyan-800  flex flex-col justify-center w-full col-span-10'>
+<div className='  flex flex-col justify-center w-full col-span-10'>
 
 {loading && <LoadingBox></LoadingBox>}
 
@@ -90,57 +90,58 @@ export default function AddSolarInverter() : JSX.Element{
     ))}
   </div>
 )}
-      <form className='w-11/12 mx-auto rounded-lg bg-cyan-900 p-8 px-8'  onSubmit={handleSubmit(insertHandler)} >
+      <form className='w-6/12 mx-auto rounded-lg bg-orange-400 p-8 px-8'  onSubmit={handleSubmit(insertHandler)} >
         <h2 className='text-4xl text-white font-bold text-center'>Add Solar Inverter</h2>
-        <div className='flex flex-col text-gray-400 py-2'>
+        <div className='flex flex-col text-white py-2'>
           <label htmlFor='type'>Type</label>
           <input
             id='type'
-            className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
+            className='rounded-lg bg-white mt-2 p-2  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
             type='text'
       
             {...register('type', { required: true,  maxLength: 25 })}
           />
           {errors.type && (<p className="text-red-500">This field is required and cannot exceed 25 characters.</p>)}
       </div>
-        <div className='flex flex-col text-gray-400 py-2'>
+        <div className='flex flex-col text-white py-2'>
           <label htmlFor='strength'>Strength</label>
           <input
             id='strength'
-            className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
+            className='rounded-lg bg-white mt-2 p-2 focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
             type='text'
+            value='w'
             min={100}
             max={999}
   
             {...register('strength', { required: true, min: 100, max: 999 })}
             />
-           {errors.strength &&( <p className="text-red-500">This field is required and must be between 100 and 999.</p>)}
+           {errors.strength &&( <p className="text-red-800">This field is required and must be between 100 and 999.</p>)}
         </div>
-        <div className='flex flex-col text-gray-400 py-2'>
+        <div className='flex flex-col text-white py-2'>
           <label htmlFor='Description'>Description</label>
           <input
             id='Description'
-            className='p-2 rounded-lg bg-gray-700 mt-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
+            className='p-2 rounded-lg bg-white mt-2 focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
             type='text'
             maxLength={255}
             {...register('description', { required: true, maxLength: 255 })}
           />
-         {errors.description && ( <p className="text-red-500">This field is required and cannot exceed 255 characters.</p>)}
+         {errors.description && ( <p className="text-red-800">This field is required and cannot exceed 255 characters.</p>)}
         </div>
-        <div className='flex flex-col text-gray-400 py-2'>
+        <div className='flex flex-col text-white py-2'>
           <label htmlFor='file'>Add Image</label>
           <input
             id='file'
            type="file"
-            className='p-2 rounded-lg bg-gray-700 mt-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
+            className='p-2 rounded-lg bg-white mt-2 focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
             {...register('inverterImage', { required: true })}
             />
-          {errors.solarImage && ( <p className="text-red-500">This field is required.</p>)}
+          {errors.solarImage && ( <p className="text-red-800">This field is required.</p>)}
         </div>
-        <div className='flex justify-between text-gray-400 py-2'>
+        <div className='flex justify-between text-white py-2'>
           Already have an account?{' '}
         </div>
-        <button className='w-full my-5 py-2 bg-teal-500 shadow-lg shadow-teal-500/50 hover:shadow-teal-500/40 text-white font-semibold rounded-lg' type="submit">
+        <button className='w-1/4 my-5 py-2 bg-green-500 shadow-lg shadow-green-500/50 hover:shadow-green-500/40 text-white font-semibold rounded-lg' type="submit">
           Add Inverter
         </button>
         

@@ -45,6 +45,7 @@ function NavItem({ link }: { link: Link1 }) {
          activeNav === link.id && "border-gray-900 "
        } `}
     >
+    
       <Link to={link.link} className='flex w-full'>
         <span className="mr-5"> {link.icon}</span>
         <h1
