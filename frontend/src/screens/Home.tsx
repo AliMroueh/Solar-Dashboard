@@ -11,6 +11,7 @@ import MessageBox from '../components/MessageBox';
 import LoadingBox from '../components/LoadingBox';
 import { BiChevronDown } from "react-icons/bi";
 import { AiOutlineSearch } from "react-icons/ai";
+import userData from '../components/userData';
 
 interface Data {
   name: string;
@@ -99,6 +100,7 @@ const Home: React.FC = () => {
         setData1Index((prevIndex) => prevIndex + 1);
       }
       console.log(data)
+      console.log(userData)
     }, 5000);
 
     return () => clearInterval(interval);
