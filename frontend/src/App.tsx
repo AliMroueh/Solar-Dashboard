@@ -8,7 +8,7 @@ import AdminSolarPanels from "./screens/AdminSolarPanels";
 import AdminSolarInverter from "./screens/AdminSolarInverter";
 import AddSolarPanels from "./screens/AddSolarPanels";
 import AddSolarInverter from "./screens/AddSolarInverter";
-import EditSolarPanels from "./screens/EditSolarPanels ";
+import EditSolarPanels from "./screens/EditSolarPanels";
 import UpdateBatteryPanel from "./screens/UpdateBatteryPanel";
 import AdminSolarBatteries from "./screens/AdminSolarBatteries";
 import UpdateInverterPanel from "./screens/UpdateInverterPanel";
