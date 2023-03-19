@@ -1,4 +1,4 @@
-interface AliData {
+interface AllData {
     name: string;
     x: number;
     y: number;
@@ -6,15 +6,18 @@ interface AliData {
   }
   
   interface UserData {
+    name: string;
+    number: number;
     bateryState: number;
-    aliData?: AliData[];
-    mohamadData?: AliData[];
-    yasserData?: AliData[];
+    solarData: AllData[];
   }
 
 const userData : UserData[]= [
-    {   bateryState: 50,
-        aliData: [
+    {   
+        name:'ali',
+        number: 0,
+        bateryState: 50,
+        solarData: [
             {name: '6 am', x: 5, y: 2, z: 3},
             {name: '7 am', x: 6, y: 3, z: 3},
             {name: '8 am', x: 6, y: 3, z: 3},
@@ -41,8 +44,11 @@ const userData : UserData[]= [
             {name: '5 am', x: 4, y: 1, z: 3},
         ]
     },
-    {   bateryState : 50,
-        mohamadData: [
+    {   
+        name:'mohamad',
+        number: 1,
+        bateryState : 50,
+        solarData: [
             {name: '6 am', x: 5, y: 2, z: 3},
             {name: '7 am', x: 6, y: 3, z: 3},
             {name: '8 am', x: 6, y: 3, z: 3},
@@ -69,8 +75,11 @@ const userData : UserData[]= [
             {name: '5 am', x: 4, y: 1, z: 3},
         ]
     },
-    {   bateryState : 50,
-        yasserData: [
+    {   
+        name:'yasser',
+        number: 2,
+        bateryState : 50,
+        solarData: [
             {name: '6 am', x: 5, y: 2, z: 3},
             {name: '7 am', x: 6, y: 3, z: 3},
             {name: '8 am', x: 6, y: 3, z: 3},

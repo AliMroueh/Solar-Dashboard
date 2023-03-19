@@ -40,6 +40,7 @@ const Home: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>("");
   const [selected, setSelected] = useState<string>("");
   const [open, setOpen] = useState<boolean>(false);
+  const [num, setNum] = useState<number>(0);
   const [users, setUsers] = useState<string[]>([]);
 
   const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
@@ -93,18 +94,27 @@ const Home: React.FC = () => {
   // }} , 5000)
   // }, [data]);
 
+  useEffect(()=> {
+    setData([])
+    setData1Index(0)
+  },[num])
+
   useEffect(() => {
     const interval = setInterval(() => {
-      if (data.length < 24) {
-        setData((prevData) => [...prevData, data1[data1Index]]);
+      
+      if (selected.length > 0 && data.length < 24) {
+        setData((prevData) => [...prevData, userData[num].solarData[data1Index]]);
         setData1Index((prevIndex) => prevIndex + 1);
+      }else{
+        return () => clearInterval(interval);
       }
-      console.log(data)
-      console.log(userData)
-    }, 5000);
+      // console.log(data)
+      // console.log(selected)
+      console.log(userData[num].name)
+    }, 1000);
 
     return () => clearInterval(interval);
-  },);
+  },[data.length, data1Index, num, selected.length]);
 
   return (
     <div className='col-span-5 flex flex-col justify-center items-center px-4'>
@@ -289,36 +299,40 @@ const Home: React.FC = () => {
             className="placeholder:text-gray-700 p-2 outline-none"
           />
         </div>
-        {users?.map((user,index) => (
+        {userData?.map((user,index) => (
           <li
             key={index}
             className={`p-2 text-sm hover:bg-sky-600 hover:text-white
             ${
-              user?.toLowerCase() === selected?.toLowerCase() &&
+              user.name?.toLowerCase() === selected?.toLowerCase() &&
               "bg-sky-600 text-white"
             }
             ${
-              user?.toLowerCase().startsWith(inputValue)
+              user.name?.toLowerCase().startsWith(inputValue)
                 ? "block"
                 : "hidden"
             }`}
             onClick={() => {
-              if (user?.toLowerCase() !== selected.toLowerCase()) {
-                setSelected(user);
+              if (user.name?.toLowerCase() !== selected.toLowerCase()) {
+                setSelected(user.name);
+                setNum(user.number);
                 setOpen(false);
                 setInputValue("");
+
               }
             }}
           >
-            {user.slice(0,10)}
+            {/* {user.slice(0,10)} */}
+            {user.name}
           </li>
         ))}
       </ul>
     </div>
      {/* End select box */}
+     {selected.length > 0 && <>
      <h1 className='text-xl'>User Consumption</h1>
      <div className=' w-full overflow-x-auto p-10'>
-        <AreaChart width={1300} height={300} data={data} className=" bg-slate-300 rounded-lg">
+        <AreaChart width={960} height={300} data={data} className=" bg-slate-300 rounded-lg">
             <CartesianGrid className='bg-red-500'></CartesianGrid>
             <XAxis dataKey="name"></XAxis>
             <YAxis></YAxis>
@@ -328,7 +342,9 @@ const Home: React.FC = () => {
             <Area type="monotone" dataKey="y" stroke="green" fill="green"  />
             <Area type="monotone" dataKey="z" stroke="red" fill="yellow"  />
           </AreaChart>
-        </div>
+
+      </div>
+      </>}
     </div>
   );
 };
