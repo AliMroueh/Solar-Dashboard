@@ -37,17 +37,20 @@ solarRouter.post("/create", upload.single("solarImage"),
             return res.status(400).json({ errors: errors.array() });
         }
 
+        let solarImage = "";
+        // Add the categoryImage field if a file was uploaded
+        if (req.file) {
+            solarImage = 'http://localhost:5000/public/' + req.file.filename;
+        }
         // Create the category object
         const solarObj = {
             type: req.body.type,
             description: req.body.description,
-            strength: req.body.strength
+            strength: req.body.strength,
+            solarImage
         };
 
-        // Add the categoryImage field if a file was uploaded
-        if (req.file) {
-            solarObj.solarImage = 'http://localhost:5000/public/' + req.file.filename;
-        }
+
 
         // Save the category to the database
         const sol = new Solar(solarObj);

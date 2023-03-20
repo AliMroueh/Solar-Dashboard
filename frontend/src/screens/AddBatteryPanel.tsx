@@ -89,9 +89,12 @@ export default function AddSolarBatteryPanels() : JSX.Element{
     // }
   
     // handleSubmit((data) => console.log(data))
-    if(!loading && !error){
-      navigate('/AdminSolarBatteries');
-    }
+    useEffect(() => {
+      if(!loading && !error){
+        navigate('/AdminSolarBatteries');
+      }
+    },[navigate, loading, error])
+
     
     return (
       <div className='  flex flex-col justify-center w-full col-span-10'>
@@ -146,14 +149,14 @@ export default function AddSolarBatteryPanels() : JSX.Element{
          {errors.description && ( <p className="text-red-800">This field is required and cannot exceed 255 characters.</p>)}
         </div>
         <div className='flex flex-col text-white py-2'>
-          <label htmlFor='file'>Add Image</label>
+          <label htmlFor='batteryImage'>Add Image</label>
           <input
-            id='file'
+            id='batteryImage'
            type="file"
             className='p-2 rounded-lg bg-white mt-2 focus:border-orange-400 focus:bg-gray-800 focus:outline-none'
-            {...register('inverterImage', { required: true })}
+            {...register('batteryImage', { required: true })}
             />
-          {errors.solarImage && ( <p className="text-red-800">This field is required.</p>)}
+          {errors.batteryImage && ( <p className="text-red-800">This field is required.</p>)}
         </div>
         <div className='flex justify-between text-white py-2'>
           Already have an account?{' '}

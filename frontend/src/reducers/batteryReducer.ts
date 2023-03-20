@@ -23,7 +23,7 @@ import {
 
 export interface BatteryState  {
     loading: boolean;
-    batteries: any[];
+    batteries?: any[];
     error?: any[];
     success?: boolean;
   }
@@ -59,13 +59,13 @@ export interface BatteryState  {
   ): BatteryState => {
     switch (action.type) {
       case ADD_NEW_BATTERY_REQUEST:
-        return { ...state, loading: true };
+        return { loading: true, batteries:[] };
   
       case ADD_NEW_BATTERY_SUCCESS:
-        return { ...state, loading: false, batteries: [...state.batteries, action.payload] };
+        return { loading: false, batteries:[action.payload] };
   
       case ADD_NEW_BATTERY_FAILURE:
-        return { ...state, loading: false, error: action.payload };
+        return { loading: false, error: action.payload };
   
       default:
         return state;
@@ -97,14 +97,14 @@ export interface BatteryState  {
   ): BatteryState => {
     switch (action.type) {
       case DELETE_BATTERY_REQUEST:
-        return { ...state, loading: true };
+        return { loading: true };
   
         case DELETE_BATTERY_SUCCESS:
-            return { ...state, loading: false, success: true};
+            return { loading: false, success: true};
           
   
       case DELETE_BATTERY_FAILURE:
-        return { ...state, loading: false, error: action.payload };
+        return { loading: false, error: action.payload };
   
       default:
         return state;

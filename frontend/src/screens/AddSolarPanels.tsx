@@ -41,12 +41,13 @@ export default function AddSolarPanels() : JSX.Element{
       
       const addSolar = useSelector<AddSolarStateWithAllSolars, AddallSolarsState>((state) => state.addSolar);
       const { loading, error, Solar } = addSolar;
-    
-      useEffect(() => {
-        console.log(Solar);
-      }, [Solar]);
-    
       const navigate = useNavigate();
+      
+      useEffect(() => {
+        if(!loading && !error){
+          navigate('/AdminSolarPanels');
+        }
+      }, [navigate,error, loading]);
     
       function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
         const newValue = parseInt(e.target.value);
@@ -70,12 +71,12 @@ export default function AddSolarPanels() : JSX.Element{
           console.log(data);
   
 
-          navigate('/AdminSolarPanels');
-          setType('');
-          setStrength(0);
-          setDescription('');
+          // 
+          // setType('');
+          // setStrength(0);
+          // setDescription('');
       };
-    
+
   
   return (
 
@@ -133,12 +134,12 @@ export default function AddSolarPanels() : JSX.Element{
          {errors.description && ( <p className="text-red-800">This field is required and cannot exceed 255 characters.</p>)}
         </div>
         <div className='flex flex-col text-white py-2'>
-          <label htmlFor='file'>Add Image</label>
+          <label htmlFor='solarImage'>Add Image</label>
           <input
-            id='file'
+            id='solarImage'
            type="file"
             className='p-2 rounded-lg bg-white mt-2 focus:border-orange-400 focus:bg-gray-800 focus:outline-none'
-            {...register('inverterImage', { required: true })}
+            {...register('solarImage', { required: true })}
             />
           {errors.solarImage && ( <p className="text-red-800">This field is required.</p>)}
         </div>
