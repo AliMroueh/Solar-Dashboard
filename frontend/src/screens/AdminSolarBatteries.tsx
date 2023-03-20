@@ -74,7 +74,7 @@ export default function AdminSolarBatteries(): JSX.Element {
 
 <div className='bg-white  flex flex-col justify-start w-full col-span-10 p-5'>
           <button className='w-auto p-4 bg-orange-400 text-xl text-white font-semibold rounded-md self-end' onClick={() => addHandler()}>
-            Add Inverter
+            Add Battery
           </button>
           {loading ? (
             <div>loading...</div>
