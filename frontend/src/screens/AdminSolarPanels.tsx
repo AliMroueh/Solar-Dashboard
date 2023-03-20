@@ -103,7 +103,7 @@ export default function AdminSolarPanles(): JSX.Element {
                   <td className='py-3 px-6 text-center max-w-xs min-h-full'>{row.description}</td>
                   <td className='py-3 px-6 text-center xs:py-0 '><img src={row.solarImage} alt="Panels" className='md:w-40 xs:w-full' /> </td>
                   <td className='py-3 px-6 text-center'>
-                  <Link to={`/EditSolarPanels/${row._id}?type=${row.type}&capacity=${row.strength}&description=${row.description}&batteryImage=${row.solarImage}`}>
+                  <Link to={`/EditSolarPanels/${row._id}?type=${row.type}&strength=${row.strength}&description=${row.description}&batteryImage=${row.solarImage}`}>
                       <button type='button' className='edit w-auto p-2 bg-green-600 text-slate-200 rounded-md'>
                         Edit
                       </button>

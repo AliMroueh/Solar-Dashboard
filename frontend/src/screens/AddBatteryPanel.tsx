@@ -10,6 +10,7 @@ import { AnyAction } from 'redux';
 import { useForm } from 'react-hook-form';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import { ADD_NEW_BATTERY_RESET } from '../constants/batteryConstants';
 
 interface Battery {
   _id: Number;
@@ -21,8 +22,9 @@ interface Battery {
 interface AddallBatteriesState {
    
     loading: boolean;
-    error:  any[] | null;
+    error:  any[] | null | string;
     batteries: Battery[];
+    success: boolean;
   }
   interface AddBatteryStateWithAllBatteries extends BatteryState  {
     addBattery: AddallBatteriesState;
@@ -33,27 +35,30 @@ export default function AddSolarBatteryPanels() : JSX.Element{
     const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
     
     
-      const [open, setOpen] = useState(false);
-      const [batteryImage, setBatteryImage] = useState<FileList | null>(null);
+      // const [open, setOpen] = useState(false);
+      // const [batteryImage, setBatteryImage] = useState<FileList | null>(null);
 
-      const [type, setType] = useState('');
-      const [capacity, setCapacity] = useState<number>(0);
-      const [description, setDescription] = useState('');
+      // const [type, setType] = useState('');
+      // const [capacity, setCapacity] = useState<number>(0);
+      // const [description, setDescription] = useState('');
      
       
       const addBattery = useSelector<AddBatteryStateWithAllBatteries, AddallBatteriesState>((state) => state.addBattery);
-      const { loading, error, batteries } = addBattery;
+      const { loading, error, success, batteries } = addBattery;
      
       useEffect(() => {
-        console.log(batteries);
+         if(success){
+          dispatch({type: ADD_NEW_BATTERY_RESET})
+          navigate('/AdminSolarBatteries')
+         }
       }, [batteries]);
     
       const navigate = useNavigate();
 
-       function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const newValue = parseInt(e.target.value);
-    setCapacity(newValue);
-  }
+  //      function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+  //   const newValue = parseInt(e.target.value);
+  //   setCapacity(newValue);
+  // }
   
   // e: React.FormEvent<HTMLFormElement>
       const insertHandler = (data: any) =>  {
@@ -69,31 +74,37 @@ export default function AddSolarBatteryPanels() : JSX.Element{
           formData.append('description', data.description);
 
           dispatch(addNewBatteryAction(formData));
-          console.log(data);
+          // console.log(data);
+          // if(!loading && !error && success){
+          //   navigate('/AdminSolarBatteries');
+          //   console.log(!loading)
+          //   console.log(!error)
+          //   console.log(success)
+    
+          // }
 
           
-          setType('');
-          setCapacity(0);
-          setDescription('');
+          // setType('');
+          // setCapacity(0);
+          // setDescription('');
         
       };
-    
-    //   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    //     event.preventDefault();
-    //     insertHandler();
-    //   };
-    
 
     // const submitHandler = () =>{
     //     console.log('hello')
     // }
   
     // handleSubmit((data) => console.log(data))
-    useEffect(() => {
-      if(!loading && !error){
-        navigate('/AdminSolarBatteries');
-      }
-    },[navigate, loading, error])
+    // useEffect(() => {
+    //   if(!loading && !error && success){
+    //     // navigate('/AdminSolarBatteries');
+    //     console.log(!loading)
+    //     console.log(!error)
+    //     console.log(success)
+
+    //   }
+
+    // },[navigate, loading, error,success])
 
     
     return (
@@ -103,12 +114,14 @@ export default function AddSolarBatteryPanels() : JSX.Element{
 
 {error && (
   <div>
-    {error.map((err) => (
+    {typeof error === 'object' ? error.map((err) => (
       <MessageBox key={err.msg} variant="danger">
 
         {err.msg}
       </MessageBox>
-    ))}
+    ))
+  : <MessageBox variant='danger'>{error}</MessageBox>
+  }
   </div>
 )}
       <form className='w-6/12 mx-auto rounded-lg bg-orange-400 p-8 px-8'  onSubmit={handleSubmit(insertHandler)} >
@@ -117,7 +130,7 @@ export default function AddSolarBatteryPanels() : JSX.Element{
           <label htmlFor='type'>Type</label>
           <input
             id='type'
-            className='rounded-lg bg-white mt-2 p-2  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
+            className='rounded-lg bg-white mt-2 p-2 text-black  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
             type='text'
       
             {...register('type', { required: true,  maxLength: 25 })}
@@ -128,11 +141,10 @@ export default function AddSolarBatteryPanels() : JSX.Element{
           <label htmlFor='capacity'>Capacity</label>
           <input
             id='capacity'
-            className='rounded-lg bg-white mt-2 p-2 focus:border-orange-400 focus:bg-gray-800 focus:outline-none'
+            className='rounded-lg bg-white mt-2 p-2 text-black focus:border-orange-400 focus:bg-yellow-600 focus:outline-none'
             type='text'
-            // min={100}
-            // max={999}
-  
+            min={100}
+            max={999}
             {...register('capacity', { required: true, min: 100, max: 999 })}
             />
            {errors.capacity &&( <p className="text-red-800">This field is required and must be between 100 and 999.</p>)}
@@ -141,7 +153,7 @@ export default function AddSolarBatteryPanels() : JSX.Element{
           <label htmlFor='Description'>Description</label>
           <input
             id='Description'
-            className='p-2 rounded-lg bg-white mt-2 focus:border-orange-400 focus:bg-gray-800 focus:outline-none'
+            className='p-2 rounded-lg bg-white mt-2 text-black focus:border-orange-400 focus:bg-yellow-600 focus:outline-none'
             type='text'
             maxLength={255}
             {...register('description', { required: true, maxLength: 255 })}
@@ -153,13 +165,10 @@ export default function AddSolarBatteryPanels() : JSX.Element{
           <input
             id='batteryImage'
            type="file"
-            className='p-2 rounded-lg bg-white mt-2 focus:border-orange-400 focus:bg-gray-800 focus:outline-none'
+            className='p-2 rounded-lg bg-white mt-2 text-black focus:border-orange-400 focus:bg-gray-600 focus:outline-none'
             {...register('batteryImage', { required: true })}
             />
           {errors.batteryImage && ( <p className="text-red-800">This field is required.</p>)}
-        </div>
-        <div className='flex justify-between text-white py-2'>
-          Already have an account?{' '}
         </div>
         <button className='w-1/4 my-5 py-2 bg-green-500 shadow-lg shadow-green-500/50 hover:shadow-green-500/40 text-white font-semibold rounded-lg' type="submit">
           Add Battery

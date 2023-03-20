@@ -42,7 +42,7 @@ export default function AddSolarPanels() : JSX.Element{
       const addSolar = useSelector<AddSolarStateWithAllSolars, AddallSolarsState>((state) => state.addSolar);
       const { loading, error, Solar } = addSolar;
       const navigate = useNavigate();
-      
+
       useEffect(() => {
         if(!loading && !error){
           navigate('/AdminSolarPanels');
@@ -102,7 +102,7 @@ export default function AddSolarPanels() : JSX.Element{
           <label htmlFor='type'>Type</label>
           <input
             id='type'
-            className='rounded-lg bg-white mt-2 p-2  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
+            className='rounded-lg bg-white mt-2 p-2 text-black focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
             type='text'
       
             {...register('type', { required: true,  maxLength: 25 })}
@@ -113,7 +113,7 @@ export default function AddSolarPanels() : JSX.Element{
           <label htmlFor='strength'>Strength</label>
           <input
             id='strength'
-            className='rounded-lg bg-white mt-2 p-2 focus:border-orange-400 focus:bg-gray-800 focus:outline-none'
+            className='rounded-lg bg-white mt-2 p-2 text-black focus:border-orange-400 focus:bg-yellow-600 focus:outline-none'
             type='text'
             min={100}
             max={999}
@@ -126,7 +126,7 @@ export default function AddSolarPanels() : JSX.Element{
           <label htmlFor='Description'>Description</label>
           <input
             id='Description'
-            className='p-2 rounded-lg bg-white mt-2 focus:border-orange-400 focus:bg-gray-800 focus:outline-none'
+            className='p-2 rounded-lg bg-white mt-2 text-black focus:border-orange-400 focus:bg-yellow-600 focus:outline-none'
             type='text'
             maxLength={255}
             {...register('description', { required: true, maxLength: 255 })}
@@ -138,7 +138,7 @@ export default function AddSolarPanels() : JSX.Element{
           <input
             id='solarImage'
            type="file"
-            className='p-2 rounded-lg bg-white mt-2 focus:border-orange-400 focus:bg-gray-800 focus:outline-none'
+            className='p-2 rounded-lg bg-white mt-2 text-black focus:border-orange-400 focus:bg-yellow-600 focus:outline-none'
             {...register('solarImage', { required: true })}
             />
           {errors.solarImage && ( <p className="text-red-800">This field is required.</p>)}
