@@ -51,9 +51,9 @@ export default function AdminSolarBatteries(): JSX.Element {
         dispatch(getAllBatteriesAction());
       }, [dispatch, success]);
     
-      if (!loading) {
-        console.log(batteries);
-      }
+      // if (!loading) {
+      //   console.log(batteries);
+      // }
     
       const addHandler = () => {
         navigate('/AddBatteryPanel');
@@ -73,7 +73,7 @@ export default function AdminSolarBatteries(): JSX.Element {
 
 
 <div className='bg-white  flex flex-col justify-start w-full col-span-10 p-5'>
-          <button className='w-auto p-4 bg-orange-400 text-xl text-white font-semibold rounded-md self-end' onClick={() => addHandler()}>
+          <button className='w-auto p-4 bg-orange-400 text-xl text-white font-semibold rounded-md self-end' onClick={addHandler}>
             Add Battery
           </button>
           {loading ? (
