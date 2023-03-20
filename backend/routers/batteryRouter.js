@@ -4,7 +4,8 @@ import multer from 'multer';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
 import shortid from 'shortid';
-import Battery from '../models/batteryModel.js';
+import Battery from '../models/batteryModel.js'
+// import Battery from '../models/batteryModel.js';
 import { body, validationResult } from 'express-validator';
 import expressAsyncHandler from 'express-async-handler';
 const batteryRouter = express.Router();
@@ -46,7 +47,12 @@ batteryRouter.post("/create", upload.single("batteryImage"),
     // Check for validation errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      if (req.file) {
+        fs.unlinkSync(req.file.path); // Delete the uploaded file
+        // return res.status(400).json({ errors: errors.array() });
+      }
+        return res.status(400).json({ errors: errors.array() });
+      
     }
 
     // Create the battery object
@@ -83,11 +89,14 @@ batteryRouter.put('/battery/update/:id', upload.single("batteryImage"),
   .withMessage('Description must be a string with maximum length of 255 characters'),
 ],
 expressAsyncHandler(async (req, res) => {
-  // const existingBattery = await Battery.findOne({ type: req.body.type });
-  // if (existingBattery) {
-  //   res.status(422).json({ message: 'Battery exists already!' });
-  //   return;
-  // }
+  const existingBattery = await Battery.findOne({ type: req.body.type, _id: { $ne: req.params.id } });
+  if (existingBattery) {
+    if (req.file) {
+      await fs.unlinkSync(req.file.path); // Delete the uploaded file
+    }
+    return res.status(422).json({ message: 'Battery exists already!' });
+    
+  }
       // Check for validation errors
       const errors = validationResult(req);
       if (!errors.isEmpty()) {

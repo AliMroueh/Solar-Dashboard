@@ -3,7 +3,8 @@ import expressAsyncHandler from 'express-async-handler';
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 // import data from '../data.js';
-import User from '../models/userModel.js';
+// import User from '../models/userModel.js';
+import User from '../models/userModel.js'
 import { generateToken, isAdmin, refreshToken } from '../utils.js';
 import passport from 'passport';
 
