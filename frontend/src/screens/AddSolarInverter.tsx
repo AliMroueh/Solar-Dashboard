@@ -135,9 +135,7 @@ export default function AddSolarInverter() : JSX.Element{
             />
           {errors.solarImage && ( <p className="text-red-800">This field is required.</p>)}
         </div>
-        <div className='flex justify-between text-white py-2'>
-          Already have an account?{' '}
-        </div>
+    
         <button className='w-1/4 my-5 py-2 bg-green-500 shadow-lg shadow-green-500/50 hover:shadow-green-500/40 text-white font-semibold rounded-lg' type="submit">
           Add Inverter
         </button>
