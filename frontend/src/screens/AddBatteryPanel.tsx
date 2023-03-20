@@ -75,7 +75,7 @@ export default function AddSolarBatteryPanels() : JSX.Element{
           dispatch(addNewBatteryAction(formData));
           console.log(data);
 
-          navigate('/AdminSolarBatteries');
+          
           setType('');
           setCapacity(0);
           setDescription('');
@@ -93,8 +93,8 @@ export default function AddSolarBatteryPanels() : JSX.Element{
     // }
   
     // handleSubmit((data) => console.log(data))
-    if(!loading){
-      console.log(error)
+    if(!loading && !error){
+      navigate('/AdminSolarBatteries');
     }
     
     return (
@@ -126,17 +126,17 @@ export default function AddSolarBatteryPanels() : JSX.Element{
           {errors.type && (<p className="text-red-500">This field is required and cannot exceed 25 characters.</p>)}
       </div>
         <div className='flex flex-col text-white py-2'>
-          <label htmlFor='strength'>Capacity</label>
+          <label htmlFor='capacity'>Capacity</label>
           <input
             id='capacity'
             className='rounded-lg bg-white mt-2 p-2 focus:border-orange-400 focus:bg-gray-800 focus:outline-none'
             type='text'
-            min={100}
-            max={999}
+            // min={100}
+            // max={999}
   
-            {...register('strength', { required: true, min: 100, max: 999 })}
+            {...register('capacity', { required: true, min: 100, max: 999 })}
             />
-           {errors.strength &&( <p className="text-red-800">This field is required and must be between 100 and 999.</p>)}
+           {errors.capacity &&( <p className="text-red-800">This field is required and must be between 100 and 999.</p>)}
         </div>
         <div className='flex flex-col text-white py-2'>
           <label htmlFor='Description'>Description</label>
