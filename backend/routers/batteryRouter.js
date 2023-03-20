@@ -6,6 +6,7 @@ import fs from 'fs';
 import shortid from 'shortid';
 import Battery from '../models/batteryModel.js';
 import { body, validationResult } from 'express-validator';
+import expressAsyncHandler from 'express-async-handler';
 const batteryRouter = express.Router();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -66,7 +67,7 @@ batteryRouter.post("/create", upload.single("batteryImage"),
 
 
 batteryRouter.put('/battery/update/:id', upload.single("batteryImage"),
-  async (req, res) => {
+expressAsyncHandler(async (req, res) => {
     const battery = await Battery.findById(req.params.id);
 
     if (battery) {
@@ -95,8 +96,7 @@ batteryRouter.put('/battery/update/:id', upload.single("batteryImage"),
     } else {
       res.status(401).send({ message: "Unknown id" });
     }
-  });
-
+  }));
 
 batteryRouter.get('/get', (req, res) => {
   Battery.find().exec((err, batteries) => {
@@ -109,9 +109,6 @@ batteryRouter.get('/get', (req, res) => {
     }
   })
 });
-
-
-
 
 batteryRouter.delete('/battery/delete/:id', async (req, res) => {
   try {
