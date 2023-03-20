@@ -96,7 +96,7 @@ export default function AddSolarInverter() : JSX.Element{
           <label htmlFor='type'>Type</label>
           <input
             id='type'
-            className='rounded-lg bg-white mt-2 p-2  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
+            className='rounded-lg text-black bg-white mt-2 p-2  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
             type='text'
       
             {...register('type', { required: true,  maxLength: 25 })}
@@ -107,13 +107,10 @@ export default function AddSolarInverter() : JSX.Element{
           <label htmlFor='strength'>Strength</label>
           <input
             id='strength'
-            className='rounded-lg bg-white mt-2 p-2 focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
+            className='rounded-lg text-black bg-white mt-2 p-2 focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
             type='text'
-            value='w'
-            min={100}
-            max={999}
-  
-            {...register('strength', { required: true, min: 100, max: 999 })}
+            min={1}
+            {...register('strength', { required: true,min:1 })}
             />
            {errors.strength &&( <p className="text-red-800">This field is required and must be between 100 and 999.</p>)}
         </div>
@@ -121,7 +118,7 @@ export default function AddSolarInverter() : JSX.Element{
           <label htmlFor='Description'>Description</label>
           <input
             id='Description'
-            className='p-2 rounded-lg bg-white mt-2 focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
+            className='p-2 rounded-lg text-black bg-white mt-2 focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
             type='text'
             maxLength={255}
             {...register('description', { required: true, maxLength: 255 })}
@@ -133,7 +130,7 @@ export default function AddSolarInverter() : JSX.Element{
           <input
             id='file'
            type="file"
-            className='p-2 rounded-lg bg-white mt-2 focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
+            className='p-2 rounded-lg text-black bg-white mt-2 focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
             {...register('inverterImage', { required: true })}
             />
           {errors.solarImage && ( <p className="text-red-800">This field is required.</p>)}

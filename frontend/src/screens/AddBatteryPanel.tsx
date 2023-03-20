@@ -81,18 +81,7 @@ export default function AddSolarBatteryPanels() : JSX.Element{
           setDescription('');
         
       };
-    
-    //   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    //     event.preventDefault();
-    //     insertHandler();
-    //   };
-    
 
-    // const submitHandler = () =>{
-    //     console.log('hello')
-    // }
-  
-    // handleSubmit((data) => console.log(data))
     if(!loading && !error){
       navigate('/AdminSolarBatteries');
     }
@@ -118,7 +107,7 @@ export default function AddSolarBatteryPanels() : JSX.Element{
           <label htmlFor='type'>Type</label>
           <input
             id='type'
-            className='rounded-lg bg-white mt-2 p-2  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
+            className='rounded-lg bg-white mt-2 p-2 text-black  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
             type='text'
       
             {...register('type', { required: true,  maxLength: 25 })}
@@ -129,11 +118,10 @@ export default function AddSolarBatteryPanels() : JSX.Element{
           <label htmlFor='capacity'>Capacity</label>
           <input
             id='capacity'
-            className='rounded-lg bg-white mt-2 p-2 focus:border-orange-400 focus:bg-gray-800 focus:outline-none'
+            className='rounded-lg bg-white mt-2 p-2 text-black focus:border-orange-400 focus:bg-yellow-600 focus:outline-none'
             type='text'
-            // min={100}
-            // max={999}
-  
+            min={100}
+            max={999}
             {...register('capacity', { required: true, min: 100, max: 999 })}
             />
            {errors.capacity &&( <p className="text-red-800">This field is required and must be between 100 and 999.</p>)}
@@ -142,7 +130,7 @@ export default function AddSolarBatteryPanels() : JSX.Element{
           <label htmlFor='Description'>Description</label>
           <input
             id='Description'
-            className='p-2 rounded-lg bg-white mt-2 focus:border-orange-400 focus:bg-gray-800 focus:outline-none'
+            className='p-2 rounded-lg bg-white mt-2 text-black focus:border-orange-400 focus:bg-yellow-600 focus:outline-none'
             type='text'
             maxLength={255}
             {...register('description', { required: true, maxLength: 255 })}
@@ -154,7 +142,7 @@ export default function AddSolarBatteryPanels() : JSX.Element{
           <input
             id='file'
            type="file"
-            className='p-2 rounded-lg bg-white mt-2 focus:border-orange-400 focus:bg-gray-800 focus:outline-none'
+            className='p-2 rounded-lg bg-white mt-2 text-black focus:border-orange-400 focus:bg-gray-600 focus:outline-none'
             {...register('inverterImage', { required: true })}
             />
           {errors.solarImage && ( <p className="text-red-800">This field is required.</p>)}

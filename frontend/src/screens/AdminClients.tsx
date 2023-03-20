@@ -90,6 +90,7 @@ export default function AdminSolarClients(): JSX.Element {
               <th className='py-3 bg-orange-400 font-bold text-lg text-center'>Address</th>
               <th className='py-3 bg-orange-400 font-bold text-lg text-center'>Phone</th>
               <th className='py-3 bg-orange-400 font-bold text-lg text-center'>Image</th>
+              <th className='py-3 bg-orange-400 font-bold text-lg text-center'>Option</th>
             </tr>
           </thead>
           <tbody>
