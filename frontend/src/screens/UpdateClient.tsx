@@ -10,7 +10,7 @@ import { updateClientAction, getAllClientsAction } from '../actions/clientAction
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { useForm } from 'react-hook-form';
-
+import { UPDATE_CLIENT_RESET } from '../constants/clientConstants';
 interface Client {
     _id: string;
     name: string;
@@ -24,6 +24,7 @@ interface Client {
       loading: boolean;
       error: any[] | null;
       clients: Client[];
+      success: boolean;
     }
 
 interface UpdateClientStateWithAllClients extends ClientState {
@@ -31,39 +32,61 @@ interface UpdateClientStateWithAllClients extends ClientState {
 }
 
 export default function UpdateSolarClient() {
-  const { register, handleSubmit,  formState: { errors } } = useForm(({ mode: 'onChange' }));
+  const { register, handleSubmit,  formState: { errors },setValue } = useForm(({ mode: 'onChange' }));
   const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
   const location = useLocation();
-  const Name = new URLSearchParams(location.search).get('name') ?? '';
-  const Email = new URLSearchParams(location.search).get('email') ?? '';
-  const Address = new URLSearchParams(location.search).get('address') ?? '';
-  const Phone = new URLSearchParams(location.search).get('phone') ?? '';
+
+  useEffect(() => {
+    const query = new URLSearchParams(location.search);
+    const name = query.get('name') ?? '';
+    const email = query.get('email') ?? '';
+    const address = query.get('address') ?? '';
+    const phone = query.get('phone') ?? '';
+
+    setValue('name', name);
+    setValue('email', email);
+    setValue('address', address);
+    setValue('phone', phone);
+  }, [location.search, setValue]);
+
+  // const Name = new URLSearchParams(location.search).get('name') ?? '';
+  // const Email = new URLSearchParams(location.search).get('email') ?? '';
+  // const Address = new URLSearchParams(location.search).get('address') ?? '';
+  // const Phone = new URLSearchParams(location.search).get('phone') ?? '';
   
   const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
 
   const [open, setOpen] = useState(false);
   const [clientImage, setClientImage] = useState<FileList | null>(null);
 
-  const [name, setName] = useState(Name);
-  const [email, setEmail] = useState(Email);
-  const [address, setAddress] = useState(Address);
-  const [phone, setPhone] = useState(Phone);
+  // const [name, setName] = useState(Name);
+  // const [email, setEmail] = useState(Email);
+  // const [address, setAddress] = useState(Address);
+  // const [phone, setPhone] = useState(Phone);
   const updateClient = useSelector<UpdateClientStateWithAllClients, UpdateallClientsState>((state) => state.updateClient);
-  const { loading, error, clients } = updateClient;
+  const { loading, error, clients, success } = updateClient;
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if(success){
+     navigate('/AdminClients');
+     dispatch({type: UPDATE_CLIENT_RESET})
+    };
+  }, [success, navigate, dispatch])
+
 
   const updateHandler = (data: any) => {
     // e.preventDefault();
     const formData = new FormData();
 
-    if (clientImage && clientImage.length > 0) {
-      formData.append('clientImage', clientImage[0]);
+    if (data.clientImage && data.clientImage.length > 0) {
+      formData.append('clientImage', data.clientImage[0]);
     }
-    formData.append('name', name);
-    formData.append('email', email);
-    formData.append('address', address);
-    formData.append('phone', phone);
+    formData.append('name', data.name);
+    formData.append('email', data.email);
+    formData.append('address', data.address);
+    formData.append('phone', data.phone.toString());
 
     
     dispatch(updateClientAction(String(id), formData));
@@ -72,30 +95,33 @@ export default function UpdateSolarClient() {
 
 
    
-    
-     navigate('/AdminClients');
+  
 
   };
 
   return (
-    <div className='bg-cyan-800  flex flex-col justify-center w-full col-span-10'>
+    <div className='flex flex-col justify-center w-full col-span-10'>
       {loading && <LoadingBox></LoadingBox>}
-      {error && (
-        <div>
-          {error.map((err) => (
-            <MessageBox key={err.msg} variant="danger">
-              {err.msg}
-            </MessageBox>
-          ))}
-        </div>
-      )}
-      <form className='w-11/12 mx-auto rounded-lg bg-cyan-900 p-8 px-8' onSubmit={handleSubmit(updateHandler)} >
+
+{error && (
+<div>
+{typeof error === 'object' ? error.map((err) => (
+<MessageBox key={err.msg} variant="danger">
+
+  {err.msg}
+</MessageBox>
+))
+: <MessageBox variant='danger'>{error}</MessageBox>
+}
+</div>
+)}
+      <form className='w-6/12 mx-auto rounded-lg bg-orange-400 p-8 px-8' onSubmit={handleSubmit(updateHandler)} >
         <h2 className='text-4xl text-white font-bold text-center'>Update Client</h2>
-        <div className='flex flex-col text-gray-400 py-2'>
+        <div className='flex flex-col text-white py-2'>
           <label htmlFor='name'>Name</label>
           <input
             id='name'
-            className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
+            className='rounded-lg bg-white mt-2 p-2 text-black  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
             type='text'
             // value={name}
             // onChange={(e) => setName(e.target.value)}
@@ -104,11 +130,11 @@ export default function UpdateSolarClient() {
           />
           {errors.name && (<p className="text-red-500">This field is required and cannot exceed 255 characters.</p>)}
         </div>
-        <div className='flex flex-col text-gray-400 py-2'>
+        <div className='flex flex-col text-white py-2'>
           <label htmlFor='email'>Email</label>
           <input
             id='email'
-            className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
+            className='rounded-lg bg-white mt-2 p-2 text-black  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
             type='email'
             // value={email}
             // onChange={(e) => setEmail(e.target.value)}
@@ -123,11 +149,11 @@ export default function UpdateSolarClient() {
           {errors.email?.type === 'pattern' && <p className="text-red-500">Invalid email address.</p>}
           {errors.email?.type === 'maxLength' && <p className="text-red-500">Cannot exceed 255 characters.</p>}
         </div>
-        <div className='flex flex-col text-gray-400 py-2'>
+        <div className='flex flex-col text-white py-2'>
           <label htmlFor='address'>Address</label>
           <input
             id='address'
-            className='p-2 rounded-lg bg-gray-700 mt-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
+            className='rounded-lg bg-white mt-2 p-2 text-black  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
             type='text'
             // value={address}
             // onChange={(e) => setAddress(e.target.value)}
@@ -136,11 +162,11 @@ export default function UpdateSolarClient() {
           />
           {errors.address && (<p className="text-red-500">This field is required and cannot exceed 255 characters.</p>)}
         </div>
-        <div className='flex flex-col text-gray-400 py-2'>
+        <div className='flex flex-col text-white py-2'>
           <label htmlFor='phone'>Phone</label>
           <input
             id='phone'
-            className='p-2 rounded-lg bg-gray-700 mt-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
+            className='rounded-lg bg-white mt-2 p-2 text-black  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
             type='text'
             // value={phone}
             // onChange={(e) => setPhone(e.target.value)}
@@ -149,12 +175,12 @@ export default function UpdateSolarClient() {
           />
           {errors.phone && (<p className="text-red-500">This field is required and cannot exceed 20 characters.</p>)}
         </div>
-        <div className='flex flex-col text-gray-400 py-2'>
+        <div className='flex flex-col text-white py-2'>
           <label htmlFor='file'>Add Image</label>
           <input
             id='file'
            
-            className='p-2 rounded-lg bg-gray-700 mt-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
+            className='rounded-lg bg-white mt-2 p-2 text-black  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
             type='file'
             
             // onChange={e => setClientImage(e.target.files)}
@@ -166,11 +192,11 @@ export default function UpdateSolarClient() {
           />
            {errors.clientImage && ( <p className="text-red-500">This field is required.</p>)}
         </div>
-        <div className='flex justify-between text-gray-400 py-2'>
+        {/* <div className='flex justify-between text-gray-400 py-2'>
          
-          {/* <Link className='text-teal-500 hover:font-semibold' to={`/signin`}>Sign-In</Link> */}
-        </div>
-        <button className='w-full my-5 py-2 bg-teal-500 shadow-lg shadow-teal-500/50 hover:shadow-teal-500/40 text-white font-semibold rounded-lg' type="submit">
+          <Link className='text-teal-500 hover:font-semibold' to={`/signin`}>Sign-In</Link>
+        </div> */}
+        <button className='w-1/4 my-5 py-2 bg-green-500 shadow-lg shadow-green-500/50 hover:shadow-green-500/40 text-white font-semibold rounded-lg' type="submit">
           Update Client
         </button>
         

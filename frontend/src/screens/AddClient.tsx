@@ -10,6 +10,7 @@ import { AnyAction } from 'redux';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { useForm } from 'react-hook-form';
+import { ADD_NEW_CLIENT_RESET } from '../constants/clientConstants';
 interface Client {
   _id: Number;
   name: string;
@@ -23,6 +24,7 @@ interface AddallClientsState {
     loading: boolean;
     error: any[] | null;
     clients: Client[];
+    success: boolean;
   }
   interface AddClientStateWithAllClients extends ClientState  {
     addClient: AddallClientsState;
@@ -33,26 +35,31 @@ export default function AddSolarClient() : JSX.Element{
     const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
     const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
     
-      const [open, setOpen] = useState(false);
-      const [clientImage, setClientImage] = useState<FileList | null>(null);
+      // const [open, setOpen] = useState(false);
+      // const [clientImage, setClientImage] = useState<FileList | null>(null);
 
-      const [name, setName] = useState('');
-      const [email, setEmail] = useState('');
-      const [address, setAddress] = useState('');
-      const [phone, setPhone] = useState<number>(0);
+      // const [name, setName] = useState('');
+      // const [email, setEmail] = useState('');
+      // const [address, setAddress] = useState('');
+      // const [phone, setPhone] = useState<number>(0);
       
       const addClient = useSelector<AddClientStateWithAllClients, AddallClientsState>((state) => state.addClient);
-      const { loading, error, clients } = addClient;
+      const { loading, error, clients, success } = addClient;
+      const navigate = useNavigate();
      
       useEffect(() => {
-        console.log(clients);
-      }, [clients]);
+        if(success){
+          dispatch({type: ADD_NEW_CLIENT_RESET})
+          navigate('/AdminClients')
+        }
+     }, [clients]);
+      
     
-      const navigate = useNavigate();
-      function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-        const newValue = parseInt(e.target.value);
-        setPhone(newValue);
-      }
+      
+      // function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+      //   const newValue = parseInt(e.target.value);
+      //   setPhone(newValue);
+      // }
       // e: React.FormEvent<HTMLFormElement>
       const insertHandler = (data: any) => {
         // e.preventDefault();
@@ -71,15 +78,12 @@ export default function AddSolarClient() : JSX.Element{
 
           dispatch(addClientAction(formData));
           
-          setName('');
-          setPhone(0);
-          setAddress('');
-          setEmail('');
+         
       };
 
-      if(!loading && !error){
-        navigate('/AdminClients');
-      }
+      // if(!loading && !error){
+      //   navigate('/AdminClients');
+      // }
     
     //   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     //     event.preventDefault();
@@ -93,24 +97,28 @@ export default function AddSolarClient() : JSX.Element{
   return (
 
 
-<div className='bg-cyan-800  flex flex-col justify-center w-full col-span-10'>
+<div className='flex flex-col justify-center w-full col-span-10'>
 {loading && <LoadingBox></LoadingBox>}
-      {error && (
-        <div>
-          {error.map((err) => (
-            <MessageBox key={err.msg} variant="danger">
-              {err.msg}
-            </MessageBox>
-          ))}
-        </div>
-      )}
-      <form className='w-11/12 mx-auto rounded-lg bg-cyan-900 p-8 px-8' onSubmit={handleSubmit(insertHandler)} >
+
+{error && (
+  <div>
+    {typeof error === 'object' ? error.map((err) => (
+      <MessageBox key={err.msg} variant="danger">
+
+        {err.msg}
+      </MessageBox>
+    ))
+  : <MessageBox variant='danger'>{error}</MessageBox>
+  }
+  </div>
+)}
+      <form className='w-6/12 mx-auto rounded-lg bg-orange-400 p-8 px-8' onSubmit={handleSubmit(insertHandler)} >
         <h2 className='text-4xl text-white font-bold text-center'>Add Client</h2>
-        <div className='flex flex-col text-gray-400 py-2'>
+        <div className='flex flex-col text-white py-2'>
           <label htmlFor='name'>Name</label>
           <input
             id='name'
-            className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
+            className='rounded-lg bg-white mt-2 p-2 text-black  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
             type='text'
         
             // onChange={(e) => setName(e.target.value)}
@@ -119,11 +127,11 @@ export default function AddSolarClient() : JSX.Element{
           />
           {errors.name && (<p className="text-red-500">This field is required and cannot exceed 255 characters.</p>)}
         </div>
-        <div className='flex flex-col text-gray-400 py-2'>
+        <div className='flex flex-col text-white py-2'>
           <label htmlFor='email'>Email</label>
           <input
             id='email'
-            className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
+            className='rounded-lg bg-white mt-2 p-2 text-black focus:border-orange-400 focus:bg-yellow-600 focus:outline-none'
             type='email'
           
             // onChange={(e) => setEmail(e.target.value)}
@@ -140,11 +148,11 @@ export default function AddSolarClient() : JSX.Element{
           {errors.email?.type === 'maxLength' && <p className="text-red-500">Cannot exceed 255 characters.</p>}
   
         </div>
-        <div className='flex flex-col text-gray-400 py-2'>
+        <div className='flex flex-col text-white py-2'>
           <label htmlFor='address'>Address</label>
           <input
             id='address'
-            className='p-2 rounded-lg bg-gray-700 mt-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
+            className='rounded-lg bg-white mt-2 p-2 text-black focus:border-orange-400 focus:bg-yellow-600 focus:outline-none'
             type='text'
            
             // onChange={(e) => setAddress(e.target.value)}
@@ -153,11 +161,11 @@ export default function AddSolarClient() : JSX.Element{
           />
           {errors.address && (<p className="text-red-500">This field is required and cannot exceed 255 characters.</p>)}
         </div>
-        <div className='flex flex-col text-gray-400 py-2'>
+        <div className='flex flex-col text-white py-2'>
           <label htmlFor='phone'>Phone</label>
           <input
             id='phone'
-            className='p-2 rounded-lg bg-gray-700 mt-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
+            className='rounded-lg bg-white mt-2 p-2 text-black focus:border-orange-400 focus:bg-yellow-600 focus:outline-none'
             type='text'
            
             // onChange={(e) => setPhone(e.target.value)}
@@ -166,12 +174,12 @@ export default function AddSolarClient() : JSX.Element{
           />
           {errors.phone && (<p className="text-red-500">This field is required and cannot exceed 20 characters.</p>)}
         </div>
-        <div className='flex flex-col text-gray-400 py-2'>
+        <div className='flex flex-col text-white py-2'>
           <label htmlFor='file'>Add Image</label>
           <input
             id='file'
            
-            className='p-2 rounded-lg bg-gray-700 mt-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
+            className='p-2 rounded-lg bg-white mt-2 text-black focus:border-orange-400 focus:bg-gray-600 focus:outline-none'
             type='file'
             
             // onChange={e => setClientImage(e.target.files)}
@@ -182,11 +190,11 @@ export default function AddSolarClient() : JSX.Element{
           />
           {errors.clientImage && ( <p className="text-red-500">This field is required.</p>)}
         </div>
-        <div className='flex justify-between text-gray-400 py-2'>
+        {/* <div className='flex justify-between text-gray-400 py-2'>
          
-          {/* <Link className='text-teal-500 hover:font-semibold' to={`/signin`}>Sign-In</Link> */}
-        </div>
-        <button className='w-full my-5 py-2 bg-teal-500 shadow-lg shadow-teal-500/50 hover:shadow-teal-500/40 text-white font-semibold rounded-lg' type="submit">
+          <Link className='text-teal-500 hover:font-semibold' to={`/signin`}>Sign-In</Link>
+        </div> */}
+        <button className='w-1/4 my-5 py-2 bg-green-500 shadow-lg shadow-green-500/50 hover:shadow-green-500/40 text-white font-semibold rounded-lg' type="submit">
           Add Client
         </button>
         

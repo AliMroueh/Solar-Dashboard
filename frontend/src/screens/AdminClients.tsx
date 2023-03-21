@@ -104,11 +104,11 @@ export default function AdminSolarClients(): JSX.Element {
                 <td className='py-3 px-6 text-center'><img src={row.clientImage} alt="Client" /> </td>
                 <td className='py-3 px-6 text-center'>
                 <Link to={`/UpdateClient/${row._id}?name=${row.name}&email=${row.email}&address=${row.address}&phone=${row.phone}&clientImage=${row.clientImage}`}>
-                    <button type='button' className='edit w-auto p-4 bg-green-600 ml-8 text-slate-200 rounded-md self-end'>
+                    <button type='button' className='edit w-auto p-2 bg-green-600 text-slate-200 rounded-md'>
                       Edit
                     </button>
                   </Link>
-                  <button type='button' className='delete w-auto p-4 bg-red-600 mr-4 text-slate-200 rounded-md self-end' onClick={(event) => deleteHandler(event, row._id)}>
+                  <button type='button' className='delete w-auto p-2 bg-red-600 text-slate-200 rounded-md ml-2' onClick={(event) => deleteHandler(event, row._id)}>
                     Delete
                   </button>
                 </td>

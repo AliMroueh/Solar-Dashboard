@@ -53,7 +53,7 @@ export const addClientAction = (info: any) => async (dispatch: ThunkDispatch<{},
       dispatch({
         type: ADD_NEW_CLIENT_FAILURE,
         payload:
-        error.response.data.errors 
+        error.response.data.errors || (error.response && error.response.data.message ? error.response.data.message : error.message)
       });
     }
   };
@@ -75,9 +75,7 @@ export const addClientAction = (info: any) => async (dispatch: ThunkDispatch<{},
       dispatch({
         type: UPDATE_CLIENT_FAILURE,
         payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
+        error.response.data.errors || (error.response && error.response.data.message ? error.response.data.message : error.message)
       });
     }
   };

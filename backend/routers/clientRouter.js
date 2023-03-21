@@ -6,6 +6,7 @@ import fs from 'fs';
 import shortid from'shortid';
 import Client from '../models/clientModel.js';
 import { body, validationResult} from 'express-validator';
+import expressAsyncHandler from 'express-async-handler';
 const clientRouter = express.Router();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -39,7 +40,7 @@ const storage = multer.diskStorage({
       .withMessage('Phone number must be no more than 20 digits'),
 
   ],
-  async (req, res, next) => {
+  expressAsyncHandler(async (req, res, next) => {
 
     // Check for validation errors
     const errors = validationResult(req);
@@ -88,11 +89,11 @@ const storage = multer.diskStorage({
       });
     }
   }
-);
+  ));
 
 
 clientRouter.put('/client/update/:id', upload.single("clientImage"),
- async (req, res) => {
+expressAsyncHandler(async (req, res) => {
     const client = await Client.findById(req.params.id);
 
     if (client) {
@@ -123,7 +124,7 @@ clientRouter.put('/client/update/:id', upload.single("clientImage"),
     } else {
         res.status(401).send({ message: "Unknown id" });
     }
-});
+}));
 
 
 clientRouter.get('/get', (req, res) => {
@@ -141,7 +142,7 @@ clientRouter.get('/get', (req, res) => {
 
   
 
-clientRouter.delete('/client/delete/:id', async (req, res) => {
+clientRouter.delete('/client/delete/:id', expressAsyncHandler(async (req, res) => {
   try {
     const client = await Client.findById(req.params.id);
     if (!client) {
@@ -159,7 +160,7 @@ clientRouter.delete('/client/delete/:id', async (req, res) => {
     console.error(err);
     res.status(500).json({ message: 'Server error' });
   }
-});
+}));
 
 
 
