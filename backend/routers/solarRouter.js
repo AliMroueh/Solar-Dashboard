@@ -34,50 +34,7 @@ solarRouter.post("/create", upload.single("solarImage"),
 
 
 
-    // expressAsyncHandler(async (req, res) => {
-    //     const existingBattery = await Battery.findOne({ type: req.body.type });
-    //     if (existingBattery) {
-    //         if (req.file) {
-    //             await fs.unlinkSync(req.file.path); // Delete the uploaded file
-    //         }
-    //         return res.status(422).json({ message: 'Battery exists already!' });
 
-    //     }
-    //     (req, res) => {
-    //         // Check for validation errors
-    //         const errors = validationResult(req);
-    //         if (!errors.isEmpty()) {
-    //             return res.status(400).json({ errors: errors.array() });
-    //         }
-
-    //         let solarImage = "";
-    //         // Add the categoryImage field if a file was uploaded
-    //         if (req.file) {
-    //             solarImage = 'http://localhost:5000/public/' + req.file.filename;
-    //         }
-    //         // Create the category object
-    //         const solarObj = {
-    //             type: req.body.type,
-    //             description: req.body.description,
-    //             strength: req.body.strength,
-    //             solarImage
-    //         };
-
-
-
-    //         // Save the category to the database
-    //         const sol = new Solar(solarObj);
-    //         sol.save((error, solar) => {
-    //             if (error) return res.status(400).json({ error });
-    //             if (solar) {
-    //                 return res.status(201).json({ solar });
-    //             }
-    //         });
-
-
-
-    //     }
-    //  ));
 
 
 
@@ -141,46 +98,6 @@ solarRouter.put('/solar/update/:id', upload.single("solarImage"),
         body('description', 'Please enter a description').trim().notEmpty().isString().isLength({ max: 255 })
             .withMessage('Description must be a string with maximum length of 255 characters'),
     ],
-    //     const solar = await Solar.findById(req.params.id);
-
-    //     if (solar) {
-    //         solar.type = req.body.type || solar.type;
-    //         solar.strength = req.body.strength || solar.strength;
-    //         solar.description = req.body.description || solar.description;
-
-    //         if (req.file) {
-    //             // Extract the filename from the categoryImage URL
-    //             const oldImagePath = path.join(path.dirname(__dirname), "uploads/") + solar.solarImage.split('/').pop();
-    //             fs.unlinkSync(oldImagePath); // Delete the old image
-    //             solar.solarImage = 'http://localhost:5000/public/' + req.file.filename;
-    //         }
-
-    //         const updatedSolar = await solar.save();
-
-    //         res.send({
-    //             _id: updatedSolar._id,
-    //             type: updatedSolar.type,
-    //             description: updatedSolar.description,
-    //             strength: updatedSolar.strength,
-    //             solarImage: updatedSolar.solarImage,
-    //         });
-    //     } else {
-    //         res.status(401).send({ message: "Unknown id" });
-    //     }
-    // });
-
-
-    // solarRouter.get('/get', (req, res) => {
-    //     Solar.find().exec((err, solar) => {
-    //         if (err) {
-    //             res.json({ message: err.message });
-    //         } else {
-
-    //             res.send(solar)
-
-    //         }
-    //     })
-    // });
 
 
 
@@ -213,7 +130,7 @@ solarRouter.put('/solar/update/:id', upload.single("solarImage"),
                 const oldImagePath = path.join(path.dirname(__dirname), "uploads/") + solar.solarImage.split('/').pop();
                 if (fs.existsSync(oldImagePath)) {
                     fs.unlinkSync(oldImagePath); // Delete the old image
-                  }                solar.solarImage = 'http://localhost:5000/public/' + req.file.filename;
+                } solar.solarImage = 'http://localhost:5000/public/' + req.file.filename;
             }
 
             const updatedSolar = await solar.save();
@@ -248,28 +165,6 @@ solarRouter.get('/get', (req, res) => {
 
 
 
-// solarRouter.delete('/solar/delete/:id', async (req, res) => {
-//     try {
-//         const solar = await Solar.findById(req.params.id);
-//         if (!solar) {
-//             return res.status(404).json({ message: 'solar not found' });
-//         }
-
-//         // Remove the battery image from the server file system
-//         const imagePath = path.join(path.dirname(__dirname), "uploads/") + solar.solarImage.split('/').pop();
-//         fs.unlinkSync(imagePath, (err) => {
-//             if (err) {
-//                 console.error(err);
-//             }
-//         });
-
-//         await Solar.findByIdAndRemove(req.params.id);
-//         res.status(201).json({ message: 'Solar removed' });
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).json({ message: 'Server error' });
-//     }
-// });
 
 
 

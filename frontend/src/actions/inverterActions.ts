@@ -40,7 +40,9 @@ export const getAllInverterAction = () => async (dispatch: ThunkDispatch<{}, {},
 
         dispatch({
             type: GET_ALL_INVERTERS_FAILURE,
-            payload: error.response && error.response.data.message ? error.response.data.message : error.message
+            payload: {
+                error: error.response && error.response.data.message ? error.response.data.message : error.message,
+              },
         })
     }
 }
@@ -62,7 +64,7 @@ export const addInverterAction =  (info: any) => async (dispatch: ThunkDispatch<
 
         dispatch({
             type: ADD_NEW_INVERTER_FAILURE,
-            payload:  error.response.data.errors 
+            payload:  error.response.data.errors || (error.response && error.response.data.message ? error.response.data.message : error.message)
         })
     }
 }
@@ -88,7 +90,7 @@ export const updateInverterAction  = (id: string, info:any) => async (dispatch: 
 
         dispatch({
             type: UPDATE_INVERTER_FAILURE,
-            payload: error.response && error.response.data.message ? error.response.data.message : error.message
+            payload: error.response.data.errors || (error.response && error.response.data.message ? error.response.data.message : error.message)
         })
     }
 }
@@ -114,7 +116,7 @@ export const deleteInverterAction = (id: Number) => async (dispatch: ThunkDispat
 
         dispatch({
             type: DELETE_INVERTER_FAILURE,
-            payload: error.response && error.response.data.message ? error.response.data.message : error.message
+            payload:  error.response.data.errors || (error.response && error.response.data.message ? error.response.data.message : error.message)
         })
     }
 }

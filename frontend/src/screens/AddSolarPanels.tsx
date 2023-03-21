@@ -32,14 +32,7 @@ export default function AddSolarPanels() : JSX.Element{
   const { register, handleSubmit,  formState: { errors } } = useForm(({ mode: 'onChange' }));
     const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
     
-    
-      // const [open, setOpen] = useState(false);
-      // const [solarImage, setSolarImage] = useState<FileList | null>(null);
-
-      // const [type, setType] = useState('');
-      // const [strength, setStrength] = useState<number>(3);
-      // const [description, setDescription] = useState('');
-    
+ 
       
       const addSolar = useSelector<AddSolarStateWithAllSolars, AddallSolarsState>((state) => state.addSolar);
       const { loading, error, solars, success } = addSolar;

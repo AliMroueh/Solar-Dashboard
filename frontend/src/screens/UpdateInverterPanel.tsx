@@ -1,13 +1,16 @@
-import React, {useState } from 'react';
+import React, {useEffect,useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { InverterState } from '../reducers/inverterReducer';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
+import { useForm } from 'react-hook-form';
 import { updateInverterAction } from '../actions/inverterActions';
-
+import LoadingBox from '../components/LoadingBox';
+import MessageBox from '../components/MessageBox';
+import { UPDATE_INVERTER_RESET } from '../constants/inverterConstants';
 
 interface Inverter {
   _id: string;
@@ -18,113 +21,137 @@ interface Inverter {
 }
 interface UpdateallInvertersState {
   loading: boolean;
-  error: string | null;
+  error:  any[] | null | string;
   inverters: Inverter[];
+  success: boolean;
 }
 
 interface UpdateInverterStateWithAllInverters extends InverterState {
   updateInverter: UpdateallInvertersState;
 }
 
-export default function UpdateInverterPanel() {
+export default function UpdateInverterPanel() : JSX.Element {
+
+  const { register, handleSubmit,  formState: { errors },setValue } = useForm(({ mode: 'onChange' }));
+
   const location = useLocation();
-  const Type = new URLSearchParams(location.search).get('type') ?? '';
-const Strength = new URLSearchParams(location.search).get('strength') ?? '';
-const Description = new URLSearchParams(location.search).get('description') ?? '';
+  useEffect(() => {
+    const query = new URLSearchParams(location.search);
+    const type = query.get('type') ?? '';
+    const strength = query.get('strength') ?? '';
+    const description = query.get('description') ?? '';
 
-  
-  const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
+    setValue('type', type);
+    setValue('strength', strength);
+    setValue('description', description);
+  }, [location.search, setValue]);
 
-  const [open, setOpen] = useState(false);
-  const [inverterImage, setInverterImage] = useState<FileList | null>(null);
 
-  const [type, setType] = useState(Type);
-  const [strength, setStrength] = useState(Strength);
-  const [description, setDescription] = useState(Description);
-
-  const updateInverter = useSelector<UpdateInverterStateWithAllInverters, UpdateallInvertersState>((state) => state.updateInverter);
-  const { loading, error, inverters } = updateInverter;
-  
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
-
-  const updateHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData();
-
-    if (inverterImage && inverterImage.length > 0) {
-      formData.append('inverterImage', inverterImage[0]);
-    }
-    formData.append('type', type);
-    formData.append('strength', strength);
-    formData.append('description', description);
-
+    const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
     
-    dispatch(updateInverterAction(String(id), formData));
-
     
-
-
+        const updateInverter = useSelector<UpdateInverterStateWithAllInverters, UpdateallInvertersState>((state) => state.updateInverter);
+      const { loading, error, inverters ,success } = updateInverter;
    
+      const { id } = useParams<{ id: string }>();
+       
+      const navigate = useNavigate();
+      useEffect(() => {
+        if(success){
+         navigate('/AdminSolarInverter');
+         dispatch({type:UPDATE_INVERTER_RESET})
+        };
+      }, [success, navigate, dispatch])
     
-    // navigate('/batteries');
+    const updateHandler = (data: any) => {
 
-  };
+          const formData = new FormData();
+    
+          if (data.inverterImage && data.inverterImage.length > 0) {
+            formData.append('inverterImage', data.inverterImage[0]);
+          }
+          formData.append('type', data.type);
+          formData.append('strength', data.strength);
+          formData.append('description', data.description);
+
+          dispatch(updateInverterAction(String(id), formData));
+      };
+
+
+
 
   return (
-    <div className='bg-cyan-800  flex flex-col justify-center w-full col-span-10'>
-      <form className='w-11/12 mx-auto rounded-lg bg-cyan-900 p-8 px-8' onSubmit={updateHandler} >
+   
+      
+<div className='bg-white  flex flex-col justify-center w-full col-span-10'>
+      {loading && <LoadingBox></LoadingBox>}
+
+      {error && (
+  <div>
+    {typeof error === 'object' ? error.map((err) => (
+      <MessageBox key={err.msg} variant="danger">
+
+        {err.msg}
+      </MessageBox>
+    ))
+  : <MessageBox variant='danger'>{error}</MessageBox>
+  }
+  </div>
+)}
+      <form className='w-8/12 mx-auto rounded-lg bg-orange-600 p-8 px-8' onSubmit={handleSubmit(updateHandler)} >
         <h2 className='text-4xl text-white font-bold text-center'>Update Inverter</h2>
         <div className='flex flex-col text-gray-400 py-2'>
           <label htmlFor='type'>Type</label>
           <input
             id='type'
-            className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
+            className='rounded-lg text-black  bg-white mt-2 p-2  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
             type='text'
-            value={type}
-            onChange={(e) => setType(e.target.value)}
-            required
-          />
-        </div>
+            {...register('type', { required: true,  maxLength: 25 })}
+            />
+            {errors.type && (<p className="text-red-500">This field is required and cannot exceed 25 characters.</p>)}
+          </div>
+
+
         <div className='flex flex-col text-gray-400 py-2'>
           <label htmlFor='strength'>Strength</label>
           <input
             id='strength'
-            className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
+            className='rounded-lg text-black  bg-white mt-2 p-2  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
             type='text'
-            value={strength}
-            onChange={(e) => setStrength(e.target.value)}
-            required
-          />
-        </div>
+            min={1}
+            {...register('strength', { required: true, min: 1})}
+            />
+             {errors.strength &&( <p className="text-red-800">This field is required and must be between 100 and 999.</p>)}
+          </div>
+
+
         <div className='flex flex-col text-gray-400 py-2'>
           <label htmlFor='Description'>Description</label>
           <input
             id='Description'
-            className='p-2 rounded-lg bg-gray-700 mt-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
+            className='rounded-lg text-black  bg-white mt-2 p-2  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
             type='text'
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
+            maxLength={255}
+            {...register('description', { required: true, maxLength: 255 })}
           />
+          {errors.description && ( <p className="text-red-800">This field is required and cannot exceed 255 characters.</p>)}
         </div>
         <div className='flex flex-col text-gray-400 py-2'>
           <label htmlFor='file'>Add Image</label>
           <input
             id='file'
-           
-            className='p-2 rounded-lg bg-gray-700 mt-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
+            className='rounded-lg text-black  bg-white mt-2 p-2  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
             type='file'
             
-            onChange={e => setInverterImage(e.target.files)}   
-          
-          />
-        </div>
+            {...register('inverterImage', { required: true })}
+            />
+            {errors.inverterImage && ( <p className="text-red-800">This field is required.</p>)}
+          </div>
         <div className='flex justify-between text-gray-400 py-2'>
        
           {/* <Link className='text-teal-500 hover:font-semibold' to={`/signin`}>Sign-In</Link> */}
         </div>
-        <button className='w-full my-5 py-2 bg-teal-500 shadow-lg shadow-teal-500/50 hover:shadow-teal-500/40 text-white font-semibold rounded-lg' type="submit">
+        <button className='w-full my-5 py-2 bg-green-500 shadow-lg shadow-green-500/50 hover:shadow-green-500/40 text-white font-semibold rounded-lg' type="submit">
           Update Inverter
         </button>
         

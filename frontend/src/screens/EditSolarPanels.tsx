@@ -101,11 +101,11 @@ export default function EditSolarPanels() : JSX.Element{
 )}
       <form className='w-6/12 mx-auto rounded-lg bg-orange-400 p-8 px-8' onSubmit={handleSubmit(updateHandler)} >
         <h2 className='text-4xl text-white font-bold text-center'>update Solar Panel</h2>
-        <div className='flex flex-col text-black py-2'>
+        <div className='flex flex-col py-2'>
           <label htmlFor='type'>Type</label>
           <input
             id='type'
-            className='rounded-lg bg-white mt-2 p-2  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
+            className='rounded-lg text-black  bg-white mt-2 p-2  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
             type='text'
           //  value={type}
           //   onChange={(e) => setType(e.target.value)}
@@ -113,11 +113,11 @@ export default function EditSolarPanels() : JSX.Element{
             />
             {errors.type && (<p className="text-red-500">This field is required and cannot exceed 25 characters.</p>)}
           </div>
-        <div className='flex flex-col text-black py-2'>
+        <div className='flex flex-col py-2'>
           <label htmlFor='strength'>Strength</label>
           <input
             id='strength'
-            className='rounded-lg bg-white mt-2 p-2  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
+            className='rounded-lg text-black  bg-white mt-2 p-2  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
             type='text'
             min={100}
             max={999}
@@ -126,11 +126,11 @@ export default function EditSolarPanels() : JSX.Element{
           />
            {errors.strength &&( <p className="text-red-800">This field is required and must be between 100 and 999.</p>)}
         </div>
-        <div className='flex flex-col text-black py-2'>
+        <div className='flex flex-col  py-2'>
           <label htmlFor='Description'>Description</label>
           <input
             id='Description'
-            className='p-2 rounded-lg  bg-white mt-2  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
+            className='p-2 rounded-lg text-black  bg-white mt-2  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
             type='text'
             // value={description}
             // onChange={(e) => setDescription(e.target.value)}
@@ -139,12 +139,12 @@ export default function EditSolarPanels() : JSX.Element{
           />
           {errors.description && ( <p className="text-red-800">This field is required and cannot exceed 255 characters.</p>)}
         </div>
-        <div className='flex flex-col text-black py-2'>
+        <div className='flex flex-col py-2'>
           <label htmlFor='file'>Add Image</label>
           <input
             id='file'
            type="file"
-            className='p-2 rounded-lg  bg-white mt-2   focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
+            className='p-2 rounded-lg text-black  bg-white mt-2   focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
             // onChange={e => setSolarImage(e.target.files)}
             {...register('solarImage', { required: true })}
             />

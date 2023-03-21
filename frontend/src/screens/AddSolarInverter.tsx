@@ -9,6 +9,7 @@ import { AnyAction } from 'redux';
 import { useForm } from 'react-hook-form';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import { ADD_NEW_INVERTER_RESET } from '../constants/inverterConstants';
 
 interface Inverter {
   _id: Number;
@@ -20,8 +21,9 @@ interface Inverter {
 interface AddallInvertersState {
    
     loading: boolean;
-    error: any[]| null;
+    error:  any[] | null | string;
     inverters: Inverter[];
+    success: boolean;
   }
   interface AddInverterStateWithAllInverters extends InverterState  {
     addInverter: AddallInvertersState;
@@ -32,19 +34,17 @@ export default function AddSolarInverter() : JSX.Element{
     const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
     
     
-      const [open, setOpen] = useState(false);
-      const [inverterImage, setInverterImage] = useState<FileList | null>(null);
-
-      const [type, setType] = useState('');
-      const [strength, setStrength] = useState<number>(3);
-      const [description, setDescription] = useState('');
+   
     
       
       const addInverter = useSelector<AddInverterStateWithAllInverters, AddallInvertersState>((state) => state.addInverter);
-      const { loading, error, inverters } = addInverter;
+      const { loading, error, inverters, success } = addInverter;
     
       useEffect(() => {
-        console.log(inverters);
+        if(success){
+          dispatch({type: ADD_NEW_INVERTER_RESET})
+          navigate('/AdminSolarInverter');
+        }
       }, [inverters]);
     
       const navigate = useNavigate();
@@ -66,10 +66,8 @@ export default function AddSolarInverter() : JSX.Element{
           dispatch(addInverterAction(formData));
           console.log(data);
 
-          navigate('/AdminSolarInverter');
-          setType('');
-          setStrength(0);
-          setDescription('');
+       
+         
       };
     
   
@@ -77,19 +75,21 @@ export default function AddSolarInverter() : JSX.Element{
 
 
 <div className='  flex flex-col justify-center w-full col-span-10'>
-
 {loading && <LoadingBox></LoadingBox>}
 
 {error && (
   <div>
-    {error.map((err) => (
+    {typeof error === 'object' ? error.map((err) => (
       <MessageBox key={err.msg} variant="danger">
 
         {err.msg}
       </MessageBox>
-    ))}
+    ))
+  : <MessageBox variant='danger'>{error}</MessageBox>
+  }
   </div>
 )}
+
       <form className='w-6/12 mx-auto rounded-lg bg-orange-400 p-8 px-8'  onSubmit={handleSubmit(insertHandler)} >
         <h2 className='text-4xl text-white font-bold text-center'>Add Solar Inverter</h2>
         <div className='flex flex-col text-white py-2'>
@@ -112,7 +112,7 @@ export default function AddSolarInverter() : JSX.Element{
             min={1}
             {...register('strength', { required: true,min:1 })}
             />
-           {errors.strength &&( <p className="text-red-800">This field is required and must be between 100 and 999.</p>)}
+           {errors.strength &&( <p className="text-red-800">This field is required and must be min 1 .</p>)}
         </div>
         <div className='flex flex-col text-white py-2'>
           <label htmlFor='Description'>Description</label>
