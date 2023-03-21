@@ -17,6 +17,9 @@ import {
     DELETE_INVERTER_FAILURE,
 
 
+    UPDATE_INVERTER_RESET,
+    ADD_NEW_INVERTER_RESET
+
   
   } from '../constants/inverterConstants';
   
@@ -24,16 +27,17 @@ import {
 
 
  export interface InverterState  {
-    loading: boolean;
-    inverters: any[];
-    error?: any[];
+    loading?: boolean;
+    inverters?: any[];
+    error?: any[] | string | null;
     success?: boolean;
   }
   
   const initialState: InverterState = {
     loading: false,
     inverters: [],
-    error: []
+    error: [],
+    success: false
   };
   
  export const getAllInverterReducer = (
@@ -55,43 +59,59 @@ import {
     }
   };
   
- export const addInverterReducer = (
-    state: InverterState = initialState,
-    action: any
-  ): InverterState => {
-    switch (action.type) {
-      case ADD_NEW_INVERTER_REQUEST:
-        return { ...state, loading: true };
-  
-      case ADD_NEW_INVERTER_SUCCESS:
-        return { ...state, loading: false, inverters: [...state.inverters, action.payload] };
-  
-      case ADD_NEW_INVERTER_FAILURE:
-        return { ...state, loading: false, error: action.payload };
-  
-      default:
-        return state;
-    }
-  };
 
- export const updateInverterReducer = (
-    state = initialState,
-    action: any
-  ): InverterState => {
-    switch (action.type) {
-      case UPDATE_INVERTER_REQUEST:
-        return { ...state, loading: true };
-  
-      case UPDATE_INVERTER_SUCCESS:
-        return { loading: false, inverters: action.payload };
-  
-      case UPDATE_INVERTER_FAILURE:
-        return { ...state, loading: false, error: action.payload };
+
+
+
+export const addInverterReducer = (
+  state: InverterState = initialState,
+  action: any
+): InverterState => {
+  switch (action.type) {
+    case ADD_NEW_INVERTER_REQUEST:
+      return {  loading: true ,success: false };
+
+    case ADD_NEW_INVERTER_SUCCESS:
+      return { ...state, loading: false, inverters: [ action.payload],success: true };
+
+    case ADD_NEW_INVERTER_FAILURE:
+      return { loading: false, error: action.payload };
+
+      case ADD_NEW_INVERTER_RESET:
+        return {};
   
       default:
         return state;
-    }
-  };
+  }
+};
+
+
+
+
+
+export const updateInverterReducer = (
+  state = initialState,
+  action: any
+): InverterState => {
+  switch (action.type) {
+    case UPDATE_INVERTER_REQUEST:
+      return { loading: true,success: false };
+
+    case UPDATE_INVERTER_SUCCESS:
+      return { loading: false, inverters: action.payload , success: true };
+
+    case UPDATE_INVERTER_FAILURE:
+      return { loading: false, error: action.payload };
+
+      case UPDATE_INVERTER_RESET:
+        return {};
+    default:
+      return state;
+  }
+};
+
+
+
 
   export const deleteInverterReducer = (
     state = initialState,
@@ -99,14 +119,14 @@ import {
   ): InverterState => {
     switch (action.type) {
       case DELETE_INVERTER_REQUEST:
-        return { ...state, loading: true };
+        return {loading: true };
   
         case DELETE_INVERTER_SUCCESS:
-            return { ...state, loading: false, success: true};
+            return { loading: false, success: true};
           
   
       case DELETE_INVERTER_FAILURE:
-        return { ...state, loading: false, error: action.payload };
+        return { loading: false, error: action.payload };
   
       default:
         return state;

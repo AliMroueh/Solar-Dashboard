@@ -104,7 +104,7 @@ export default function AdminSolarInverter(): JSX.Element {
                     <td className='py-3 px-6 text-center max-w-xs min-h-full'>{row.description}</td>
                     <td className='py-3 px-6 text-center xs:py-0'><img src={row.inverterImage} alt="Battery" className='md:w-40 xs:w-full' /> </td>
                     <td className='py-3 px-6 text-center'>
-                    <Link to={`/UpdateInverterPanel/${row._id}?type=${row.type}&capacity=${row.strength}&description=${row.description}&batteryImage=${row.inverterImage}`}>
+                    <Link to={`/UpdateInverterPanel/${row._id}?type=${row.type}&strength=${row.strength}&description=${row.description}&batteryImage=${row.inverterImage}`}>
                         <button type='button' className='edit w-auto p-2 bg-green-600 text-slate-200 rounded-md'>
                           Edit
                         </button>
