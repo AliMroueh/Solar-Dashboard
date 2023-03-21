@@ -199,7 +199,7 @@ solarRouter.put('/solar/update/:id', upload.single("solarImage"),
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
-        const solar = await solar.findById(req.params.id);
+        const solar = await Solar.findById(req.params.id);
 
         if (solar) {
             solar.type = req.body.type || solar.type;
@@ -211,8 +211,9 @@ solarRouter.put('/solar/update/:id', upload.single("solarImage"),
             if (req.file) {
                 // Extract the filename from the batteryImage URL
                 const oldImagePath = path.join(path.dirname(__dirname), "uploads/") + solar.solarImage.split('/').pop();
-                fs.unlinkSync(oldImagePath); // Delete the old image
-                solar.solarImage = 'http://localhost:5000/public/' + req.file.filename;
+                if (fs.existsSync(oldImagePath)) {
+                    fs.unlinkSync(oldImagePath); // Delete the old image
+                  }                solar.solarImage = 'http://localhost:5000/public/' + req.file.filename;
             }
 
             const updatedSolar = await solar.save();

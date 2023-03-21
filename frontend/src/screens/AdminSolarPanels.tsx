@@ -33,7 +33,7 @@ import { AnyAction } from 'redux';
       }
       interface DeleteSolarStateWithAllSolars extends SolarState {
        
-        deleteBattery:DeleteSolarState;
+        deleteSolar:DeleteSolarState;
       }
     
    
@@ -45,9 +45,13 @@ export default function AdminSolarPanles(): JSX.Element {
       const getAllSolars = useSelector<GetSolarStateWithAllSolars, GetallSolarsState>((state) => state.getAllSolars);
     
       const { loading, error, solars } = getAllSolars;
+
+      // const deleteSolar = useSelector<GetSolarStateWithAllSolars, GetallSolarsState>((state) => state.deleteSolar);
     
-      const deleteBattery = useSelector<DeleteSolarStateWithAllSolars, DeleteSolarState>((state) => state.deleteBattery);
-      const { loading: loadingDel, success, error: errorDel } = deleteBattery;
+      // const { loading, error, success } = deleteSolar;
+    
+      const deleteSolar = useSelector<DeleteSolarStateWithAllSolars, DeleteSolarState>((state) => state.deleteSolar);
+      const { loading: loadingDel, success, error: errorDel } = deleteSolar;
     
       useEffect(() => {
         dispatch(getAllSolarAction());

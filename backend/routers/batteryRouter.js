@@ -111,10 +111,15 @@ expressAsyncHandler(async (req, res) => {
 
 
 
+      // if image exists
       if (req.file) {
         // Extract the filename from the batteryImage URL
         const oldImagePath = path.join(path.dirname(__dirname), "uploads/") + battery.batteryImage.split('/').pop();
-        fs.unlinkSync(oldImagePath); // Delete the old image
+
+        if (fs.existsSync(oldImagePath)) {
+          fs.unlinkSync(oldImagePath); // Delete the old image
+        }
+
         battery.batteryImage = 'http://localhost:5000/public/' + req.file.filename;
       }
 

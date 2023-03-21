@@ -33,21 +33,32 @@ interface UpdateBatteryStateWithAllBatteries extends BatteryState {
 }
 
 export default function UpdateBatteryPanel() {
-  const { register, handleSubmit,  formState: { errors } } = useForm(({ mode: 'onChange' }));
+  const { register, handleSubmit,  formState: { errors },setValue } = useForm(({ mode: 'onChange' }));
   const location = useLocation();
-  const Type = new URLSearchParams(location.search).get('type') ?? '';
-const Capacity = new URLSearchParams(location.search).get('capacity') ?? '';
-const Description = new URLSearchParams(location.search).get('description') ?? '';
+  useEffect(() => {
+    const query = new URLSearchParams(location.search);
+    const type = query.get('type') ?? '';
+    const capacity = query.get('capacity') ?? '';
+    const description = query.get('description') ?? '';
+
+    setValue('type', type);
+    setValue('capacity', capacity);
+    setValue('description', description);
+  }, [location.search, setValue]);
+
+//   const Type = new URLSearchParams(location.search).get('type') ?? '';
+// const Capacity = new URLSearchParams(location.search).get('capacity') ?? '';
+// const Description = new URLSearchParams(location.search).get('description') ?? '';
 
   
   const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
 
-  const [open, setOpen] = useState(false);
-  const [batteryImage, setBatteryImage] = useState<FileList | null>(null);
+  // const [open, setOpen] = useState(false);
+  // const [batteryImage, setBatteryImage] = useState<FileList | null>(null);
 
-  const [type, setType] = useState(Type);
-  const [capacity, setCapacity] = useState(Capacity);
-  const [description, setDescription] = useState(Description);
+  // const [type, setType] = useState(Type);
+  // const [capacity, setCapacity] = useState(Capacity);
+  // const [description, setDescription] = useState(Description);
 
   const updateBattery = useSelector<UpdateBatteryStateWithAllBatteries, UpdateallBatteriesState>((state) => state.updateBattery);
   const { loading, error, batteries, success } = updateBattery;
@@ -67,18 +78,29 @@ const Description = new URLSearchParams(location.search).get('description') ?? '
     // e.preventDefault();
     const formData = new FormData();
 
-    if (batteryImage && batteryImage.length > 0) {
-      formData.append('batteryImage', batteryImage[0]);
+    if (data.batteryImage && data.batteryImage.length > 0) {
+      formData.append('batteryImage', data.batteryImage[0]);
     }
-    formData.append('type', type);
-    formData.append('capacity', capacity);
-    formData.append('description', description);
-
-    
+    formData.append('type', data.type);
+    formData.append('capacity', data.capacity.toString());
+    formData.append('description', data.description);  
     dispatch(updateBatteryAction(String(id), formData));
-
-
   }
+  // const insertHandler = (data: any) =>  {
+      
+  //   // e.preventDefault();
+  //     const formData = new FormData();
+
+  //     if (data.batteryImage && data.batteryImage.length > 0) {
+  //       formData.append('batteryImage', data.batteryImage[0]);
+  //     }
+  //     formData.append('type', data.type);
+  //     formData.append('capacity', data.capacity.toString());
+  //     formData.append('description', data.description);
+
+  //     dispatch(addNewBatteryAction(formData));
+    
+  // };
 
   return (
     <div className='bg-cyan-800  flex flex-col justify-center w-full col-span-10'>
@@ -96,7 +118,7 @@ const Description = new URLSearchParams(location.search).get('description') ?? '
   }
   </div>
 )}
-      <form className='w-11/12 mx-auto rounded-lg bg-cyan-900 p-8 px-8' onSubmit={updateHandler} >
+      <form className='w-11/12 mx-auto rounded-lg bg-cyan-900 p-8 px-8' onSubmit={handleSubmit(updateHandler)} >
         <h2 className='text-4xl text-white font-bold text-center'>Update Battery</h2>
         <div className='flex flex-col text-gray-400 py-2'>
           <label htmlFor='type'>Type</label>
@@ -121,8 +143,8 @@ const Description = new URLSearchParams(location.search).get('description') ?? '
             // value={capacity}
             // onChange={(e) => setCapacity(e.target.value)}
             // required
-            min={100}
-            max={999}
+            // min={100}
+            // max={999}
   
             {...register('capacity', { required: true, min: 100, max: 999 })}
           />

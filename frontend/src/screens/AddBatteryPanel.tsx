@@ -74,19 +74,6 @@ export default function AddSolarBatteryPanels() : JSX.Element{
           formData.append('description', data.description);
 
           dispatch(addNewBatteryAction(formData));
-          // console.log(data);
-          // if(!loading && !error && success){
-          //   navigate('/AdminSolarBatteries');
-          //   console.log(!loading)
-          //   console.log(!error)
-          //   console.log(success)
-    
-          // }
-
-          
-          // setType('');
-          // setCapacity(0);
-          // setDescription('');
         
       };
 
