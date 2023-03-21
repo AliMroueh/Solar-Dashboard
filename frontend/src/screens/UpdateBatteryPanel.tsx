@@ -7,18 +7,20 @@ import { BatteryState } from '../reducers/batteryReducer';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import { updateBatteryAction, getAllBatteriesAction } from '../actions/batteryActions';
-
+import { useForm } from 'react-hook-form';
+import LoadingBox from '../components/LoadingBox';
+import MessageBox from '../components/MessageBox';
 
 interface Battery {
   _id: string;
   type: string;
   batteryImage: File;
-  capacity: string;
+  capacity: Number;
   description: string;
 }
 interface UpdateallBatteriesState {
   loading: boolean;
-  error: string | null;
+  error: any[] | null;
   batteries: Battery[];
 }
 
@@ -27,6 +29,7 @@ interface UpdateBatteryStateWithAllBatteries extends BatteryState {
 }
 
 export default function UpdateBatteryPanel() {
+  const { register, handleSubmit,  formState: { errors } } = useForm(({ mode: 'onChange' }));
   const location = useLocation();
   const Type = new URLSearchParams(location.search).get('type') ?? '';
 const Capacity = new URLSearchParams(location.search).get('capacity') ?? '';
@@ -48,8 +51,8 @@ const Description = new URLSearchParams(location.search).get('description') ?? '
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  const updateHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const updateHandler = (data: any) => {
+    // e.preventDefault();
     const formData = new FormData();
 
     if (batteryImage && batteryImage.length > 0) {
@@ -68,12 +71,25 @@ const Description = new URLSearchParams(location.search).get('description') ?? '
    
     
      navigate('/AdminSolarBatteries');
+     
 
   };
 
   return (
     <div className='bg-cyan-800  flex flex-col justify-center w-full col-span-10'>
-      <form className='w-11/12 mx-auto rounded-lg bg-cyan-900 p-8 px-8' onSubmit={updateHandler} >
+      {loading && <LoadingBox></LoadingBox>}
+
+{error && (
+  <div>
+    {error.map((err) => (
+      <MessageBox key={err.msg} variant="danger">
+
+        {err.msg}
+      </MessageBox>
+    ))}
+  </div>
+)}
+      <form className='w-11/12 mx-auto rounded-lg bg-cyan-900 p-8 px-8' onSubmit={handleSubmit(updateHandler)} >
         <h2 className='text-4xl text-white font-bold text-center'>Update Battery</h2>
         <div className='flex flex-col text-gray-400 py-2'>
           <label htmlFor='type'>Type</label>
@@ -81,10 +97,12 @@ const Description = new URLSearchParams(location.search).get('description') ?? '
             id='type'
             className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
             type='text'
-            value={type}
-            onChange={(e) => setType(e.target.value)}
-            required
+            // value={type}
+            // onChange={(e) => setType(e.target.value)}
+            // required
+            {...register('type', { required: true,  maxLength: 25 })}
           />
+          {errors.type && (<p className="text-red-500">This field is required and cannot exceed 25 characters.</p>)}
         </div>
         <div className='flex flex-col text-gray-400 py-2'>
           <label htmlFor='capacity'>Capacity</label>
@@ -93,10 +111,15 @@ const Description = new URLSearchParams(location.search).get('description') ?? '
             className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
            
             type='text'
-            value={capacity}
-            onChange={(e) => setCapacity(e.target.value)}
-            required
+            // value={capacity}
+            // onChange={(e) => setCapacity(e.target.value)}
+            // required
+            min={100}
+            max={999}
+  
+            {...register('capacity', { required: true, min: 100, max: 999 })}
           />
+           {errors.capacity &&( <p className="text-red-800">This field is required and must be between 100 and 999.</p>)}
         </div>
         <div className='flex flex-col text-gray-400 py-2'>
           <label htmlFor='Description'>Description</label>
@@ -104,10 +127,13 @@ const Description = new URLSearchParams(location.search).get('description') ?? '
             id='Description'
             className='p-2 rounded-lg bg-gray-700 mt-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
             type='text'
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
+            // value={description}
+            // onChange={(e) => setDescription(e.target.value)}
+            // required
+            maxLength={255}
+            {...register('description', { required: true, maxLength: 255 })}
           />
+          {errors.description && ( <p className="text-red-800">This field is required and cannot exceed 255 characters.</p>)}
         </div>
         <div className='flex flex-col text-gray-400 py-2'>
           <label htmlFor='file'>Add Image</label>
@@ -117,9 +143,10 @@ const Description = new URLSearchParams(location.search).get('description') ?? '
             className='p-2 rounded-lg bg-gray-700 mt-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
             type='file'
             
-            onChange={e => setBatteryImage(e.target.files)}   
-          
+            // onChange={e => setBatteryImage(e.target.files)}   
+            {...register('batteryImage', { required: true })}
           />
+          {errors.batteryImage && ( <p className="text-red-800">This field is required.</p>)}
         </div>
         <div className='flex justify-between text-gray-400 py-2'>
        

@@ -7,7 +7,9 @@ import { ClientState } from '../reducers/clientReducer';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import { updateClientAction, getAllClientsAction } from '../actions/clientActions';
-
+import LoadingBox from '../components/LoadingBox';
+import MessageBox from '../components/MessageBox';
+import { useForm } from 'react-hook-form';
 
 interface Client {
     _id: string;
@@ -15,12 +17,12 @@ interface Client {
     clientImage: File;
     email:string;
     address:string;
-    phone:string;
+    phone:Number;
   }
   interface UpdateallClientsState {
      
       loading: boolean;
-      error: string | null;
+      error: any[] | null;
       clients: Client[];
     }
 
@@ -29,6 +31,8 @@ interface UpdateClientStateWithAllClients extends ClientState {
 }
 
 export default function UpdateSolarClient() {
+  const { register, handleSubmit,  formState: { errors } } = useForm(({ mode: 'onChange' }));
+  const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
   const location = useLocation();
   const Name = new URLSearchParams(location.search).get('name') ?? '';
   const Email = new URLSearchParams(location.search).get('email') ?? '';
@@ -49,8 +53,8 @@ export default function UpdateSolarClient() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  const updateHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const updateHandler = (data: any) => {
+    // e.preventDefault();
     const formData = new FormData();
 
     if (clientImage && clientImage.length > 0) {
@@ -75,7 +79,17 @@ export default function UpdateSolarClient() {
 
   return (
     <div className='bg-cyan-800  flex flex-col justify-center w-full col-span-10'>
-      <form className='w-11/12 mx-auto rounded-lg bg-cyan-900 p-8 px-8' onSubmit={updateHandler} >
+      {loading && <LoadingBox></LoadingBox>}
+      {error && (
+        <div>
+          {error.map((err) => (
+            <MessageBox key={err.msg} variant="danger">
+              {err.msg}
+            </MessageBox>
+          ))}
+        </div>
+      )}
+      <form className='w-11/12 mx-auto rounded-lg bg-cyan-900 p-8 px-8' onSubmit={handleSubmit(updateHandler)} >
         <h2 className='text-4xl text-white font-bold text-center'>Update Client</h2>
         <div className='flex flex-col text-gray-400 py-2'>
           <label htmlFor='name'>Name</label>
@@ -83,10 +97,12 @@ export default function UpdateSolarClient() {
             id='name'
             className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
             type='text'
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
+            // value={name}
+            // onChange={(e) => setName(e.target.value)}
+            // required
+            {...register('name', { required: true,  maxLength: 255 })}
           />
+          {errors.name && (<p className="text-red-500">This field is required and cannot exceed 255 characters.</p>)}
         </div>
         <div className='flex flex-col text-gray-400 py-2'>
           <label htmlFor='email'>Email</label>
@@ -94,10 +110,18 @@ export default function UpdateSolarClient() {
             id='email'
             className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
             type='email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
+            // value={email}
+            // onChange={(e) => setEmail(e.target.value)}
+            // required
+            {...register('email', { 
+              required: true, 
+              pattern: EMAIL_REGEX,
+              maxLength: 255 
+            })}
           />
+          {errors.email?.type === 'required' && <p className="text-red-500">This field is required.</p>}
+          {errors.email?.type === 'pattern' && <p className="text-red-500">Invalid email address.</p>}
+          {errors.email?.type === 'maxLength' && <p className="text-red-500">Cannot exceed 255 characters.</p>}
         </div>
         <div className='flex flex-col text-gray-400 py-2'>
           <label htmlFor='address'>Address</label>
@@ -105,10 +129,12 @@ export default function UpdateSolarClient() {
             id='address'
             className='p-2 rounded-lg bg-gray-700 mt-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
             type='text'
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            required
+            // value={address}
+            // onChange={(e) => setAddress(e.target.value)}
+            // required
+            {...register('address', { required: true,  maxLength: 255 })}
           />
+          {errors.address && (<p className="text-red-500">This field is required and cannot exceed 255 characters.</p>)}
         </div>
         <div className='flex flex-col text-gray-400 py-2'>
           <label htmlFor='phone'>Phone</label>
@@ -116,10 +142,12 @@ export default function UpdateSolarClient() {
             id='phone'
             className='p-2 rounded-lg bg-gray-700 mt-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
             type='text'
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            required
+            // value={phone}
+            // onChange={(e) => setPhone(e.target.value)}
+            // required
+            {...register('phone', { required: true,  maxLength: 999999999999999 })}
           />
+          {errors.phone && (<p className="text-red-500">This field is required and cannot exceed 20 characters.</p>)}
         </div>
         <div className='flex flex-col text-gray-400 py-2'>
           <label htmlFor='file'>Add Image</label>
@@ -129,12 +157,14 @@ export default function UpdateSolarClient() {
             className='p-2 rounded-lg bg-gray-700 mt-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none'
             type='file'
             
-            onChange={e => setClientImage(e.target.files)}
+            // onChange={e => setClientImage(e.target.files)}
+            {...register('clientImage', { required: true })}
 
               
               
           
           />
+           {errors.clientImage && ( <p className="text-red-500">This field is required.</p>)}
         </div>
         <div className='flex justify-between text-gray-400 py-2'>
          
