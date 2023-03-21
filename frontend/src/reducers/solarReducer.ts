@@ -16,6 +16,9 @@ import {
     DELETE_SOLAR_SUCCESS,
     DELETE_SOLAR_FAILURE,
 
+    UPDATE_SOLAR_RESET,
+    ADD_NEW_SOLAR_RESET
+
 
   } from '../constants/solarConstants';
   
@@ -23,16 +26,17 @@ import {
 
 
  export interface SolarState  {
-    loading: boolean;
-    solars: any[];
-    error?: any[];
+    loading?: boolean;
+    solars?: any[];
+    error?: any[] | string | null;
     success?: boolean;
   }
   
   const initialState: SolarState = {
     loading: false,
     solars: [],
-    error: []
+    error: [],
+    success: false
   };
   
  export const getAllSolarReducer = (
@@ -60,16 +64,19 @@ import {
   ): SolarState => {
     switch (action.type) {
       case ADD_NEW_SOLAR_REQUEST:
-        return { ...state, loading: true };
+        return {  loading: true ,success: false };
   
       case ADD_NEW_SOLAR_SUCCESS:
-        return { ...state, loading: false, solars: [...state.solars, action.payload] };
+        return { ...state, loading: false, solars: [ action.payload],success: true };
   
       case ADD_NEW_SOLAR_FAILURE:
-        return { ...state, loading: false, error: action.payload };
+        return { loading: false, error: action.payload };
   
-      default:
-        return state;
+        case ADD_NEW_SOLAR_RESET:
+          return {};
+    
+        default:
+          return state;
     }
   };
 
@@ -79,14 +86,16 @@ import {
   ): SolarState => {
     switch (action.type) {
       case UPDATE_SOLAR_REQUEST:
-        return { ...state, loading: true };
+        return { loading: true,success: false };
   
       case UPDATE_SOLAR_SUCCESS:
-        return { loading: false, solars: action.payload };
+        return { loading: false, solars: action.payload , success: true };
   
       case UPDATE_SOLAR_FAILURE:
-        return { ...state, loading: false, error: action.payload };
+        return { loading: false, error: action.payload };
   
+        case UPDATE_SOLAR_RESET:
+          return {};
       default:
         return state;
     }

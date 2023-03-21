@@ -4,8 +4,10 @@ import multer from 'multer';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
 import shortid from 'shortid';
-import Battery from '../models/batteryModel.js';
+import Battery from '../models/batteryModel.js'
+// import Battery from '../models/batteryModel.js';
 import { body, validationResult } from 'express-validator';
+import expressAsyncHandler from 'express-async-handler';
 const batteryRouter = express.Router();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -32,11 +34,25 @@ batteryRouter.post("/create", upload.single("batteryImage"),
     body('description', 'Please enter a description').trim().notEmpty().isString().isLength({ max: 255 })
     .withMessage('Description must be a string with maximum length of 255 characters'),
   ],
-  (req, res) => {
+  expressAsyncHandler(async (req, res) => {
+    const existingBattery = await Battery.findOne({ type: req.body.type });
+    if (existingBattery) {
+      if (req.file) {
+        await fs.unlinkSync(req.file.path); // Delete the uploaded file
+      }
+      return res.status(422).json({ message: 'Battery exists already!' });
+      
+    }
+
     // Check for validation errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      if (req.file) {
+        fs.unlinkSync(req.file.path); // Delete the uploaded file
+        // return res.status(400).json({ errors: errors.array() });
+      }
+        return res.status(400).json({ errors: errors.array() });
+      
     }
 
     // Create the battery object
@@ -60,13 +76,32 @@ batteryRouter.post("/create", upload.single("batteryImage"),
       }
     });
   }
-);
-
-
-
+));
 
 batteryRouter.put('/battery/update/:id', upload.single("batteryImage"),
-  async (req, res) => {
+[
+  // Validate the fields
+  body('type', 'Please enter a type').trim().notEmpty().isString().isLength({ max: 25 })
+  .withMessage('Type must be a string with maximum length of 25 characters'),
+  body('capacity', 'Please enter a capacity').trim().notEmpty().isNumeric().isLength({ min:2, max: 3 })
+  .withMessage('Capacity must be a three digit number'),
+  body('description', 'Please enter a description').trim().notEmpty().isString().isLength({ max: 255 })
+  .withMessage('Description must be a string with maximum length of 255 characters'),
+],
+expressAsyncHandler(async (req, res) => {
+  const existingBattery = await Battery.findOne({ type: req.body.type, _id: { $ne: req.params.id } });
+  if (existingBattery) {
+    if (req.file) {
+      await fs.unlinkSync(req.file.path); // Delete the uploaded file
+    }
+    return res.status(422).json({ message: 'Battery exists already!' });
+    
+  }
+      // Check for validation errors
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
     const battery = await Battery.findById(req.params.id);
 
     if (battery) {
@@ -95,8 +130,7 @@ batteryRouter.put('/battery/update/:id', upload.single("batteryImage"),
     } else {
       res.status(401).send({ message: "Unknown id" });
     }
-  });
-
+  }));
 
 batteryRouter.get('/get', (req, res) => {
   Battery.find().exec((err, batteries) => {
@@ -110,10 +144,8 @@ batteryRouter.get('/get', (req, res) => {
   })
 });
 
-
-
-
-batteryRouter.delete('/battery/delete/:id', async (req, res) => {
+batteryRouter.delete('/battery/delete/:id',
+expressAsyncHandler(async (req, res) => {
   try {
     const battery = await Battery.findById(req.params.id);
     if (!battery) {
@@ -123,8 +155,12 @@ batteryRouter.delete('/battery/delete/:id', async (req, res) => {
     // Remove the battery image from the server file system
     if (battery.batteryImage) {
       const imagePath = path.join(path.dirname(__dirname), "uploads/") + battery.batteryImage.split('/').pop();
-      fs.unlinkSync(imagePath);
-    }
+        // fs.unlinkSync(imagePath);   
+        if (fs.existsSync(imagePath)) { // Check if the image file exists
+          fs.unlinkSync(imagePath); // Delete the image file
+        }
+      }   
+    
 
     await Battery.findByIdAndRemove(req.params.id);
     res.status(201).json({ message: 'Battery removed' });
@@ -132,7 +168,7 @@ batteryRouter.delete('/battery/delete/:id', async (req, res) => {
     console.error(err);
     res.status(500).json({ message: 'Server error' });
   }
-});
+}));
 
 
 

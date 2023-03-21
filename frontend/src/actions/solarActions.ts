@@ -61,7 +61,7 @@ export const addSolarAction =  (info: any) => async (dispatch: ThunkDispatch<{},
 
         dispatch({
             type: ADD_NEW_SOLAR_FAILURE,
-            payload:  error.response.data.errors 
+            payload:  error.response.data.errors || (error.response && error.response.data.message ? error.response.data.message : error.message)
         })
     }
 }
@@ -80,8 +80,7 @@ export const updateSolarAction = (id: string, info:any) => async (dispatch: Thun
   } catch (error: any) {
     dispatch({
       type: UPDATE_SOLAR_FAILURE,
-      payload:
-      error.response.data.errors
+      payload: error.response.data.errors || (error.response && error.response.data.message ? error.response.data.message : error.message)
     });
   }
 };
@@ -98,7 +97,7 @@ export const deleteSolarAction = (id: Number) => async (dispatch: ThunkDispatch<
   } catch (error:any) {
     dispatch({
       type: DELETE_SOLAR_FAILURE,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message
+      payload:  error.response.data.errors || (error.response && error.response.data.message ? error.response.data.message : error.message)
     })
   }
 }

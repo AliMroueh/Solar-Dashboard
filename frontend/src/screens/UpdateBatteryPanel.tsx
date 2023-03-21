@@ -8,8 +8,11 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import { updateBatteryAction, getAllBatteriesAction } from '../actions/batteryActions';
 import { useForm } from 'react-hook-form';
+
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import { UPDATE_BATTERY_RESET } from '../constants/batteryConstants';
+
 
 interface Battery {
   _id: string;
@@ -20,8 +23,9 @@ interface Battery {
 }
 interface UpdateallBatteriesState {
   loading: boolean;
-  error: any[] | null;
+  error:  any[] | null | string;
   batteries: Battery[];
+  success: boolean;
 }
 
 interface UpdateBatteryStateWithAllBatteries extends BatteryState {
@@ -46,10 +50,17 @@ const Description = new URLSearchParams(location.search).get('description') ?? '
   const [description, setDescription] = useState(Description);
 
   const updateBattery = useSelector<UpdateBatteryStateWithAllBatteries, UpdateallBatteriesState>((state) => state.updateBattery);
-  const { loading, error, batteries } = updateBattery;
+  const { loading, error, batteries, success } = updateBattery;
   
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  useEffect(() => {
+    if(success){
+     navigate('/AdminSolarBatteries');
+     dispatch({type:UPDATE_BATTERY_RESET})
+    };
+  }, [success, navigate, dispatch])
+  
 
   const updateHandler = (data: any) => {
     // e.preventDefault();
@@ -65,31 +76,26 @@ const Description = new URLSearchParams(location.search).get('description') ?? '
     
     dispatch(updateBatteryAction(String(id), formData));
 
-    
 
-
-   
-    
-     navigate('/AdminSolarBatteries');
-     
-
-  };
+  }
 
   return (
     <div className='bg-cyan-800  flex flex-col justify-center w-full col-span-10'>
       {loading && <LoadingBox></LoadingBox>}
 
-{error && (
+      {error && (
   <div>
-    {error.map((err) => (
+    {typeof error === 'object' ? error.map((err) => (
       <MessageBox key={err.msg} variant="danger">
 
         {err.msg}
       </MessageBox>
-    ))}
+    ))
+  : <MessageBox variant='danger'>{error}</MessageBox>
+  }
   </div>
 )}
-      <form className='w-11/12 mx-auto rounded-lg bg-cyan-900 p-8 px-8' onSubmit={handleSubmit(updateHandler)} >
+      <form className='w-11/12 mx-auto rounded-lg bg-cyan-900 p-8 px-8' onSubmit={updateHandler} >
         <h2 className='text-4xl text-white font-bold text-center'>Update Battery</h2>
         <div className='flex flex-col text-gray-400 py-2'>
           <label htmlFor='type'>Type</label>

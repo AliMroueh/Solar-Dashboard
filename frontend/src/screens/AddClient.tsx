@@ -70,12 +70,16 @@ export default function AddSolarClient() : JSX.Element{
 
 
           dispatch(addClientAction(formData));
-          navigate('/AdminClients');
+          
           setName('');
           setPhone(0);
           setAddress('');
           setEmail('');
       };
+
+      if(!loading && !error){
+        navigate('/AdminClients');
+      }
     
     //   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     //     event.preventDefault();

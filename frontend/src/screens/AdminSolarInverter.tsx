@@ -89,7 +89,7 @@ export default function AdminSolarInverter(): JSX.Element {
                 <tr>
                   <th className='py-3  bg-orange-400 font-bold text-lg text-center'>ID</th>
                   <th className='py-3  bg-orange-400 font-bold text-lg text-center'>Type</th>
-                  <th className='py-3  bg-orange-400 font-bold text-lg text-center'>Capacity</th>
+                  <th className='py-3  bg-orange-400 font-bold text-lg text-center'>Strength</th>
                   <th className='py-3  bg-orange-400 font-bold text-lg text-center'>Description</th>
                   <th className='py-3  bg-orange-400 font-bold text-lg text-center'>Image</th>
                   <th className='py-3  bg-orange-400 font-bold text-lg text-center'>Option</th>
@@ -102,7 +102,7 @@ export default function AdminSolarInverter(): JSX.Element {
                     <td className='py-3 px-6 text-center'>{row.type}</td>
                     <td className='py-3 px-6 text-center'>{row.strength}</td>
                     <td className='py-3 px-6 text-center max-w-xs min-h-full'>{row.description}</td>
-                    <td className='py-3 px-6 text-center xs:py-0 px-0'><img src={row.inverterImage} alt="Battery" className='md:w-40 xs:w-full' /> </td>
+                    <td className='py-3 px-6 text-center xs:py-0'><img src={row.inverterImage} alt="Battery" className='md:w-40 xs:w-full' /> </td>
                     <td className='py-3 px-6 text-center'>
                     <Link to={`/UpdateInverterPanel/${row._id}?type=${row.type}&capacity=${row.strength}&description=${row.description}&batteryImage=${row.inverterImage}`}>
                         <button type='button' className='edit w-auto p-2 bg-green-600 text-slate-200 rounded-md'>

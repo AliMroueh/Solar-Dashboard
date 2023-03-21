@@ -14,7 +14,9 @@ import {
 
     DELETE_BATTERY_REQUEST,
     DELETE_BATTERY_SUCCESS,
-    DELETE_BATTERY_FAILURE
+    DELETE_BATTERY_FAILURE,
+    UPDATE_BATTERY_RESET,
+    ADD_NEW_BATTERY_RESET
     
   } from '../constants/batteryConstants';
   
@@ -22,16 +24,17 @@ import {
 
 
 export interface BatteryState  {
-    loading: boolean;
-    batteries: any[];
-    error?: any[];
+    loading?: boolean;
+    batteries?: any[];
+    error?: any[] | string | null;
     success?: boolean;
   }
   
   const initialState: BatteryState = {
     loading: false,
     batteries: [],
-    error: []
+    error: [],
+    success: false
   };
   
  export const getAllBatteriesReducer = (
@@ -59,13 +62,16 @@ export interface BatteryState  {
   ): BatteryState => {
     switch (action.type) {
       case ADD_NEW_BATTERY_REQUEST:
-        return { ...state, loading: true };
+        return { loading: true, success: false };
   
       case ADD_NEW_BATTERY_SUCCESS:
-        return { ...state, loading: false, batteries: [...state.batteries, action.payload] };
+        return { loading: false, batteries:[action.payload], success: true };
   
       case ADD_NEW_BATTERY_FAILURE:
-        return { ...state, loading: false, error: action.payload };
+        return { loading: false, error: action.payload };
+      
+      case ADD_NEW_BATTERY_RESET:
+        return {};
   
       default:
         return state;
@@ -78,13 +84,16 @@ export interface BatteryState  {
   ): BatteryState => {
     switch (action.type) {
       case UPDATE_BATTERY_REQUEST:
-        return { ...state, loading: true };
+        return { loading: true, success: false };
   
       case UPDATE_BATTERY_SUCCESS:
-        return { loading: false, batteries: action.payload };
+        return { loading: false, batteries: action.payload, success: true };
   
       case UPDATE_BATTERY_FAILURE:
-        return { ...state, loading: false, error: action.payload };
+        return { loading: false, error: action.payload };
+
+        case UPDATE_BATTERY_RESET:
+          return {};
   
       default:
         return state;
@@ -97,14 +106,14 @@ export interface BatteryState  {
   ): BatteryState => {
     switch (action.type) {
       case DELETE_BATTERY_REQUEST:
-        return { ...state, loading: true };
+        return { loading: true };
   
         case DELETE_BATTERY_SUCCESS:
-            return { ...state, loading: false, success: true};
+            return { loading: false, success: true};
           
   
       case DELETE_BATTERY_FAILURE:
-        return { ...state, loading: false, error: action.payload };
+        return { loading: false, error: action.payload };
   
       default:
         return state;
