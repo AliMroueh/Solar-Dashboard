@@ -22,7 +22,7 @@ interface AddallSolarsState {
    
     loading: boolean;
     error:  any[] | null | string;
-    Solar: Solar[];
+    solars: Solar[];
     success: boolean;
   }
   interface AddSolarStateWithAllSolars extends SolarState  {
@@ -42,13 +42,14 @@ export default function AddSolarPanels() : JSX.Element{
     
       
       const addSolar = useSelector<AddSolarStateWithAllSolars, AddallSolarsState>((state) => state.addSolar);
-      const { loading, error, Solar,success } = addSolar;
+      const { loading, error, solars, success } = addSolar;
+
       useEffect(() => {
         if(success){
           dispatch({type: ADD_NEW_SOLAR_RESET})
           navigate('/AdminSolarPanels');
         }
-      }, [Solar]);
+      }, [solars]);
 
 
    

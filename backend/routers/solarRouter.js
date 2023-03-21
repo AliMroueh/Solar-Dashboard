@@ -288,7 +288,7 @@ solarRouter.delete('/solar/delete/:id',
                 const imagePath = path.join(path.dirname(__dirname), "uploads/") + solar.solarImage.split('/').pop();
                 // fs.unlinkSync(imagePath);   
                 if (fs.existsSync(imagePath)) { // Check if the image file exists
-                    fs.unlinkSync(imagePath); // Delete the image file
+                    fs.unlinkSync(imagePath);
                 }
             }
 

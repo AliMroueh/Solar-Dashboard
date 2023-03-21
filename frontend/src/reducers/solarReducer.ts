@@ -107,14 +107,14 @@ import {
   ): SolarState => {
     switch (action.type) {
       case DELETE_SOLAR_REQUEST:
-        return { ...state, loading: true };
+        return {  loading: true };
   
         case DELETE_SOLAR_SUCCESS:
-            return { ...state, loading: false, success: true};
+            return {loading: false, success: true};
           
   
       case DELETE_SOLAR_FAILURE:
-        return { ...state, loading: false, error: action.payload };
+        return {loading: false, error: action.payload };
   
       default:
         return state;

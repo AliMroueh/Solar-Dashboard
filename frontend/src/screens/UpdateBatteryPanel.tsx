@@ -54,6 +54,7 @@ const Description = new URLSearchParams(location.search).get('description') ?? '
   
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  
   useEffect(() => {
     if(success){
      navigate('/AdminSolarBatteries');
