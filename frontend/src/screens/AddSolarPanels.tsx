@@ -9,19 +9,21 @@ import { AnyAction } from 'redux';
 import { useForm } from 'react-hook-form';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-
+import { ADD_NEW_SOLAR_RESET } from '../constants/solarConstants';
 interface Solar {
   _id: Number;
   type: string;
   solarImage: File;
   strengh:Number;
   description:string;
+
 }
 interface AddallSolarsState {
    
     loading: boolean;
-    error: any[] | null;
+    error:  any[] | null | string;
     Solar: Solar[];
+    success: boolean;
   }
   interface AddSolarStateWithAllSolars extends SolarState  {
     addSolar: AddallSolarsState;
@@ -31,28 +33,26 @@ export default function AddSolarPanels() : JSX.Element{
     const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
     
     
-      const [open, setOpen] = useState(false);
-      const [solarImage, setSolarImage] = useState<FileList | null>(null);
+      // const [open, setOpen] = useState(false);
+      // const [solarImage, setSolarImage] = useState<FileList | null>(null);
 
-      const [type, setType] = useState('');
-      const [strength, setStrength] = useState<number>(3);
-      const [description, setDescription] = useState('');
+      // const [type, setType] = useState('');
+      // const [strength, setStrength] = useState<number>(3);
+      // const [description, setDescription] = useState('');
     
       
       const addSolar = useSelector<AddSolarStateWithAllSolars, AddallSolarsState>((state) => state.addSolar);
-      const { loading, error, Solar } = addSolar;
-      const navigate = useNavigate();
-
+      const { loading, error, Solar,success } = addSolar;
       useEffect(() => {
-        if(!loading && !error){
+        if(success){
+          dispatch({type: ADD_NEW_SOLAR_RESET})
           navigate('/AdminSolarPanels');
         }
-      }, [navigate,error, loading]);
-    
-      function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-        const newValue = parseInt(e.target.value);
-        setStrength(newValue);
-      }
+      }, [Solar]);
+
+
+   
+     const navigate = useNavigate();
 
       const insertHandler = (data: any) =>  {
       
@@ -71,10 +71,7 @@ export default function AddSolarPanels() : JSX.Element{
           console.log(data);
   
 
-          // 
-          // setType('');
-          // setStrength(0);
-          // setDescription('');
+   
       };
 
   
@@ -84,18 +81,22 @@ export default function AddSolarPanels() : JSX.Element{
 
 <div className='  flex flex-col justify-center w-full col-span-10'>
 
+
 {loading && <LoadingBox></LoadingBox>}
 
 {error && (
   <div>
-    {error.map((err) => (
+    {typeof error === 'object' ? error.map((err) => (
       <MessageBox key={err.msg} variant="danger">
 
         {err.msg}
       </MessageBox>
-    ))}
+    ))
+  : <MessageBox variant='danger'>{error}</MessageBox>
+  }
   </div>
 )}
+
       <form className='w-6/12 mx-auto rounded-lg bg-orange-400 p-8 px-8'  onSubmit={handleSubmit(insertHandler)} >
         <h2 className='text-4xl text-white font-bold text-center'>Add Solar Panels</h2>
         <div className='flex flex-col text-white py-2'>
