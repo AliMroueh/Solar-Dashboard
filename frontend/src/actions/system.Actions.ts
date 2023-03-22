@@ -44,7 +44,7 @@ export const getAllSystemsAction = () => async (dispatch: ThunkDispatch<{}, {}, 
 export const addNewSystemAction = (info: any) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     dispatch({ type: ADD_NEW_SYSTEM_REQUEST });
     try {
-      const { data } = await axios.post(`/api/batteries/create`, info);
+      const { data } = await axios.post(`/api/systems/create`, info);
   
       dispatch({
         type: ADD_NEW_SYSTEM_SUCCESS,
@@ -54,7 +54,7 @@ export const addNewSystemAction = (info: any) => async (dispatch: ThunkDispatch<
       dispatch({
         type: ADD_NEW_SYSTEM_FAILURE,
         payload:
-          error.response.data.errors 
+          error.response.data.errors || (error.response && error.response.data.message ? error.response.data.message : error.message)
       });
     }
   };
@@ -63,7 +63,7 @@ export const addNewSystemAction = (info: any) => async (dispatch: ThunkDispatch<
     
     dispatch({ type: UPDATE_SYSTEM_REQUEST });
     try {
-      const { data } = await axios.put(`/api/batteries/battery/update/${id}`, info);
+      const { data } = await axios.put(`/api/systems/system/update/${id}`, info);
       dispatch({
         type: UPDATE_SYSTEM_SUCCESS,
         payload: data,
@@ -72,9 +72,7 @@ export const addNewSystemAction = (info: any) => async (dispatch: ThunkDispatch<
       dispatch({
         type: UPDATE_SYSTEM_FAILURE,
         payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
+        error.response.data.errors || (error.response && error.response.data.message ? error.response.data.message : error.message)
       });
     }
   };
@@ -83,7 +81,7 @@ export const addNewSystemAction = (info: any) => async (dispatch: ThunkDispatch<
     dispatch({ type: DELETE_SYSTEM_REQUEST })
     
     try {
-      const { data } = await axios.delete(`/api/batteries/battery/delete/${id}`);
+      const { data } = await axios.delete(`/api/systems/system/delete/${id}`);
       dispatch({
         type: DELETE_SYSTEM_SUCCESS,
         payload: data,

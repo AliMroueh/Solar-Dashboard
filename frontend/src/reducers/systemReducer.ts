@@ -13,7 +13,10 @@ GET_ALL_SYSTEMS_FAILURE,
 
     DELETE_SYSTEM_REQUEST,
     DELETE_SYSTEM_SUCCESS,
-    DELETE_SYSTEM_FAILURE
+    DELETE_SYSTEM_FAILURE,
+
+    UPDATE_SYSTEM_RESET,
+    ADD_NEW_SYSTEM_RESET
 
 
 } from "../constants/systemConstants";
@@ -25,16 +28,17 @@ GET_ALL_SYSTEMS_FAILURE,
 
 
 export interface SystemState  {
-    loading: boolean;
-    systems: any[];
-    error?: any[];
+    loading?: boolean;
+    systems?: any[];
+    error?: any[] | string | null;
     success?: boolean;
   }
   
   const initialState: SystemState = {
     loading: false,
     systems: [],
-    error: []
+    error: [],
+    success: false
   };
   
  export const getAllSystemsReducer = (
@@ -62,13 +66,16 @@ export interface SystemState  {
   ): SystemState => {
     switch (action.type) {
       case ADD_NEW_SYSTEM_REQUEST:
-        return { ...state, loading: true };
+        return {  loading: true, success: false };
   
       case ADD_NEW_SYSTEM_SUCCESS:
-        return { ...state, loading: false, systems: [...state.systems, action.payload] };
+        return {  loading: false, systems: [action.payload] , success: true};
   
       case ADD_NEW_SYSTEM_FAILURE:
-        return { ...state, loading: false, error: action.payload };
+        return {  loading: false, error: action.payload };
+
+        case ADD_NEW_SYSTEM_RESET:
+          return {};
   
       default:
         return state;
@@ -81,13 +88,15 @@ export interface SystemState  {
   ): SystemState => {
     switch (action.type) {
       case UPDATE_SYSTEM_REQUEST:
-        return { ...state, loading: true };
+        return {  loading: true, success: false };
   
       case UPDATE_SYSTEM_SUCCESS:
-        return { loading: false, systems: action.payload };
+        return { loading: false, systems: action.payload , success: true };
   
       case UPDATE_SYSTEM_FAILURE:
-        return { ...state, loading: false, error: action.payload };
+        return {  loading: false, error: action.payload };
+        case UPDATE_SYSTEM_RESET:
+          return {};
   
       default:
         return state;
@@ -100,14 +109,14 @@ export interface SystemState  {
   ): SystemState => {
     switch (action.type) {
       case DELETE_SYSTEM_REQUEST:
-        return { ...state, loading: true };
+        return {  loading: true };
   
         case DELETE_SYSTEM_SUCCESS:
-            return { ...state, loading: false, success: true};
+            return {  loading: false, success: true};
           
   
       case DELETE_SYSTEM_FAILURE:
-        return { ...state, loading: false, error: action.payload };
+        return {  loading: false, error: action.payload };
   
       default:
         return state;

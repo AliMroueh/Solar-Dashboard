@@ -33,14 +33,6 @@ solarRouter.post("/create", upload.single("solarImage"),
     ],
 
 
-
-
-
-
-
-
-
-
     expressAsyncHandler(async (req, res) => {
         const existingSolar = await Solar.findOne({ type: req.body.type });
         if (existingSolar) {
@@ -120,7 +112,7 @@ solarRouter.put('/solar/update/:id', upload.single("solarImage"),
 
         if (solar) {
             solar.type = req.body.type || solar.type;
-            solar.capacity = req.body.solar || solar.solar;
+            solar.strength = req.body.solar || solar.strength;
             solar.description = req.body.description || solar.description;
 
 
@@ -158,15 +150,6 @@ solarRouter.get('/get', (req, res) => {
         }
     })
 });
-
-
-
-
-
-
-
-
-
 
 
 
