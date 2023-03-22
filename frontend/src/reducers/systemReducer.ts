@@ -23,10 +23,6 @@ GET_ALL_SYSTEMS_FAILURE,
 
 
 
-  
-
-
-
 export interface SystemState  {
     loading?: boolean;
     systems?: any[];

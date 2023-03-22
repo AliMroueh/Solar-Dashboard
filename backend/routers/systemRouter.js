@@ -24,14 +24,14 @@ const storage = multer.diskStorage({
 
 
 
-// userId // SolarPanelId///  numberSolarPanel//  BatteryId //  numberBattery ///  inverterId //  numberInverter 
+// clientId // SolarPanelId///  numberSolarPanel//  BatteryId //  numberBattery ///  inverterId //  numberInverter 
 
 const upload = multer({ storage });
 
 systemRouter.post("/create",
     //  upload.single("solarImage"),
     [
-        body('userId', 'Please choose a user').trim().notEmpty().isString()
+        body('clientId', 'Please choose a user').trim().notEmpty().isString()
             .withMessage('Type must be a string with maximum length of 25 characters'),
         body('SolarPanelId', 'Please enter a strength').trim().notEmpty().isString()
             .withMessage('solarPanelId must be a three digit number'),
@@ -51,7 +51,7 @@ systemRouter.post("/create",
     ],
 
     expressAsyncHandler(async (req, res) => {
-        // const existingSolar = await Solar.findOne({ userId: req.body.userId });
+        // const existingSolar = await Solar.findOne({ clientId: req.body.clientId });
         // if (existingSolar) {
         //     if (req.file) {
         //         await fs.unlinkSync(req.file.path); // Delete the uploaded file
@@ -71,11 +71,11 @@ systemRouter.post("/create",
 
         // }
 
-        // const system = await System.findOne({ userId: req.body.userId });
+        // const system = await System.findOne({ clientId: req.body.clientId });
 
         // Create the battery object
         const sysObj = {
-            userId: req.body.userId,
+            clientId: req.body.clientId,
             SolarPanelId: req.body.SolarPanelId,
             numberSolarPanel: req.body.numberSolarPanel,
             BatterylId: req.body.BatterylId,
@@ -106,7 +106,7 @@ systemRouter.post("/create",
 systemRouter.put('/system/update/:id',
     // upload.single("solarImage"),
     [
-        body('userId', 'Please choose a user').trim().notEmpty().isString()
+        body('clientId', 'Please choose a user').trim().notEmpty().isString()
             .withMessage('Type must be a string with maximum length of 25 characters'),
         body('SolarPanelId', 'Please enter a strength').trim().notEmpty().isString()
             .withMessage('solarPanelId must be a three digit number'),
@@ -145,7 +145,7 @@ systemRouter.put('/system/update/:id',
 
         if (system) {
 
-            system.userId = req.body.userId || system.userId,
+            system.clientId = req.body.clientId || system.clientId,
                 system.SolarPanelId = req.body.SolarPanelId || system.SolarPanelId,
                 system.numberSolarPanel = req.body.numberSolarPanel || system.numberSolarPanel,
                 system.BatterylId = req.body.BatterylId || system.BatterylId,
@@ -167,7 +167,7 @@ systemRouter.put('/system/update/:id',
 
             res.send({
 
-                userId: updatedSystem.userId,
+                clientId: updatedSystem.clientId,
                 SolarPanelId: updatedSystem.SolarPanelId,
                 numberSolarPanel: updatedSystem.numberSolarPanel,
                 BatterylId: updatedSystem.BatterylId,
@@ -230,5 +230,23 @@ systemRouter.delete('/solar/delete/:id',
         }
     }));
 
+
+
+
+
+// for select 
+
+
+
+
+systemRouter.get(
+    '/solars',
+    expressAsyncHandler(async (req, res) => {
+        // Finds the distinct values for a specified field across a single collection or view and returns the results in an array.
+        // distinct : different, separate, independent, special
+        const solars = await Solar.find().distinct('solar');
+        res.send(solars);
+    })
+);
 
 export default systemRouter;
