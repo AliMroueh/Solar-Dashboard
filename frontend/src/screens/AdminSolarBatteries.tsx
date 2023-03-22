@@ -86,7 +86,7 @@ export default function AdminSolarBatteries(): JSX.Element {
                 <tr>
                   <th className='py-3  bg-orange-400 font-bold text-lg text-center'>ID</th>
                   <th className='py-3  bg-orange-400 font-bold text-lg text-center'>Type</th>
-                  <th className='py-3  bg-orange-400 font-bold text-lg text-center'>Capacity</th>
+                  <th className='py-3  bg-orange-400 font-bold text-lg text-center w-10'>Capacity</th>
                   <th className='py-3  bg-orange-400 font-bold text-lg text-center'>Description</th>
                   <th className='py-3  bg-orange-400 font-bold text-lg text-center'>Image</th>
                   <th className='py-3  bg-orange-400 font-bold text-lg text-center'>Option</th>
@@ -97,7 +97,7 @@ export default function AdminSolarBatteries(): JSX.Element {
                   <tr key={index} className='hover:bg-yellow-100 bg-yellow-300 cursor-pointer duration-300'>
                     <td className='py-3 px-6 text-center'>{row._id.toString()}</td>
                     <td className='py-3 px-6 text-center'>{row.type}</td>
-                    <td className='py-3 px-6 text-center'>{row.capacity}</td>
+                    <td className='py-3 px-6 text-center w-10'>{row.capacity}</td>
                     <td className='py-3 px-6 text-center max-w-xs min-h-full'>{row.description}</td>
                     <td className='py-3 px-6 text-center xs:py-0 px-0'><img src={row.batteryImage} alt="Battery" className='md:w-40 xs:w-full' /> </td>
                     <td className='py-3 px-6 text-center'>
@@ -106,7 +106,7 @@ export default function AdminSolarBatteries(): JSX.Element {
                           Edit
                         </button>
                       </Link>
-                      <button type='button' className='delete w-auto p-2 bg-red-600 text-slate-200 rounded-md ml-2' onClick={(event) => deleteHandler(event, row._id)}>
+                      <button type='button' className='delete w-auto p-2 bg-red-600 text-slate-200 rounded-md ml-2 mt-2' onClick={(event) => deleteHandler(event, row._id)}>
                         Delete
                       </button>
                     </td>
