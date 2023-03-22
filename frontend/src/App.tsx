@@ -14,6 +14,7 @@ import AdminSolarBatteries from "./screens/AdminSolarBatteries";
 import UpdateInverterPanel from "./screens/UpdateInverterPanel";
 import AddSolarBatteryPanels from "./screens/AddBatteryPanel";
 import Home from "./screens/Home";
+import AddSolarSystem from "./screens/AddSolarSystem";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
             <Route path="/UpdateBatteryPanel/:id" element={<UpdateBatteryPanel/>}/>
             <Route path="/UpdateInverterPanel/:id" element={<UpdateInverterPanel/>}/>
             <Route path="/UpdateClient/:id" element={<UpdateSolarClient />}/>
+            <Route path="/AddSolarSystem" element={<AddSolarSystem />}/>
 
           </Routes>
         </div> 
