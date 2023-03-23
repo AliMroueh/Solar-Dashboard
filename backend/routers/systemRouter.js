@@ -242,11 +242,41 @@ systemRouter.delete('/solar/delete/:id',
 systemRouter.get(
     '/solars',
     expressAsyncHandler(async (req, res) => {
-        // Finds the distinct values for a specified field across a single collection or view and returns the results in an array.
-        // distinct : different, separate, independent, special
+
         const solars = await Solar.find().distinct('solar');
         res.send(solars);
     })
 );
+
+
+
+systemRouter.get(
+    '/batteries',
+    expressAsyncHandler(async (req, res) => {
+
+        const batteries = await battery.find().distinct('battery');
+        res.send(batteries);
+    })
+);
+
+systemRouter.get(
+    '/inverters',
+    expressAsyncHandler(async (req, res) => {
+
+        const inverters = await inverters.find().distinct('inverter');
+        res.send(inverters);
+    })
+);
+
+
+systemRouter.get(
+    '/clients',
+    expressAsyncHandler(async (req, res) => {
+
+        const clients = await clients.find().distinct('client');
+        res.send(clients);
+    })
+);
+
 
 export default systemRouter;

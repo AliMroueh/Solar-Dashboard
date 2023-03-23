@@ -21,7 +21,7 @@ import React, { useEffect } from 'react';
           error: string | null;
           clients: Client[];
         }
-    interface GetBatteryStateWithAllClients extends ClientState {
+    interface GetClientStateWithAllClients extends ClientState {
         getAllClients: GetallClientsState;
         
       }
@@ -40,7 +40,7 @@ export default function AdminSolarClients(): JSX.Element {
     const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
      
       const navigate = useNavigate();
-      const getAllClients = useSelector<GetBatteryStateWithAllClients, GetallClientsState>((state) => state.getAllClients);
+      const getAllClients = useSelector<GetClientStateWithAllClients, GetallClientsState>((state) => state.getAllClients);
     
       const { loading, error, clients } = getAllClients;
     

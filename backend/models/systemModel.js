@@ -4,7 +4,7 @@ const systemSchema = new mongoose.Schema({
     clientId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'User'
+        ref: 'Client'
     },
     SolarPanelId: {
         type: mongoose.Schema.Types.ObjectId,
