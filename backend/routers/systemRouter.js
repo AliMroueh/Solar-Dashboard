@@ -12,25 +12,6 @@ import Client from '../models/clientModel.js';
 
 const systemRouter = express.Router();
 
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
-// const storage = multer.diskStorage({
-//     destination: function (req, file, cb) {
-//         cb(null, path.join(path.dirname(__dirname), "uploads"));
-//     },
-//     filename: function (req, file, cb) {
-//         cb(null, shortid.generate() + "-" + file.originalname);
-//     },
-// });
-
-
-
-
-
-// clientId // SolarPanelId///  numberSolarPanel//  BatteryId //  numberBattery ///  inverterId //  numberInverter 
-
-// const upload = multer({ storage });
-
 systemRouter.post("/create",
     [
         body('clientId', 'Please choose a user').trim().notEmpty().isString().withMessage('Type must be a string with maximum length of 25 characters'),
@@ -40,28 +21,13 @@ systemRouter.post("/create",
         body('numberBattery', 'Please enter a numberBattery').trim().notEmpty().isNumeric().isLength({ max: 3 }).withMessage('numberBattery must be 3 digits'),
         body('inverterId', 'Please choose a user').trim().notEmpty().isString().withMessage('Type must be a string with maximum length of 25 characters'),
         body('numberInverter', 'Please enter a numberInverter').trim().notEmpty().isNumeric().isLength({ max: 3 }).withMessage('numberInverter must must be 3 digits'),
-
-
-
     ],
-
     expressAsyncHandler(async (req, res) => {
-        // const existingSolar = await Solar.findOne({ clientId: req.body.clientId });
-        // if (existingSolar) {
-        //     if (req.file) {
-        //         await fs.unlinkSync(req.file.path); // Delete the uploaded file
-        //     }
-        //     return res.status(422).json({ message: 'Solar exists already!' });
-
-        // }
 
         // Check for validation errors
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            // if (req.file) {
-            //     fs.unlinkSync(req.file.path); // Delete the uploaded file
-            //     // return res.status(400).json({ errors: errors.array() });
-            // }
+
             return res.status(400).json({ errors: errors.array() });
 
         }
@@ -88,11 +54,6 @@ systemRouter.post("/create",
             numberInverter: req.body.numberInverter
         };
 
-        // Add the batteryImage field if a file was uploaded
-        // if (req.file) {
-        //     sysObj.solarImage = 'http://localhost:5000/public/' + req.file.filename;
-        // }
-
         // Save the battery to the database
         const sys = new System(sysObj);
         sys.save((error, system) => {
@@ -102,101 +63,117 @@ systemRouter.post("/create",
             }
         });
     }
-    ));
+    ));  
 
+// systemRouter.get('/get', (req, res) => {
+//         System.find().exec((err, systems) => {
+//             if (err) {
+//             res.json({ message: err.message });
+//         } else {
+//             let ar = []
+//             let nc = ''
+//             systems.forEach(async sys => 
+//                {
+//                 const client = await Client.findById(sys.clientId);
+//                 return ar.push(client)
+//             }
+//                 )
+//                 return res.send(ar)
+//         }
+//     })
+// });
 
-
-
-systemRouter.put('/system/update/:id',
-    // upload.single("solarImage"),
-    [
-        body('clientId', 'Please choose a user').trim().notEmpty().isString()
-            .withMessage('Type must be a string with maximum length of 25 characters'),
-        body('SolarPanelId', 'Please enter a strength').trim().notEmpty().isString()
-            .withMessage('solarPanelId must be a three digit number'),
-        body('numberSolarPanel', 'Please enter a numberSolarPanel').trim().notEmpty().isNumeric().isLength({ max: 3 })
-            .withMessage('numberSolarPanel must ....'),
-        body('BatterylId', 'Please enter a strength').trim().notEmpty().isString()
-            .withMessage('BatterylId must be a three digit number'),
-        body('numberBattery', 'Please enter a numberBattery').trim().notEmpty().isNumeric().isLength({ max: 3 })
-            .withMessage('numberBattery must ....'),
-        body('inverterId', 'Please choose a user').trim().notEmpty().isString()
-            .withMessage('Type must be a string with maximum length of 25 characters'),
-        body('numberInverter', 'Please enter a numberInverter').trim().notEmpty().isNumeric().isLength({ max: 3 })
-            .withMessage('numberInverter must ....'),
-
-
-
-    ],
-
-
-
-    expressAsyncHandler(async (req, res) => {
-        // const existingSolar = await Solar.findOne({ type: req.body.type, _id: { $ne: req.params.id } });
-        // if (existingSolar) {
-        //     if (req.file) {
-        //         await fs.unlinkSync(req.file.path); // Delete the uploaded file
-        //     }
-        //     return res.status(422).json({ message: 'Solar exists already!' });
-
-        // }
-        // // Check for validation errors
-        // const errors = validationResult(req);
-        // if (!errors.isEmpty()) {
-        //     return res.status(400).json({ errors: errors.array() });
-        // }
-        const system = await system.findById(req.params.id);
-
-        if (system) {
-
-            system.clientId = req.body.clientId || system.clientId,
-                system.SolarPanelId = req.body.SolarPanelId || system.SolarPanelId,
-                system.numberSolarPanel = req.body.numberSolarPanel || system.numberSolarPanel,
-                system.BatterylId = req.body.BatterylId || system.BatterylId,
-                system.numberBattery = req.body.numberBattery || system.numberBattery,
-                system.inverterId = req.body.inverterId || system.inverterId,
-                system.numberInverter = req.body.numberInverter || system.numberInverter
-
-
-
-            // if (req.file) {
-            //     // Extract the filename from the batteryImage URL
-            //     const oldImagePath = path.join(path.dirname(__dirname), "uploads/") + solar.solarImage.split('/').pop();
-            //     if (fs.existsSync(oldImagePath)) {
-            //         fs.unlinkSync(oldImagePath); // Delete the old image
-            //     } solar.solarImage = 'http://localhost:5000/public/' + req.file.filename;
-            // }
-
-            const updatedSystem = await system.save();
-
-            res.send({
-
-                clientId: updatedSystem.clientId,
-                SolarPanelId: updatedSystem.SolarPanelId,
-                numberSolarPanel: updatedSystem.numberSolarPanel,
-                BatterylId: updatedSystem.BatterylId,
-                numberBattery: updatedSystem.numberBattery,
-                inverterId: updatedSystem.inverterId,
-                numberInverter: updatedSystem.numberInverter
-            });
-        } else {
-            res.status(401).send({ message: "Unknown id" });
-        }
-    }));
-
-systemRouter.get('/get', (req, res) => {
-    System.find().exec((err, systems) => {
-        if (err) {
-            res.json({ message: err.message });
-        } else {
-
-            res.send(systems)
-
-        }
-    })
+systemRouter.get('/get', async (req, res) => {
+    try {
+        const systems = await System.find().exec();
+        const clients = await Promise.all(systems.map(sys => Client.findById(sys.clientId).exec()));
+        const result = systems.map((sys, index) => ({
+            system: sys,
+            client: clients[index]
+        }));
+        return res.send(result);
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
 });
 
 
+systemRouter.put('/system/update/:id',
+        // upload.single("solarImage"),
+        [
+            body('clientId', 'Please choose a user').trim().notEmpty().isString()
+                .withMessage('Type must be a string with maximum length of 25 characters'),
+            body('SolarPanelId', 'Please enter a strength').trim().notEmpty().isString()
+                .withMessage('solarPanelId must be a three digit number'),
+            body('numberSolarPanel', 'Please enter a numberSolarPanel').trim().notEmpty().isNumeric().isLength({ max: 3 })
+                .withMessage('numberSolarPanel must ....'),
+            body('BatterylId', 'Please enter a strength').trim().notEmpty().isString()
+                .withMessage('BatterylId must be a three digit number'),
+            body('numberBattery', 'Please enter a numberBattery').trim().notEmpty().isNumeric().isLength({ max: 3 })
+                .withMessage('numberBattery must ....'),
+            body('inverterId', 'Please choose a user').trim().notEmpty().isString()
+                .withMessage('Type must be a string with maximum length of 25 characters'),
+            body('numberInverter', 'Please enter a numberInverter').trim().notEmpty().isNumeric().isLength({ max: 3 })
+                .withMessage('numberInverter must ....'),
+    
+    
+    
+        ],
+    
+    
+    
+        expressAsyncHandler(async (req, res) => {
+            // const existingSolar = await Solar.findOne({ type: req.body.type, _id: { $ne: req.params.id } });
+            // if (existingSolar) {
+            //     if (req.file) {
+            //         await fs.unlinkSync(req.file.path); // Delete the uploaded file
+            //     }
+            //     return res.status(422).json({ message: 'Solar exists already!' });
+    
+            // }
+            // // Check for validation errors
+            // const errors = validationResult(req);
+            // if (!errors.isEmpty()) {
+            //     return res.status(400).json({ errors: errors.array() });
+            // }
+            const system = await system.findById(req.params.id);
+    
+            if (system) {
+    
+                system.clientId = req.body.clientId || system.clientId,
+                    system.SolarPanelId = req.body.SolarPanelId || system.SolarPanelId,
+                    system.numberSolarPanel = req.body.numberSolarPanel || system.numberSolarPanel,
+                    system.BatterylId = req.body.BatterylId || system.BatterylId,
+                    system.numberBattery = req.body.numberBattery || system.numberBattery,
+                    system.inverterId = req.body.inverterId || system.inverterId,
+                    system.numberInverter = req.body.numberInverter || system.numberInverter
+    
+    
+    
+                // if (req.file) {
+                //     // Extract the filename from the batteryImage URL
+                //     const oldImagePath = path.join(path.dirname(__dirname), "uploads/") + solar.solarImage.split('/').pop();
+                //     if (fs.existsSync(oldImagePath)) {
+                //         fs.unlinkSync(oldImagePath); // Delete the old image
+                //     } solar.solarImage = 'http://localhost:5000/public/' + req.file.filename;
+                // }
+    
+                const updatedSystem = await system.save();
+    
+                res.send({
+    
+                    clientId: updatedSystem.clientId,
+                    SolarPanelId: updatedSystem.SolarPanelId,
+                    numberSolarPanel: updatedSystem.numberSolarPanel,
+                    BatterylId: updatedSystem.BatterylId,
+                    numberBattery: updatedSystem.numberBattery,
+                    inverterId: updatedSystem.inverterId,
+                    numberInverter: updatedSystem.numberInverter
+                });
+            } else {
+                res.status(401).send({ message: "Unknown id" });
+            }
+        }));
 
 
 
