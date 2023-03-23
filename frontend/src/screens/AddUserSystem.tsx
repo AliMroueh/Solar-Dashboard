@@ -188,13 +188,11 @@ export default function AddUserSystem() : JSX.Element{
       const getAllClients = useSelector<GetClientStateWithAllClients, GetallClientsState>((state) => state.getAllClients);
     
       const { loading:loadingcl, error:errorcl, clients } = getAllClients;
-
-
-
+console.log(clients)
 
       const [clientId, setClientId] = useState('');
       // const [SolarPanelId, setSolarPanelId] = useState('');
-      const [numberSolarPanel, setNumberSolarPanel] = useState(1);
+      const [numberSolarPanel, setNumberSolarPanel] = useState('');
       const [BatteryId, setBatteryId] = useState('');
       const [numberBattery, setNumberBattery] = useState(1);
       const [inverterId, setInverterId] = useState('');
@@ -231,25 +229,43 @@ export default function AddUserSystem() : JSX.Element{
     //   e.preventDefault();
     //   insertHandler();
     // };
+    useEffect(() => {
+      console.log(clientId)
+    }, [clientId])
+    
 
   const insertHandler = () =>  {
     // e.preventDefault();
    // clientId // SolarPanelId///  numberSolarPanel//  BatteryId //  numberBattery ///  inverterId //  numberInverter 
   
-   const formData = new FormData();
+  //  const formData = new FormData();
     
+  //  formData.append('clientId', clientId.toString());
+  //  formData.append('Solar', Solar.toString());
+  //  formData.append('numberSolarPanel',numberSolarPanel.toString());
+  //  formData.append('BatteryId',BatteryId.toString());
+  //  formData.append('numberBattery',numberBattery.toString());
+  //  formData.append('inverterId',inverterId.toString());
+  //  formData.append('numberInverter',numberInverter.toString());
+
+
+  //  dispatch(addSystemAction(clientId.toString(),Solar.toString(),numberSolarPanel.toString(),BatteryId.toString(),numberBattery.toString(),inverterId.toString(),numberInverter.toString()));
+
+  dispatch(
+    addSystemAction({
+      info: {
+        clientId: clientId,
+        solar: Solar.toString(),
+        numberSolarPanel: numberSolarPanel.toString(),
+        batteryId: BatteryId,
+        numberBattery: numberBattery.toString(),
+        inverterId: inverterId,
+        numberInverter: numberInverter.toString()
+      }
+    })
+  );
   
-   formData.append('clientId', clientId.toString());
-   formData.append('Solar', Solar.toString());
-   formData.append('numberSolarPanel',numberSolarPanel.toString());
-   formData.append('BatteryId',BatteryId.toString());
-   formData.append('numberBattery',numberBattery.toString());
-   formData.append('inverterId',inverterId.toString());
-   formData.append('numberInverter',numberInverter.toString());
-
-
-   dispatch(addSystemAction(formData));
-   console.log(formData);
+  //  console.log(formData);
     // const system = {
 
 
@@ -268,10 +284,6 @@ export default function AddUserSystem() : JSX.Element{
 
   };
 
-        
-    
-    
-  
   return (
 
 
@@ -306,7 +318,7 @@ export default function AddUserSystem() : JSX.Element{
              onChange={(e) => setClientId(e.target.value)}>
                <option value='choose solar panels'>choose client </option>
                {clients.map((r, index) =>
-                 <option value={r.name}>
+                 <option value={r._id.toString()}>
                    {r.name}
                  </option>
                )}
@@ -324,7 +336,7 @@ export default function AddUserSystem() : JSX.Element{
              onChange={(e) => setSolar(e.target.value)}>
                 <option value='choose solar panels'>choose panels </option>
                 {solars.map((r, index) =>
-                  <option value={r.type}>
+                  <option value={r._id.toString()}>
                     {r.type}
                   </option>
                 )}
@@ -332,7 +344,7 @@ export default function AddUserSystem() : JSX.Element{
             </div> 
         </div>
 
-{/* 
+
         <div className='flex flex-col text-white py-2'>
           <label htmlFor='Description'>Description</label>
           <input
@@ -342,7 +354,7 @@ export default function AddUserSystem() : JSX.Element{
             value={numberSolarPanel}
             onChange={(e) => setNumberSolarPanel(e.target.value)}
          />
-         </div> */}
+         </div>
 
    <div className='input_style'>
       
@@ -352,7 +364,7 @@ export default function AddUserSystem() : JSX.Element{
             <select value={BatteryId} onChange={(e) => setBatteryId(e.target.value)}>
                <option value='choose solar panels'>choose batteries </option>
                {batteries.map((r, index) =>
-                 <option value={r.type}>
+                 <option value={r._id.toString()}>
                    {r.type}
                  </option>
                )}

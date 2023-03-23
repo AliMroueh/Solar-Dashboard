@@ -7,18 +7,21 @@ import multer from 'multer';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
 import expressAsyncHandler from 'express-async-handler';
+import System from '../models/systemModel.js';
+import Client from '../models/clientModel.js';
+
 const systemRouter = express.Router();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, path.join(path.dirname(__dirname), "uploads"));
-    },
-    filename: function (req, file, cb) {
-        cb(null, shortid.generate() + "-" + file.originalname);
-    },
-});
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
+// const storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//         cb(null, path.join(path.dirname(__dirname), "uploads"));
+//     },
+//     filename: function (req, file, cb) {
+//         cb(null, shortid.generate() + "-" + file.originalname);
+//     },
+// });
 
 
 
@@ -26,25 +29,17 @@ const storage = multer.diskStorage({
 
 // clientId // SolarPanelId///  numberSolarPanel//  BatteryId //  numberBattery ///  inverterId //  numberInverter 
 
-const upload = multer({ storage });
+// const upload = multer({ storage });
 
 systemRouter.post("/create",
-    //  upload.single("solarImage"),
     [
-        body('clientId', 'Please choose a user').trim().notEmpty().isString()
-            .withMessage('Type must be a string with maximum length of 25 characters'),
-        body('SolarPanelId', 'Please enter a strength').trim().notEmpty().isString()
-            .withMessage('solarPanelId must be a three digit number'),
-        body('numberSolarPanel', 'Please enter a numberSolarPanel').trim().notEmpty().isNumeric().isLength({ max: 3 })
-            .withMessage('numberSolarPanel must ....'),
-        body('BatterylId', 'Please enter a strength').trim().notEmpty().isString()
-            .withMessage('BatterylId must be a three digit number'),
-        body('numberBattery', 'Please enter a numberBattery').trim().notEmpty().isNumeric().isLength({ max: 3 })
-            .withMessage('numberBattery must ....'),
-        body('inverterId', 'Please choose a user').trim().notEmpty().isString()
-            .withMessage('Type must be a string with maximum length of 25 characters'),
-        body('numberInverter', 'Please enter a numberInverter').trim().notEmpty().isNumeric().isLength({ max: 3 })
-            .withMessage('numberInverter must ....'),
+        body('clientId', 'Please choose a user').trim().notEmpty().isString().withMessage('Type must be a string with maximum length of 25 characters'),
+        body('SolarPanelId', 'Please enter a strength').trim().notEmpty().isString().withMessage('solarPanelId must be a three digit number'),
+        body('numberSolarPanel', 'Please enter a numberSolarPanel').trim().notEmpty().isNumeric().isLength({ max: 3 }).withMessage('numberSolarPanel must be 3 digits'),
+        body('BatteryId', 'Please enter a strength').trim().notEmpty().isString().withMessage('BatterylId must be a three digit number'),
+        body('numberBattery', 'Please enter a numberBattery').trim().notEmpty().isNumeric().isLength({ max: 3 }).withMessage('numberBattery must be 3 digits'),
+        body('inverterId', 'Please choose a user').trim().notEmpty().isString().withMessage('Type must be a string with maximum length of 25 characters'),
+        body('numberInverter', 'Please enter a numberInverter').trim().notEmpty().isNumeric().isLength({ max: 3 }).withMessage('numberInverter must must be 3 digits'),
 
 
 
@@ -61,24 +56,33 @@ systemRouter.post("/create",
         // }
 
         // Check for validation errors
-        // const errors = validationResult(req);
-        // if (!errors.isEmpty()) {
-        //     if (req.file) {
-        //         fs.unlinkSync(req.file.path); // Delete the uploaded file
-        //         // return res.status(400).json({ errors: errors.array() });
-        //     }
-        //     return res.status(400).json({ errors: errors.array() });
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            // if (req.file) {
+            //     fs.unlinkSync(req.file.path); // Delete the uploaded file
+            //     // return res.status(400).json({ errors: errors.array() });
+            // }
+            return res.status(400).json({ errors: errors.array() });
 
-        // }
+        }
 
-        // const system = await System.findOne({ clientId: req.body.clientId });
+        const client = await Client.findOne({ _id: req.body.clientId });
 
+        if(!client){
+           return res.status(401).json({message: "client is not exists"})
+        }
+
+        const clientInSolar = await System.findOne({ clientId: req.body.clientId });
+
+        if(clientInSolar){
+           return res.status(401).json({message: "client is already exists in Solar"})
+        }
         // Create the battery object
         const sysObj = {
             clientId: req.body.clientId,
             SolarPanelId: req.body.SolarPanelId,
             numberSolarPanel: req.body.numberSolarPanel,
-            BatterylId: req.body.BatterylId,
+            BatteryId: req.body.BatteryId,
             numberBattery: req.body.numberBattery,
             inverterId: req.body.inverterId,
             numberInverter: req.body.numberInverter

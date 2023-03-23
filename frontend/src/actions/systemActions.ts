@@ -41,7 +41,7 @@ export const getAllSystemsAction = () => async (dispatch: ThunkDispatch<{}, {}, 
   }
 };
 
-export const addSystemAction = (info: any) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+export const addSystemAction = ({info}: any) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     dispatch({ type: ADD_NEW_SYSTEM_REQUEST });
     try {
       const { data } = await axios.post(`/api/systems/create`, info);
