@@ -7,7 +7,7 @@ import React, { useEffect } from 'react';
     import { ThunkDispatch } from 'redux-thunk';
     import { AnyAction } from 'redux';
 
-    interface Battery {
+    export interface Battery {
       _id: Number;
       type:string;
       capacity:string;

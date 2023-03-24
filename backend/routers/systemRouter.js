@@ -9,18 +9,20 @@ import fs from 'fs';
 import expressAsyncHandler from 'express-async-handler';
 import System from '../models/systemModel.js';
 import Client from '../models/clientModel.js';
+import Battery from '../models/batteryModel.js';
+import Inverter from '../models/inverterModel.js';
 
 const systemRouter = express.Router();
 
 systemRouter.post("/create",
     [
-        body('clientId', 'Please choose a user').trim().notEmpty().isString().withMessage('Type must be a string with maximum length of 25 characters'),
-        body('SolarPanelId', 'Please enter a strength').trim().notEmpty().isString().withMessage('solarPanelId must be a three digit number'),
-        body('numberSolarPanel', 'Please enter a numberSolarPanel').trim().notEmpty().isNumeric().isLength({ max: 3 }).withMessage('numberSolarPanel must be 3 digits'),
-        body('BatteryId', 'Please enter a strength').trim().notEmpty().isString().withMessage('BatterylId must be a three digit number'),
-        body('numberBattery', 'Please enter a numberBattery').trim().notEmpty().isNumeric().isLength({ max: 3 }).withMessage('numberBattery must be 3 digits'),
-        body('inverterId', 'Please choose a user').trim().notEmpty().isString().withMessage('Type must be a string with maximum length of 25 characters'),
-        body('numberInverter', 'Please enter a numberInverter').trim().notEmpty().isNumeric().isLength({ max: 3 }).withMessage('numberInverter must must be 3 digits'),
+        body('clientId', 'Please choose a client').trim().notEmpty().isString().withMessage('Type must be a string with maximum length of 25 characters'),
+        body('SolarPanelId', 'Please enter a Solar Panel').trim().notEmpty().isString().withMessage('solarPanelId must be a three digit number'),
+        body('numberSolarPanel', 'Please enter a count of Solar Panel').trim().notEmpty().isNumeric().isLength({ max: 3 }).withMessage('numberSolarPanel must be 3 digits'),
+        body('BatteryId', 'Please choose a battery').trim().notEmpty().isString().withMessage('BatterylId must be a three digit number'),
+        body('numberBattery', 'Please enter a count of Batteries').trim().notEmpty().isNumeric().isLength({ max: 3 }).withMessage('numberBattery must be 3 digits'),
+        body('inverterId', 'Please choose an inverter').trim().notEmpty().isString().withMessage('Type must be a string with maximum length of 25 characters'),
+        body('numberInverter', 'Please enter a count of inverters').trim().notEmpty().isNumeric().isLength({ max: 3 }).withMessage('numberInverter must must be 3 digits'),
     ],
     expressAsyncHandler(async (req, res) => {
 
@@ -87,9 +89,19 @@ systemRouter.get('/get', async (req, res) => {
     try {
         const systems = await System.find().exec();
         const clients = await Promise.all(systems.map(sys => Client.findById(sys.clientId).exec()));
+        const solarPanel = await Promise.all(systems.map(sys => Solar.findById(sys.SolarPanelId).exec()));
+        const battery = await Promise.all(systems.map(sys => Battery.findById(sys.BatteryId).exec()));
+        const inverter = await Promise.all(systems.map(sys => Inverter.findById(sys.inverterId).exec()));
+
         const result = systems.map((sys, index) => ({
-            system: sys,
-            client: clients[index]
+            // system: sys,
+            client: clients[index],
+            solarPanel: solarPanel[index],
+            numberSolarPanel: sys.numberSolarPanel,
+            battery: battery[index],
+            numberBattery: sys.numberBattery,
+            inverter: inverter[index],
+            numberInverter: sys.numberInverter,
         }));
         return res.send(result);
     } catch (err) {
@@ -98,74 +110,36 @@ systemRouter.get('/get', async (req, res) => {
 });
 
 
-systemRouter.put('/system/update/:id',
-        // upload.single("solarImage"),
+systemRouter.put('/update/:id',
         [
-            body('clientId', 'Please choose a user').trim().notEmpty().isString()
-                .withMessage('Type must be a string with maximum length of 25 characters'),
-            body('SolarPanelId', 'Please enter a strength').trim().notEmpty().isString()
-                .withMessage('solarPanelId must be a three digit number'),
-            body('numberSolarPanel', 'Please enter a numberSolarPanel').trim().notEmpty().isNumeric().isLength({ max: 3 })
-                .withMessage('numberSolarPanel must ....'),
-            body('BatterylId', 'Please enter a strength').trim().notEmpty().isString()
-                .withMessage('BatterylId must be a three digit number'),
-            body('numberBattery', 'Please enter a numberBattery').trim().notEmpty().isNumeric().isLength({ max: 3 })
-                .withMessage('numberBattery must ....'),
-            body('inverterId', 'Please choose a user').trim().notEmpty().isString()
-                .withMessage('Type must be a string with maximum length of 25 characters'),
-            body('numberInverter', 'Please enter a numberInverter').trim().notEmpty().isNumeric().isLength({ max: 3 })
-                .withMessage('numberInverter must ....'),
-    
-    
-    
+            body('clientId', 'Please choose a client').trim().notEmpty().isString().withMessage('Type must be a string with maximum length of 25 characters'),
+            body('SolarPanelId', 'Please enter a Solar Panel').trim().notEmpty().isString().withMessage('solarPanelId must be a three digit number'),
+            body('numberSolarPanel', 'Please enter a count of Solar Panel').trim().notEmpty().isNumeric().isLength({ max: 3 }).withMessage('numberSolarPanel must be 3 digits'),
+            body('BatteryId', 'Please choose a battery').trim().notEmpty().isString().withMessage('BatterylId must be a three digit number'),
+            body('numberBattery', 'Please enter a count of Batteries').trim().notEmpty().isNumeric().isLength({ max: 3 }).withMessage('numberBattery must be 3 digits'),
+            body('inverterId', 'Please choose an inverter').trim().notEmpty().isString().withMessage('Type must be a string with maximum length of 25 characters'),
+            body('numberInverter', 'Please enter a count of inverters').trim().notEmpty().isNumeric().isLength({ max: 3 }).withMessage('numberInverter must must be 3 digits'),
         ],
-    
-    
-    
         expressAsyncHandler(async (req, res) => {
-            // const existingSolar = await Solar.findOne({ type: req.body.type, _id: { $ne: req.params.id } });
-            // if (existingSolar) {
-            //     if (req.file) {
-            //         await fs.unlinkSync(req.file.path); // Delete the uploaded file
-            //     }
-            //     return res.status(422).json({ message: 'Solar exists already!' });
-    
-            // }
-            // // Check for validation errors
-            // const errors = validationResult(req);
-            // if (!errors.isEmpty()) {
-            //     return res.status(400).json({ errors: errors.array() });
-            // }
-            const system = await system.findById(req.params.id);
+            const system = await System.findById(req.params.id);
     
             if (system) {
     
                 system.clientId = req.body.clientId || system.clientId,
-                    system.SolarPanelId = req.body.SolarPanelId || system.SolarPanelId,
-                    system.numberSolarPanel = req.body.numberSolarPanel || system.numberSolarPanel,
-                    system.BatterylId = req.body.BatterylId || system.BatterylId,
-                    system.numberBattery = req.body.numberBattery || system.numberBattery,
-                    system.inverterId = req.body.inverterId || system.inverterId,
-                    system.numberInverter = req.body.numberInverter || system.numberInverter
-    
-    
-    
-                // if (req.file) {
-                //     // Extract the filename from the batteryImage URL
-                //     const oldImagePath = path.join(path.dirname(__dirname), "uploads/") + solar.solarImage.split('/').pop();
-                //     if (fs.existsSync(oldImagePath)) {
-                //         fs.unlinkSync(oldImagePath); // Delete the old image
-                //     } solar.solarImage = 'http://localhost:5000/public/' + req.file.filename;
-                // }
-    
+                system.SolarPanelId = req.body.SolarPanelId || system.SolarPanelId,
+                system.numberSolarPanel = req.body.numberSolarPanel || system.numberSolarPanel,
+                system.BatteryId = req.body.BatteryId || system.BatteryId,
+                system.numberBattery = req.body.numberBattery || system.numberBattery,
+                system.inverterId = req.body.inverterId || system.inverterId,
+                system.numberInverter = req.body.numberInverter || system.numberInverter
+
                 const updatedSystem = await system.save();
     
                 res.send({
-    
                     clientId: updatedSystem.clientId,
                     SolarPanelId: updatedSystem.SolarPanelId,
                     numberSolarPanel: updatedSystem.numberSolarPanel,
-                    BatterylId: updatedSystem.BatterylId,
+                    BatteryId: updatedSystem.BatteryId,
                     numberBattery: updatedSystem.numberBattery,
                     inverterId: updatedSystem.inverterId,
                     numberInverter: updatedSystem.numberInverter
@@ -175,89 +149,55 @@ systemRouter.put('/system/update/:id',
             }
         }));
 
-
-
-
-
-
-
-
-
-
-
-systemRouter.delete('/solar/delete/:id',
+systemRouter.delete('/delete/:id',
     expressAsyncHandler(async (req, res) => {
         try {
             const system = await System.findById(req.params.id);
             if (!system) {
                 return res.status(404).json({ message: 'system not found' });
             }
-
-            // Remove the battery image from the server file system
-            if (system.systemImage) {
-                const imagePath = path.join(path.dirname(__dirname), "uploads/") + system.systemImage.split('/').pop();
-                // fs.unlinkSync(imagePath);   
-                if (fs.existsSync(imagePath)) { // Check if the image file exists
-                    fs.unlinkSync(imagePath);
-                }
-            }
-
-
             await System.findByIdAndRemove(req.params.id);
             res.status(201).json({ message: 'System removed' });
         } catch (err) {
-            console.error(err);
+            // console.error(err);
             res.status(500).json({ message: 'Server error' });
         }
     }));
 
-
-
-
-
 // for select 
 
+// systemRouter.get(
+//     '/solars',
+//     expressAsyncHandler(async (req, res) => {
 
+//         const solars = await Solar.find().distinct('solar');
+//         res.send(solars);
+//     })
+// );
+// systemRouter.get(
+//     '/batteries',
+//     expressAsyncHandler(async (req, res) => {
 
+//         const batteries = await battery.find().distinct('battery');
+//         res.send(batteries);
+//     })
+// );
+// systemRouter.get(
+//     '/inverters',
+//     expressAsyncHandler(async (req, res) => {
 
-systemRouter.get(
-    '/solars',
-    expressAsyncHandler(async (req, res) => {
+//         const inverters = await inverters.find().distinct('inverter');
+//         res.send(inverters);
+//     })
+// );
+// systemRouter.get(
+//     '/clients',
+//     expressAsyncHandler(async (req, res) => {
 
-        const solars = await Solar.find().distinct('solar');
-        res.send(solars);
-    })
-);
-
-
-
-systemRouter.get(
-    '/batteries',
-    expressAsyncHandler(async (req, res) => {
-
-        const batteries = await battery.find().distinct('battery');
-        res.send(batteries);
-    })
-);
-
-systemRouter.get(
-    '/inverters',
-    expressAsyncHandler(async (req, res) => {
-
-        const inverters = await inverters.find().distinct('inverter');
-        res.send(inverters);
-    })
-);
-
-
-systemRouter.get(
-    '/clients',
-    expressAsyncHandler(async (req, res) => {
-
-        const clients = await clients.find().distinct('client');
-        res.send(clients);
-    })
-);
+//         const clients = await clients.find().distinct('client');
+//         res.send(clients);
+//     })
+// );
 
 
 export default systemRouter;

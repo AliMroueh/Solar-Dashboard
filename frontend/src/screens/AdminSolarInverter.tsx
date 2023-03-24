@@ -8,7 +8,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 
 
-interface Inverter {
+export interface Inverter {
   _id: Number;
   type:string;
   strength:string;

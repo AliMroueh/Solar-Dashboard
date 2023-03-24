@@ -58,7 +58,7 @@ export default function AdminSolarPanles(): JSX.Element {
 
   useEffect(() => {
     dispatch(getAllSystemsAction());
-  }, [dispatch, success]);
+  }, [dispatch]);
 
   if (!loading) {
     console.log(systems);

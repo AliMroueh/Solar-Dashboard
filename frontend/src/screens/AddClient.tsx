@@ -11,7 +11,8 @@ import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { useForm } from 'react-hook-form';
 import { ADD_NEW_CLIENT_RESET } from '../constants/clientConstants';
-interface Client {
+
+export interface Client {
   _id: Number;
   name: string;
   clientImage: File;

@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { ADD_NEW_SOLAR_RESET } from '../constants/solarConstants';
-interface Solar {
+export interface Solar {
   _id: Number;
   type: string;
   solarImage: File;

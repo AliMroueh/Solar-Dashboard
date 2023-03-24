@@ -88,16 +88,7 @@ interface GetBatteryStateWithAllBatteries extends BatteryState {
     
   }
 
-
-
-// 
-
-
-
 //  get inverter
-
-
-
 
 interface Inverter {
   _id: Number;
@@ -125,13 +116,6 @@ interface GetInverterStateWithAllInverters extends InverterState {
     getAllInverter: GetallInvertersState;
     
   }
-
-
-    // 
-
-
-
-
     // client
 
     interface Client {
@@ -192,13 +176,13 @@ export default function AddUserSystem() : JSX.Element{
       const { loading:loadingcl, error:errorcl, clients } = getAllClients;
 console.log(clients)
 
-      const [clientId, setClientId] = useState('');
+      const [clientId, setClientId] = useState<string>('');
       // const [SolarPanelId, setSolarPanelId] = useState('');
-      const [numberSolarPanel, setNumberSolarPanel] = useState('');
-      const [BatteryId, setBatteryId] = useState('');
-      const [numberBattery, setNumberBattery] = useState('');
-      const [inverterId, setInverterId] = useState('');
-      const [numberInverter, setnumberInverter] = useState('');
+      const [numberSolarPanel, setNumberSolarPanel] = useState<string>('');
+      const [BatteryId, setBatteryId] = useState<string>('');
+      const [numberBattery, setNumberBattery] = useState<string>('');
+      const [inverterId, setInverterId] = useState<string>('');
+      const [numberInverter, setnumberInverter] = useState<string>('');
 
        const [Solar, setSolar] = useState<string>('choose solar ');
      
@@ -245,15 +229,15 @@ console.log(clients)
     // };
  
 
-  const insertHandler = () =>  {
-
+  const insertHandler = (e: { preventDefault: () => void;}) =>  {
+  e.preventDefault();
   dispatch(
     addSystemAction({
       info: {
         clientId: clientId,
-        solar: Solar.toString(),
+        SolarPanelId: Solar,
         numberSolarPanel: numberSolarPanel.toString(),
-        batteryId: BatteryId,
+        BatteryId: BatteryId,
         numberBattery: numberBattery.toString(),
         inverterId: inverterId,
         numberInverter: numberInverter.toString()
@@ -326,11 +310,8 @@ console.log(clients)
 
 
      <div className='input_style'>
-      
-       {/* {loadingsol && <LoadingBox></LoadingBox>}
-            {errorsol && <MessageBox>{errorsol}</MessageBox>} */}
             <div className='input_style'>
-             <select value={Solar}  className="bg-gray-50 border border-gray-300 m-5 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+             <select value={Solar}  className="bg-gray-50 border border-gray-300 mt-5 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
              onChange={(e) => setSolar(e.target.value)}>
                 <option value='choose solar panels'>choose panels </option>
                 {solars.map((r, index) =>
