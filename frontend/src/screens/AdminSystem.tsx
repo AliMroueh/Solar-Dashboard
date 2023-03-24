@@ -71,7 +71,7 @@ export default function AdminSystem(): JSX.Element {
       <div className="bg-white rounded-lg shadow-lg overflow-hidden flex justify-between flex-wrap">
 
         <div className="flex">
-          <img src="https://via.placeholder.com/150x150" alt="Inverter Image" className="h-24 w-24 object-cover"/>
+          <img src={system.inverter.inverterImage} alt="Inverter Image" className="h-24 w-24 object-fill"/>
           <div className="ml-4">
             <h3 className="text-md font-medium text-gray-900">{system.inverter.type}</h3>
             <p className="text-sm text-gray-500">{system.numberInverter}</p>
@@ -79,7 +79,7 @@ export default function AdminSystem(): JSX.Element {
         </div>
 
         <div className="flex">
-          <img src="https://via.placeholder.com/150x150" alt="Battery Image" className="h-24 w-24 object-cover"/>
+          <img src={system.battery.batteryImage} alt="Battery Image" className="h-24 w-24 object-fill"/>
           <div className="ml-4">
             <h3 className="text-md font-medium text-gray-900">{system.battery.type}</h3>
             <p className="text-sm text-gray-500">{system.numberBattery}</p>
@@ -87,7 +87,7 @@ export default function AdminSystem(): JSX.Element {
         </div>
 
         <div className="flex">
-          <img src="https://via.placeholder.com/150x150" alt="Solar Panel Image" className="h-24 w-24 object-cover"/>
+          <img src={system.battery.batteryImage} alt="Solar Panel Image" className="h-24 w-24 object-fill"/>
           <div className="ml-4">
             <h3 className="text-md font-medium text-gray-900">{system.solarPanel.type}</h3>
             <p className="text-sm text-gray-500">{system.numberSolarPanel}</p>
