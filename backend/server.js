@@ -21,15 +21,15 @@ const __dirname = path.dirname(__filename);
 // mongodb+srv://yasser:database@main.twjbt8n.mongodb.net/solar-system?retryWrites=true&w=majority`
 const app = express();
 mongoose.set('strictQuery', true)
-// mongoose.connect(`mongodb+srv://yasser:database@main.twjbt8n.mongodb.net/solar-system?retryWrites=true&w=majority`, {
-  mongoose.connect('mongodb://localhost/solar', {
+mongoose.connect(`mongodb+srv://yasser:database@main.twjbt8n.mongodb.net/solar-system?retryWrites=true&w=majority`, {
+  // mongoose.connect('mongodb://localhost/solar', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
 
   .then(db => console.log('DB is connected'))
   .catch(err => console.log(err));
-  // these two middleware will transfer the data to req.body in the app
+// these two middleware will transfer the data to req.body in the app
 // a middleware that parse json data in the body of the request
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

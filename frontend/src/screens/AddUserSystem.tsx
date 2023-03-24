@@ -17,6 +17,8 @@ import { InverterState } from '../reducers/inverterReducer';
 import { ClientState } from '../reducers/clientReducer';
 import { getAllBatteriesAction } from '../actions/batteryActions';
 import { getAllClientsAction } from '../actions/clientActions';
+import { getAllInverterAction } from '../actions/inverterActions';
+
 
 
 interface System {
@@ -194,9 +196,9 @@ console.log(clients)
       // const [SolarPanelId, setSolarPanelId] = useState('');
       const [numberSolarPanel, setNumberSolarPanel] = useState('');
       const [BatteryId, setBatteryId] = useState('');
-      const [numberBattery, setNumberBattery] = useState(1);
+      const [numberBattery, setNumberBattery] = useState('');
       const [inverterId, setInverterId] = useState('');
-      const [numberInverter, setnumberInverter] = useState(1);
+      const [numberInverter, setnumberInverter] = useState('');
 
        const [Solar, setSolar] = useState<string>('choose solar ');
      
@@ -219,6 +221,18 @@ console.log(clients)
     }, [dispatch]);
 
 
+    useEffect(() => {
+      dispatch(getAllInverterAction());
+    }, [dispatch]);
+
+
+    useEffect(() => {
+      console.log(clientId)
+    }, [clientId])
+    
+
+
+
 
      if (!loadingsol) {
      console.log(solars)
@@ -229,10 +243,7 @@ console.log(clients)
     //   e.preventDefault();
     //   insertHandler();
     // };
-    useEffect(() => {
-      console.log(clientId)
-    }, [clientId])
-    
+ 
 
   const insertHandler = () =>  {
     // e.preventDefault();
@@ -309,12 +320,14 @@ console.log(clients)
 
 
  <form className='w-6/12 mx-auto rounded-lg bg-orange-400 p-8 px-8'  onSubmit={insertHandler} >
+
+
      <div className='input_style'>
       
-      {loadingcl && <LoadingBox></LoadingBox>}
-           {errorcl && <MessageBox>{errorsol}</MessageBox>}
+      {/* {loadingcl && <LoadingBox></LoadingBox>}
+           {errorcl && <MessageBox>{errorcl}</MessageBox>} */}
            <div className='input_style'>
-            <select value={clientId}
+            <select value={clientId} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
              onChange={(e) => setClientId(e.target.value)}>
                <option value='choose solar panels'>choose client </option>
                {clients.map((r, index) =>
@@ -329,10 +342,10 @@ console.log(clients)
 
      <div className='input_style'>
       
-       {loadingsol && <LoadingBox></LoadingBox>}
-            {errorsol && <MessageBox>{errorsol}</MessageBox>}
+       {/* {loadingsol && <LoadingBox></LoadingBox>}
+            {errorsol && <MessageBox>{errorsol}</MessageBox>} */}
             <div className='input_style'>
-             <select value={Solar} 
+             <select value={Solar}  className="bg-gray-50 border border-gray-300 m-5 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
              onChange={(e) => setSolar(e.target.value)}>
                 <option value='choose solar panels'>choose panels </option>
                 {solars.map((r, index) =>
@@ -358,10 +371,10 @@ console.log(clients)
 
    <div className='input_style'>
       
-      {lodingbatt && <LoadingBox></LoadingBox>}
-           {errorbatt && <MessageBox>{errorsol}</MessageBox>}
+      {/* {lodingbatt && <LoadingBox></LoadingBox>}
+           {errorbatt && <MessageBox>{errorbatt}</MessageBox>} */}
            <div className='input_style'>
-            <select value={BatteryId} onChange={(e) => setBatteryId(e.target.value)}>
+            <select value={BatteryId} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={(e) => setBatteryId(e.target.value)}>
                <option value='choose solar panels'>choose batteries </option>
                {batteries.map((r, index) =>
                  <option value={r._id.toString()}>
@@ -375,12 +388,43 @@ console.log(clients)
        <div className='flex flex-col text-white py-2'>
          <label htmlFor='Description'>Description</label>
          <input
-           id='numberSolarPanel'
+           id='numberBattery'
            className='p-2 rounded-lg bg-white mt-2 text-black focus:border-orange-400 focus:bg-yellow-600 focus:outline-none'
-           type='text'
-           value={numberSolarPanel}
-          //  onChange={(e) => setNumberSolarPanel(e.target.value)}
+           type='number'
+           value={numberBattery}
+            onChange={(e) => setNumberBattery(e.target.value)}
           //  onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setNumberSolarPanel(e.target.value)}
+        />
+        </div> 
+
+
+
+        
+        <div className='input_style'>
+      {/* {loadinginv && <LoadingBox></LoadingBox>}
+           {errorinv && <MessageBox>{errorinv}</MessageBox>} */}
+           <div className='input_style'>
+            <select  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={inverterId} onChange={(e) => setInverterId(e.target.value)}>
+               <option value='choose solar panels'>choose invertres </option>
+               {inverters.map((r, index) =>
+                 <option value={r._id.toString()}>
+                   {r.type}
+                 </option>
+               )}
+             </select>
+           </div> 
+           </div>
+   
+
+       <div className='flex flex-col text-white py-2'>
+         <label htmlFor='Description'>Description</label>
+         <input
+           id='numberBattery'
+           className='p-2 rounded-lg bg-white mt-2 text-black focus:border-orange-400 focus:bg-yellow-600 focus:outline-none'
+           type='number'
+           value={numberInverter}
+            onChange={(e) => setnumberInverter(e.target.value)}
+
         />
         </div> 
 
