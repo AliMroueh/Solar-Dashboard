@@ -246,21 +246,6 @@ console.log(clients)
  
 
   const insertHandler = () =>  {
-    // e.preventDefault();
-   // clientId // SolarPanelId///  numberSolarPanel//  BatteryId //  numberBattery ///  inverterId //  numberInverter 
-  
-  //  const formData = new FormData();
-    
-  //  formData.append('clientId', clientId.toString());
-  //  formData.append('Solar', Solar.toString());
-  //  formData.append('numberSolarPanel',numberSolarPanel.toString());
-  //  formData.append('BatteryId',BatteryId.toString());
-  //  formData.append('numberBattery',numberBattery.toString());
-  //  formData.append('inverterId',inverterId.toString());
-  //  formData.append('numberInverter',numberInverter.toString());
-
-
-  //  dispatch(addSystemAction(clientId.toString(),Solar.toString(),numberSolarPanel.toString(),BatteryId.toString(),numberBattery.toString(),inverterId.toString(),numberInverter.toString()));
 
   dispatch(
     addSystemAction({
