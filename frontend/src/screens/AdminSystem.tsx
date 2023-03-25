@@ -112,11 +112,12 @@ export default function AdminSystem(): JSX.Element {
   }
   </div>
 )}
-{systems.map((system,index) => 
-    <div className="grid grid-cols-1 gap-4" key={index}>
-         <button className='w-2/12 p-4 bg-orange-400 text-xl text-white font-semibold rounded-md self-end' onClick={() => addHandler()}>
+  <button className='w-2/12 p-4 bg-orange-400 text-xl text-white font-semibold rounded-md self-end' onClick={() => addHandler()}>
           Add User System
         </button>
+{systems.map((system,index) => 
+    <div className="grid grid-cols-1 gap-4" key={index}>
+       
          <div className="p-4">
             <h2 className="text-lg font-medium text-gray-900">{system.systemId.toString()}</h2>
       </div> 
