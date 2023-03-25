@@ -59,7 +59,7 @@ export const addSystemAction = ({info}: any) => async (dispatch: ThunkDispatch<{
     }
   };
 
-  export const updateSystemAction = (id: string, info:any) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+  export const updateSystemAction = (id: string, {info}:any) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
     
     dispatch({ type: UPDATE_SYSTEM_REQUEST });
     try {

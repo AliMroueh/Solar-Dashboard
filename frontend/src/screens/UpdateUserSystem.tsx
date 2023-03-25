@@ -144,7 +144,22 @@ export default function UpdateUserSystem() : JSX.Element{
   // const { register, handleSubmit,  formState: { errors } } = useForm(({ mode: 'onChange' }));
     const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
       
+    const location = useLocation();
 
+    
+    useEffect(() => {
+        const query = new URLSearchParams(location.search);
+        const client = query.get('client') ?? '';
+        const solarPanel = query.get('solarPanel') ?? '';
+        const numberSolarPanel = query.get('numberSolarPanel') ?? '';
+        const battery = query.get('battery') ?? '';
+        const numberBattery = query.get('numberBattery') ?? '';
+        const inverter = query.get('inverter') ?? '';
+        const numberInverter = query.get('numberInverter') ?? '';
+    
+       
+      }, [location.search]);
+      
     const navigate = useNavigate();
 
 
@@ -187,8 +202,9 @@ export default function UpdateUserSystem() : JSX.Element{
        const [Solar, setSolar] = useState<string>('choose solar ');
      
 
+    
+    //    <Link to={`/UpdateUserSystem/${system.systemId}?client=${system.client._id}&solarPanel=${system.solarPanel._id}&numberSolarPanel=${system.numberSolarPanel}&battery=${system.battery._id}&numberBattery=${system.numberBattery}&inverter=${system.inverter._id}&numberInverter=${system.numberInverter}`}>
 
-  
   
 
 
@@ -228,7 +244,15 @@ console.log(id)
 
   const updateHandler = (e: { preventDefault: () => void;}) =>  {
   e.preventDefault();
+console.log(id,clientId,
+            Solar,
+         numberSolarPanel.toString(),
+          BatteryId,
+          numberBattery.toString(),
+          inverterId,
+           numberInverter.toString())
   dispatch(
+    
     updateSystemAction(String(id) ,{
       info: {
 

@@ -121,6 +121,7 @@ systemRouter.put('/update/:id',
         body('numberInverter', 'Please enter a count of inverters').trim().notEmpty().isNumeric().isLength({ max: 3 }).withMessage('numberInverter must must be 3 digits'),
     ],
     expressAsyncHandler(async (req, res) => {
+        console.log(req.body)
         const system = await System.findById(req.params.id);
 
         if (system) {
