@@ -147,18 +147,26 @@ export default function UpdateUserSystem() : JSX.Element{
     const location = useLocation();
 
     
-    useEffect(() => {
+    // useEffect(() => {
         const query = new URLSearchParams(location.search);
         const client = query.get('client') ?? '';
         const solarPanel = query.get('solarPanel') ?? '';
-        const numberSolarPanel = query.get('numberSolarPanel') ?? '';
+        const NumberSolarPanel = query.get('numberSolarPanel') ?? '';
         const battery = query.get('battery') ?? '';
-        const numberBattery = query.get('numberBattery') ?? '';
+        const NumberBattery = query.get('numberBattery') ?? '';
         const inverter = query.get('inverter') ?? '';
-        const numberInverter = query.get('numberInverter') ?? '';
+        const NumberInverter = query.get('numberInverter') ?? '';
     
-       
-      }, [location.search]);
+        const [clientId, setClientId] = useState<string>(client);
+        const [numberSolarPanel, setNumberSolarPanel] = useState<string>(NumberSolarPanel);
+      // }, [location.search]);
+
+
+      const [BatteryId, setBatteryId] = useState<string>(battery);
+      const [numberBattery, setNumberBattery] = useState<string>(NumberBattery);
+      const [inverterId, setInverterId] = useState<string>(inverter);
+      const [numberInverter, setnumberInverter] = useState<string>(NumberInverter);
+       const [Solar, setSolar] = useState<string>(solarPanel);
       
     const navigate = useNavigate();
 
@@ -189,18 +197,7 @@ export default function UpdateUserSystem() : JSX.Element{
       const getAllClients = useSelector<GetClientStateWithAllClients, GetallClientsState>((state) => state.getAllClients);
     
       const { loading:loadingcl, error:errorcl, clients } = getAllClients;
-                       console.log(clients)
-
-      const [clientId, setClientId] = useState<string>('');
-      // const [SolarPanelId, setSolarPanelId] = useState('');
-      const [numberSolarPanel, setNumberSolarPanel] = useState<string>('');
-      const [BatteryId, setBatteryId] = useState<string>('');
-      const [numberBattery, setNumberBattery] = useState<string>('');
-      const [inverterId, setInverterId] = useState<string>('');
-      const [numberInverter, setnumberInverter] = useState<string>('');
-
-       const [Solar, setSolar] = useState<string>('choose solar ');
-     
+ 
 
     
     //    <Link to={`/UpdateUserSystem/${system.systemId}?client=${system.client._id}&solarPanel=${system.solarPanel._id}&numberSolarPanel=${system.numberSolarPanel}&battery=${system.battery._id}&numberBattery=${system.numberBattery}&inverter=${system.inverter._id}&numberInverter=${system.numberInverter}`}>
