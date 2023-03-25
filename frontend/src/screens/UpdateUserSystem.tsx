@@ -173,7 +173,13 @@ export default function UpdateUserSystem() : JSX.Element{
 
       const updateSystem = useSelector<UpdateSystemStateWithAllSystems, UpdateAllSystemsState>((state) => state.updateSystem);
       const { loading, error, systems, success } = updateSystem;
-
+      
+      useEffect(() => {
+        if(success){
+          // dispatch({type: ADD_NEW_INVERTER_RESET})
+          navigate('/AdminSystem');
+        }
+      }, [navigate, success]);
 
 
       const getAllSolars = useSelector<GetSolarStateWithAllSolars, GetallSolarsState>((state) => state.getAllSolars);
