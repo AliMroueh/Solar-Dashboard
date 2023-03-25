@@ -63,7 +63,7 @@ export const addSystemAction = ({info}: any) => async (dispatch: ThunkDispatch<{
     
     dispatch({ type: UPDATE_SYSTEM_REQUEST });
     try {
-      const { data } = await axios.put(`/api/systems/system/update/${id}`, info);
+      const { data } = await axios.put(`/api/systems/update/${id}`, info);
       dispatch({
         type: UPDATE_SYSTEM_SUCCESS,
         payload: data,
@@ -81,7 +81,7 @@ export const addSystemAction = ({info}: any) => async (dispatch: ThunkDispatch<{
     dispatch({ type: DELETE_SYSTEM_REQUEST })
     
     try {
-      const { data } = await axios.delete(`/api/systems/system/delete/${id}`);
+      const { data } = await axios.delete(`/api/systems/delete/${id}`);
       dispatch({
         type: DELETE_SYSTEM_SUCCESS,
         payload: data,

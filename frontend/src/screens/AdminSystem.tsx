@@ -15,7 +15,8 @@ import { Battery } from './AdminSolarBatteries';
 import { Inverter } from './AdminSolarInverter';
 
 interface System {
-  _id:Number,
+  systemId:Number,
+   clientId:any;
   client: Client,
   battery: Battery,
   inverter: Inverter,
@@ -23,6 +24,17 @@ interface System {
   numberSolarPanel:String;
   numberBattery :String;
   numberInverter :String;
+
+  //  clientId:Client;
+  // // client: Client,
+  // BatteryId: Battery,
+  // inverterId: Inverter,
+  // solarPanel: Solar, 
+  // numberSolarPanel:String;
+  // numberBattery :String;
+  // numberInverter :String;
+
+
 }
 
 interface GetallSystemsState {
@@ -57,6 +69,7 @@ export default function AdminSystem(): JSX.Element {
   const getAllSystems = useSelector<GetSystemStateWithAllSystems, GetallSystemsState>((state) => state.getAllSystems);
 
   const { loading, error, systems } = getAllSystems;
+  console.log(systems)
 
 
 
@@ -104,6 +117,9 @@ export default function AdminSystem(): JSX.Element {
          <button className='w-2/12 p-4 bg-orange-400 text-xl text-white font-semibold rounded-md self-end' onClick={() => addHandler()}>
           Add User System
         </button>
+         <div className="p-4">
+            <h2 className="text-lg font-medium text-gray-900">{system.systemId.toString()}</h2>
+      </div> 
       <div className="p-4">
             <h2 className="text-lg font-medium text-gray-900">{system.client.name}</h2>
       </div>
@@ -137,12 +153,13 @@ export default function AdminSystem(): JSX.Element {
         <table>
           <tr>
           <td className='py-3 px-6 text-center'>
-                  <Link to={`/UpdateUserSystem/`}>
+            
+          <Link to={`/UpdateUserSystem/${system.systemId}?client=${system.client._id}&solarPanel=${system.solarPanel._id}&numberSolarPanel=${system.numberSolarPanel}&battery=${system.battery._id}&numberBattery=${system.numberBattery}&inverter=${system.inverter._id}&numberInverter=${system.numberInverter}`}>
                       <button type='button' className='edit w-auto p-2 bg-green-600 text-slate-200 rounded-md'>
                         Edit
                       </button>
                     </Link>
-                    <button type='button' className='delete w-auto p-2 bg-red-600 text-slate-200 rounded-md ml-2' onClick={(event) => deleteHandler(event, system._id)}>
+                    <button type='button' className='delete w-auto p-2 bg-red-600 text-slate-200 rounded-md ml-2' onClick={(event) => deleteHandler(event, system.systemId)}>
                       Delete
                     </button>
                   </td>

@@ -36,14 +36,14 @@ systemRouter.post("/create",
 
         const client = await Client.findOne({ _id: req.body.clientId });
 
-        if(!client){
-           return res.status(401).json({message: "client is not exists"})
+        if (!client) {
+            return res.status(401).json({ message: "client is not exists" })
         }
 
         const clientInSolar = await System.findOne({ clientId: req.body.clientId });
 
-        if(clientInSolar){
-           return res.status(401).json({message: "client is already exists in Solar"})
+        if (clientInSolar) {
+            return res.status(401).json({ message: "client is already exists in Solar" })
         }
         // Create the battery object
         const sysObj = {
@@ -65,7 +65,7 @@ systemRouter.post("/create",
             }
         });
     }
-    ));  
+    ));
 
 // systemRouter.get('/get', (req, res) => {
 //         System.find().exec((err, systems) => {
@@ -94,7 +94,7 @@ systemRouter.get('/get', async (req, res) => {
         const inverter = await Promise.all(systems.map(sys => Inverter.findById(sys.inverterId).exec()));
 
         const result = systems.map((sys, index) => ({
-            // system: sys,
+            systemId: sys._id,
             client: clients[index],
             solarPanel: solarPanel[index],
             numberSolarPanel: sys.numberSolarPanel,
@@ -111,21 +111,21 @@ systemRouter.get('/get', async (req, res) => {
 
 
 systemRouter.put('/update/:id',
-        [
-            body('clientId', 'Please choose a client').trim().notEmpty().isString().withMessage('Type must be a string with maximum length of 25 characters'),
-            body('SolarPanelId', 'Please enter a Solar Panel').trim().notEmpty().isString().withMessage('solarPanelId must be a three digit number'),
-            body('numberSolarPanel', 'Please enter a count of Solar Panel').trim().notEmpty().isNumeric().isLength({ max: 3 }).withMessage('numberSolarPanel must be 3 digits'),
-            body('BatteryId', 'Please choose a battery').trim().notEmpty().isString().withMessage('BatterylId must be a three digit number'),
-            body('numberBattery', 'Please enter a count of Batteries').trim().notEmpty().isNumeric().isLength({ max: 3 }).withMessage('numberBattery must be 3 digits'),
-            body('inverterId', 'Please choose an inverter').trim().notEmpty().isString().withMessage('Type must be a string with maximum length of 25 characters'),
-            body('numberInverter', 'Please enter a count of inverters').trim().notEmpty().isNumeric().isLength({ max: 3 }).withMessage('numberInverter must must be 3 digits'),
-        ],
-        expressAsyncHandler(async (req, res) => {
-            const system = await System.findById(req.params.id);
-    
-            if (system) {
-    
-                system.clientId = req.body.clientId || system.clientId,
+    [
+        body('clientId', 'Please choose a client').trim().notEmpty().isString().withMessage('Type must be a string with maximum length of 25 characters'),
+        body('SolarPanelId', 'Please enter a Solar Panel').trim().notEmpty().isString().withMessage('solarPanelId must be a three digit number'),
+        body('numberSolarPanel', 'Please enter a count of Solar Panel').trim().notEmpty().isNumeric().isLength({ max: 3 }).withMessage('numberSolarPanel must be 3 digits'),
+        body('BatteryId', 'Please choose a battery').trim().notEmpty().isString().withMessage('BatterylId must be a three digit number'),
+        body('numberBattery', 'Please enter a count of Batteries').trim().notEmpty().isNumeric().isLength({ max: 3 }).withMessage('numberBattery must be 3 digits'),
+        body('inverterId', 'Please choose an inverter').trim().notEmpty().isString().withMessage('Type must be a string with maximum length of 25 characters'),
+        body('numberInverter', 'Please enter a count of inverters').trim().notEmpty().isNumeric().isLength({ max: 3 }).withMessage('numberInverter must must be 3 digits'),
+    ],
+    expressAsyncHandler(async (req, res) => {
+        const system = await System.findById(req.params.id);
+
+        if (system) {
+
+            system.clientId = req.body.clientId || system.clientId,
                 system.SolarPanelId = req.body.SolarPanelId || system.SolarPanelId,
                 system.numberSolarPanel = req.body.numberSolarPanel || system.numberSolarPanel,
                 system.BatteryId = req.body.BatteryId || system.BatteryId,
@@ -133,21 +133,21 @@ systemRouter.put('/update/:id',
                 system.inverterId = req.body.inverterId || system.inverterId,
                 system.numberInverter = req.body.numberInverter || system.numberInverter
 
-                const updatedSystem = await system.save();
-    
-                res.send({
-                    clientId: updatedSystem.clientId,
-                    SolarPanelId: updatedSystem.SolarPanelId,
-                    numberSolarPanel: updatedSystem.numberSolarPanel,
-                    BatteryId: updatedSystem.BatteryId,
-                    numberBattery: updatedSystem.numberBattery,
-                    inverterId: updatedSystem.inverterId,
-                    numberInverter: updatedSystem.numberInverter
-                });
-            } else {
-                res.status(401).send({ message: "Unknown id" });
-            }
-        }));
+            const updatedSystem = await system.save();
+
+            res.send({
+                clientId: updatedSystem.clientId,
+                SolarPanelId: updatedSystem.SolarPanelId,
+                numberSolarPanel: updatedSystem.numberSolarPanel,
+                BatteryId: updatedSystem.BatteryId,
+                numberBattery: updatedSystem.numberBattery,
+                inverterId: updatedSystem.inverterId,
+                numberInverter: updatedSystem.numberInverter
+            });
+        } else {
+            res.status(401).send({ message: "Unknown id" });
+        }
+    }));
 
 systemRouter.delete('/delete/:id',
     expressAsyncHandler(async (req, res) => {
