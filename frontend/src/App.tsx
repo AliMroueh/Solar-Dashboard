@@ -14,7 +14,7 @@ import AdminSolarBatteries from "./screens/AdminSolarBatteries";
 import UpdateInverterPanel from "./screens/UpdateInverterPanel";
 import AddSolarBatteryPanels from "./screens/AddBatteryPanel";
 import Home from "./screens/Home";
-import AddSolarSystem from "./screens/AddSolarSystem";
+
 import AddUserSystem from "./screens/AddUserSystem";
 import AdminSystem from "./screens/AdminSystem";
 

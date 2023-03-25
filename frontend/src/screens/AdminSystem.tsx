@@ -2,9 +2,10 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
-import { getAllSystemsAction } from '../actions/systemActions';
+import { getAllSystemsAction,  deleteSystemAction } from '../actions/systemActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { SystemState } from '../reducers/systemReducer';
@@ -14,6 +15,7 @@ import { Battery } from './AdminSolarBatteries';
 import { Inverter } from './AdminSolarInverter';
 
 interface System {
+  _id:Number,
   client: Client,
   battery: Battery,
   inverter: Inverter,
@@ -33,13 +35,33 @@ interface GetSystemStateWithAllSystems extends SystemState {
 
 }
 
-export default function AdminSystem(): JSX.Element {
 
+
+interface DeleteSystemState {
+  loading: boolean;
+  success: boolean;
+  error: string | null;
+}
+
+
+interface DeleteSystemStateWithAllSystems extends SystemState {
+       
+  deleteSystem:DeleteSystemState;
+}
+
+
+export default function AdminSystem(): JSX.Element {
+  const navigate = useNavigate();
   const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
 
-  const getAllSolars = useSelector<GetSystemStateWithAllSystems, GetallSystemsState>((state) => state.getAllSystems);
+  const getAllSystems = useSelector<GetSystemStateWithAllSystems, GetallSystemsState>((state) => state.getAllSystems);
 
-  const { loading, error, systems } = getAllSolars;
+  const { loading, error, systems } = getAllSystems;
+
+
+
+  const deleteSystems = useSelector<DeleteSystemStateWithAllSystems, DeleteSystemState>((state) => state.deleteSystem);
+  const { loading: loadingDel, success, error: errorDel } = deleteSystems;
 
   useEffect(() => {
     dispatch(getAllSystemsAction());
@@ -48,6 +70,20 @@ export default function AdminSystem(): JSX.Element {
   if (!loading) {
     console.log(systems);
   }
+
+
+
+  const addHandler = () => {
+    navigate('/AddUserSystem');
+  };
+
+
+  const deleteHandler = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: Number) => {
+    dispatch(deleteSystemAction(id));
+    event.preventDefault();
+  };
+
+
   return (
   <div className='col-span-5'>
     {loading && <LoadingBox></LoadingBox>}
@@ -65,6 +101,9 @@ export default function AdminSystem(): JSX.Element {
 )}
 {systems.map((system,index) => 
     <div className="grid grid-cols-1 gap-4" key={index}>
+         <button className='w-2/12 p-4 bg-orange-400 text-xl text-white font-semibold rounded-md self-end' onClick={() => addHandler()}>
+          Add User System
+        </button>
       <div className="p-4">
             <h2 className="text-lg font-medium text-gray-900">{system.client.name}</h2>
       </div>
@@ -92,6 +131,23 @@ export default function AdminSystem(): JSX.Element {
             <h3 className="text-md font-medium text-gray-900">{system.solarPanel.type}</h3>
             <p className="text-sm text-gray-500">{system.numberSolarPanel}</p>
           </div>
+        </div>
+        
+        <div className="flex">
+        <table>
+          <tr>
+          <td className='py-3 px-6 text-center'>
+                  <Link to={`/UpdateUserSystem/`}>
+                      <button type='button' className='edit w-auto p-2 bg-green-600 text-slate-200 rounded-md'>
+                        Edit
+                      </button>
+                    </Link>
+                    <button type='button' className='delete w-auto p-2 bg-red-600 text-slate-200 rounded-md ml-2' onClick={(event) => deleteHandler(event, system._id)}>
+                      Delete
+                    </button>
+                  </td>
+          </tr>
+        </table>
         </div>
       </div>
     </div>
