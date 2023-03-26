@@ -71,7 +71,7 @@ export default function SigninScreen() {
     //     </div>
     // </div>
     // </div>
-    <div className='col-span-5'>
+    <div className='col-span-5 absolute top-0 left-0'>
     <div className='grid grid-cols-1 sm:grid-cols-2 h-screen w-full'>
         
     <div className='hidden sm:block'>
