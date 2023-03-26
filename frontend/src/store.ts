@@ -7,16 +7,36 @@ import { getAllClientsReducer,addClientReducer,updateClientReducer,deleteClientR
 import { addSolarReducer, deleteSolarReducer, getAllSolarReducer, updateSolarReducer } from "./reducers/solarReducer";
 import { sendEmailReducer } from "./reducers/emailReducer";
 import { getAllSystemsReducer,addSystemReducer,updateSystemReducer,deleteSystemReducer } from "./reducers/systemReducer";
-const initialState = {
-    // userSignin: {
-    //     userInfo: localStorage.getItem("userInfo")
-    //         ? JSON.parse(localStorage.getItem("userInfo") as string)
-    //         : null,
-    // },
-};
+import { userRegisterReducer, userSigninReducer } from "./reducers/userReducers";
+
+
+// const initialState = {
+//     userSignin: {
+//         userInfo: localStorage.getItem("userInfo")
+//             ? JSON.parse(localStorage.getItem("userInfo") as string)
+//             : null,
+//     },
+// };
+
+interface UserSigninState {
+    userInfo: string | null;
+  }
+  
+  interface AppState {
+    userSignin: UserSigninState;
+  }
+  
+  const initialState: AppState = {
+    userSignin: {
+      userInfo: localStorage.getItem('userInfo')
+        ? JSON.parse(localStorage.getItem('userInfo')!)
+        : null,
+    },
+  };
+  
 const reducer = combineReducers({
-    // userSignin: userSigninReducer,
-    // userRegister: userRegisterReducer,
+    userSignin: userSigninReducer,
+    userRegister: userRegisterReducer,
     getAllSolars:getAllSolarReducer,
     addSolar:addSolarReducer,
     updateSolar:updateSolarReducer,

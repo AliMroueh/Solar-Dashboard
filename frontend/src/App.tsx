@@ -18,6 +18,8 @@ import Home from "./screens/Home";
 import AddUserSystem from "./screens/AddUserSystem";
 import AdminSystem from "./screens/AdminSystem";
 import UpdateUserSystem from "./screens/UpdateUserSystem";
+import RegisterScreen from "./screens/RegisterScreen";
+import SigninScreen from "./screens/SigninScreen";
 
 function App() {
   return (
@@ -45,6 +47,8 @@ function App() {
             <Route path="/UpdateUserSystem/:id" element={<UpdateUserSystem />}/>
             {/* AdminSystem */}
             <Route path="/AdminSystem" element={<AdminSystem />}/>
+            <Route path="/register" element={<RegisterScreen />}/>
+            <Route path="/signin" element={<SigninScreen />}/>
 
           </Routes>
         </div> 
