@@ -11,13 +11,13 @@ import MessageBox from '../components/MessageBox';
 import LoadingBox from '../components/LoadingBox';
 import { BiChevronDown } from "react-icons/bi";
 import { AiOutlineSearch } from "react-icons/ai";
-import userData from '../components/userData';
+import userData, { AllData } from '../components/userData';
 
-interface Data {
-  name: string;
-  x: number;
-  y: number;
-}
+// interface Data {
+//   name: string;
+//   x: number;
+//   y: number;
+// }
 
 const Home: React.FC = () => {
 
@@ -29,13 +29,7 @@ const Home: React.FC = () => {
   interface getEmail extends emailState  {
     sendEmail: EmailState;
     }
-    interface Data1 {
-      name: string;
-      x: number;
-      y: number;
-      z: number;
-  }
-  const [data, setData] = useState<Data[]>([]);
+  const [data, setData] = useState<AllData[]>([]);
   const [data1Index, setData1Index] = useState<number>(0);
   const [inputValue, setInputValue] = useState<string>("");
   const [selected, setSelected] = useState<string>("");
@@ -61,32 +55,32 @@ const Home: React.FC = () => {
   // }, [data]);
   // let timeChange: string | number | NodeJS.Timeout | undefined
   // let dayTime: any[] = [];
-  const data1 : Data1[] = [
-    {name: '6 am', x: 5, y: 2, z: 3},
-    {name: '7 am', x: 6, y: 3, z: 3},
-    {name: '8 am', x: 6, y: 3, z: 3},
-    {name: '9 am', x: 7, y: 5, z: 3},
-    {name: '10 am', x: 9, y: 6, z: 3},
-    {name: '11 am', x: 10, y: 7, z: 3},
-    {name: '12 pm', x: 10, y: 8, z: 3},
-    {name: '1 pm', x: 10, y: 9, z: 3},
-    {name: '2 pm', x: 10, y: 8, z: 3},
-    {name: '3 pm', x: 10, y: 8, z: 3},
-    {name: '4 pm', x: 9, y: 5, z: 3},
-    {name: '5 pm', x: 9, y: 5, z: 3},
-    {name: '6 pm', x: 6, y: 4, z: 3},
-    {name: '7 pm', x: 5, y: 3, z: 3},
-    {name: '8 pm', x: 4, y: 2, z: 3},
-    {name: '9 pm', x: 3, y: 1, z: 3},
-    {name: '10 pm', x: 4, y: 2, z: 3},
-    {name: '11 pm', x: 6, y: 2, z: 3},
-    {name: '12 am', x: 4, y: 2, z: 3},
-    {name: '1 am', x: 3, y: 1, z: 3},
-    {name: '2 am', x: 2, y: 0, z: 3},
-    {name: '3 am', x: 4, y: 2, z: 3},
-    {name: '4 am', x: 3, y: 1, z: 3},
-    {name: '5 am', x: 4, y: 1, z: 3},
-]
+//   const data1 : Data1[] = [
+//     {name: '6 am', x: 5, y: 2, z: 3},
+//     {name: '7 am', x: 6, y: 3, z: 3},
+//     {name: '8 am', x: 6, y: 3, z: 3},
+//     {name: '9 am', x: 7, y: 5, z: 3},
+//     {name: '10 am', x: 9, y: 6, z: 3},
+//     {name: '11 am', x: 10, y: 7, z: 3},
+//     {name: '12 pm', x: 10, y: 8, z: 3},
+//     {name: '1 pm', x: 10, y: 9, z: 3},
+//     {name: '2 pm', x: 10, y: 8, z: 3},
+//     {name: '3 pm', x: 10, y: 8, z: 3},
+//     {name: '4 pm', x: 9, y: 5, z: 3},
+//     {name: '5 pm', x: 9, y: 5, z: 3},
+//     {name: '6 pm', x: 6, y: 4, z: 3},
+//     {name: '7 pm', x: 5, y: 3, z: 3},
+//     {name: '8 pm', x: 4, y: 2, z: 3},
+//     {name: '9 pm', x: 3, y: 1, z: 3},
+//     {name: '10 pm', x: 4, y: 2, z: 3},
+//     {name: '11 pm', x: 6, y: 2, z: 3},
+//     {name: '12 am', x: 4, y: 2, z: 3},
+//     {name: '1 am', x: 3, y: 1, z: 3},
+//     {name: '2 am', x: 2, y: 0, z: 3},
+//     {name: '3 am', x: 4, y: 2, z: 3},
+//     {name: '4 am', x: 3, y: 1, z: 3},
+//     {name: '5 am', x: 4, y: 1, z: 3},
+// ]
   // useEffect(() => {
   //   // if(timeChange) clearInterval(timeChange)
   //   timeChange = setInterval(() => {if(data.length < 24){
@@ -105,6 +99,9 @@ const Home: React.FC = () => {
       if (selected.length > 0 && data.length < 24) {
         setData((prevData) => [...prevData, userData[num].solarData[data1Index]]);
         setData1Index((prevIndex) => prevIndex + 1);
+        if(userData[num].solarData[data1Index].Solar_production - userData[num].solarData[data1Index].Load_consumption <= 100){
+        dispatch(sendEmailAction())
+        }
       }else{
         return () => clearInterval(interval);
       }
@@ -114,12 +111,13 @@ const Home: React.FC = () => {
     }, 1000);
 
     return () => clearInterval(interval);
-  },[data.length, data1Index, num, selected.length]);
+  },[data.length, data1Index, dispatch, num, selected.length]);
 
   return (
     <div className='col-span-5 flex flex-col justify-center items-center px-4'>
       {loading && <LoadingBox></LoadingBox>}
-      {error && <MessageBox>{error}</MessageBox>}
+      {error && <MessageBox variant='danger'>{error}</MessageBox>}
+      {email && <MessageBox variant='info'>Email sent successfully</MessageBox>}
 
       {/* <LineChart
         width={500}
@@ -334,13 +332,13 @@ const Home: React.FC = () => {
      <div className=' w-full overflow-x-auto p-10'>
         <AreaChart width={960} height={300} data={data} className=" bg-slate-300 rounded-lg">
             <CartesianGrid className='bg-red-500'></CartesianGrid>
-            <XAxis dataKey="name"></XAxis>
+            <XAxis dataKey="date"></XAxis>
             <YAxis></YAxis>
             {/* <Tooltip> </Tooltip> */}
             <Legend></Legend>
-            <Area type="monotone" dataKey="x" stroke="blue" fill="blue"/>
-            <Area type="monotone" dataKey="y" stroke="green" fill="green"  />
-            <Area type="monotone" dataKey="z" stroke="red" fill="yellow"  />
+            <Area type="monotone" dataKey="Solar_production" stroke="blue" fill="blue"/>
+            <Area type="monotone" dataKey="Load_consumption" stroke="green" fill="green"  />
+            <Area type="monotone" dataKey="Storage_production" stroke="red" fill="yellow"  />
           </AreaChart>
 
       </div>
