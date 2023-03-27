@@ -14,6 +14,59 @@ import Inverter from '../models/inverterModel.js';
 
 const systemRouter = express.Router();
 
+systemRouter.get(
+    '/summary',
+    // passport.authenticate('jwt', { session: false }),
+    // isAdmin(),
+    expressAsyncHandler(async (req, res) => {
+      const clients = await Client.aggregate([
+        {
+          $group: {
+            //   _id still null
+            _id: null,
+            // numOrders incrememt by one every order
+            numClients: { $sum: 1 },
+          },
+        },
+      ]);
+      const batteries = await Battery.aggregate([
+        {
+          $group: {
+            _id: null,
+            numBatteries: { $sum: 1 },
+          },
+        },
+      ]);
+      const inverters = await Inverter.aggregate([
+        {
+          $group: {
+            _id: null,
+            numInverter: { $sum: 1 },
+          },
+        },
+      ]);
+      
+      const solars = await Solar.aggregate([
+        {
+          $group: {
+            _id: '$category',
+            numSolars: { $sum: 1 },
+          },
+        },
+      ]);
+
+      const systems = await System.aggregate([
+        {
+          $group: {
+            _id: '$category',
+            numSystem: { $sum: 1 },
+          },
+        },
+      ]);
+      res.send({ clients, inverters, batteries, solars, systems });
+    })
+  );
+
 systemRouter.post("/create",
     [
         body('clientId', 'Please choose a client').trim().notEmpty().isString().withMessage('Type must be a string with maximum length of 25 characters'),

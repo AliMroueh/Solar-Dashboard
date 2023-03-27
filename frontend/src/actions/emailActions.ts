@@ -11,11 +11,11 @@ import {
 
 
 
-export const sendEmailAction = () => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+export const sendEmailAction = (name:string,email:string) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
   dispatch({ type: GET_EMAIL_REQUEST });
 
   try {
-    const { data } = await axios.post('/api/email');
+    const { data } = await axios.post('/api/email',{name,email});
 
     dispatch({
       type: GET_EMAIL_SUCCESS,

@@ -5,13 +5,14 @@ import expressAsyncHandler from "express-async-handler";
 const emailRouter = express.Router();
 
 emailRouter.post('/', expressAsyncHandler(async(req,res) => {
+  console.log(req.body)
   try{
     mailgun()
   .messages()
   .send(
     {
       from: 'John Doe <john@mg.yourdomain.com>',
-      to: `ali Mroueh <alimroueh9999@gmail.com>`,
+      to: `${req.body.name} <${req.body.email}>`,
       subject: `high consumption`,
       html: '<p>5afef 2estehlak ya man</p>',
     },

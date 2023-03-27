@@ -5,8 +5,18 @@ import {
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
 import SearchIcon from "./SearchIcon";
+import { ThunkDispatch } from "redux-thunk";
+import { AnyAction } from "redux";
+import { useDispatch } from "react-redux";
+import { signout } from "../actions/userActions";
 
 function Header() {
+
+  const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
+
+  const Signout = () => {
+    dispatch(signout())
+  }
   return (
     <div className=" w-full py-6 
     bg-gradient-to-r from-slate-50 via-slate-50 to-slate-400
@@ -32,6 +42,7 @@ function Header() {
         <BellIcon className="header-icon" />
         <InboxIcon className="header-icon" />
         <UserCircleIcon className="header-icon" />
+        <button onClick={Signout}>Sign Out</button>
       </div>
     </div>
   );

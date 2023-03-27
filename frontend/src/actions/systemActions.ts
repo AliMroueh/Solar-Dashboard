@@ -2,6 +2,8 @@ import axios from 'axios';
 import { Dispatch } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+import { RootState } from '../store'; // replace with your root state type
 
 import {
   GET_ALL_SYSTEMS_REQUEST,
@@ -15,7 +17,10 @@ import {
   UPDATE_SYSTEM_FAILURE,
   DELETE_SYSTEM_REQUEST,
   DELETE_SYSTEM_SUCCESS,
-  DELETE_SYSTEM_FAILURE
+  DELETE_SYSTEM_FAILURE,
+  SYS_SUMMARY_REQUEST,
+  SYS_SUMMARY_SUCCESS,
+  SYS_SUMMARY_FAILURE
 } from '../constants/systemConstants';
 
 
@@ -93,3 +98,45 @@ export const addSystemAction = ({info}: any) => async (dispatch: ThunkDispatch<{
       })
     }
   }
+
+  // export const summarySys = () => async (dispatch: ThunkDispatch<{}, {}, AnyAction>, getState : GetState) => {
+  //   dispatch({ type: SYS_SUMMARY_REQUEST });
+  //   const {
+  //     userSignin: { userInfo },
+  //   } = getState();
+  //   try {
+  //     const { data } = await axios.get('/api/systems/summary', {
+  //       headers: { Authorization: `Bearer ${userInfo.token}` },
+  //     });
+  //     dispatch({ type: SYS_SUMMARY_SUCCESS, payload: data });
+  //   } catch (error: any) {
+  //     dispatch({
+  //       type: SYS_SUMMARY_FAILURE,
+  //       payload:
+  //         error.response && error.response.data.message
+  //           ? error.response.data.message
+  //           : error.message,
+  //     });
+  //   }
+  // };
+
+  export const summarySys = (): ThunkAction<void, RootState, null, AnyAction> => async (dispatch, getState) => {
+    dispatch({ type: SYS_SUMMARY_REQUEST });
+    const {
+      userSignin: { userInfo },
+    } = getState();
+    try {
+      const { data } = await axios.get('/api/systems/summary', {
+        headers: { Authorization: `Bearer ${userInfo?.token}` },
+      });
+      dispatch({ type: SYS_SUMMARY_SUCCESS, payload: data });
+    } catch (error: any) {
+      dispatch({
+        type: SYS_SUMMARY_FAILURE,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };

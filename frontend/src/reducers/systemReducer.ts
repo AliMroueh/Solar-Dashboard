@@ -16,7 +16,10 @@ GET_ALL_SYSTEMS_FAILURE,
     DELETE_SYSTEM_FAILURE,
 
     UPDATE_SYSTEM_RESET,
-    ADD_NEW_SYSTEM_RESET
+    ADD_NEW_SYSTEM_RESET,
+    SYS_SUMMARY_REQUEST,
+    SYS_SUMMARY_SUCCESS,
+    SYS_SUMMARY_FAILURE
 
 
 } from "../constants/systemConstants";
@@ -28,6 +31,7 @@ export interface SystemState  {
     systems?: any[];
     error?: any[] | string | null;
     success?: boolean;
+    summary?: any[]
   }
   
   const initialState: SystemState = {
@@ -119,3 +123,18 @@ export interface SystemState  {
     }
   };
   
+export const SysSummaryReducer = (
+  state = initialState,
+  action: { type: any; payload: any; }
+) => {
+  switch (action.type) {
+    case SYS_SUMMARY_REQUEST:
+      return { loading: true };
+    case SYS_SUMMARY_SUCCESS:
+      return { loading: false, summary: action.payload };
+    case SYS_SUMMARY_FAILURE:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};

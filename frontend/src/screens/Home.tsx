@@ -12,12 +12,9 @@ import LoadingBox from '../components/LoadingBox';
 import { BiChevronDown } from "react-icons/bi";
 import { AiOutlineSearch } from "react-icons/ai";
 import userData, { AllData } from '../components/userData';
-
-// interface Data {
-//   name: string;
-//   x: number;
-//   y: number;
-// }
+import { SystemState } from '../reducers/systemReducer';
+import { summarySys } from '../actions/systemActions';
+import { RootState } from '../store';
 
 const Home: React.FC = () => {
 
@@ -29,6 +26,21 @@ const Home: React.FC = () => {
   interface getEmail extends emailState  {
     sendEmail: EmailState;
     }
+
+  interface getSummary{
+    loading: boolean;
+    error: string | null;
+    summary: {
+      clients: any[any],
+      batteries: any[any],
+      inverters: any[any],
+      solars: any[any],
+      systems: any[any],
+    };
+  }
+  interface getAllSummary extends SystemState {
+    SysSummary: getSummary
+  }
   const [data, setData] = useState<AllData[]>([]);
   const [data1Index, setData1Index] = useState<number>(0);
   const [inputValue, setInputValue] = useState<string>("");
@@ -37,10 +49,18 @@ const Home: React.FC = () => {
   const [num, setNum] = useState<number>(0);
   const [users, setUsers] = useState<string[]>([]);
 
-  const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
+  // const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
+  const dispatch: ThunkDispatch<RootState, null, AnyAction>= useDispatch();
+  const dispatch1: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
+// const dispatch2: ThunkDispatch<RootState, null, AnyAction> = useDispatch();
 
   const sendEmail = useSelector<getEmail, EmailState>((state) => state.sendEmail);
   const { loading, error, email } = sendEmail;
+
+  const getAllData = useSelector<getAllSummary, getSummary>((state) => state.SysSummary);
+  const { loading: loadingSummary, error: errorSymmary, summary } = getAllData;
+
+
 
   // useEffect(() =>{
   //   dispatch(sendEmailAction())
@@ -89,9 +109,15 @@ const Home: React.FC = () => {
   // }, [data]);
 
   useEffect(()=> {
+    dispatch(summarySys())
     setData([])
     setData1Index(0)
-  },[num])
+  },[dispatch, num])
+
+  if(!loadingSummary){
+    console.log(summary)
+    console.log(summary?.clients[0].numClients)
+  }
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -100,25 +126,21 @@ const Home: React.FC = () => {
         setData((prevData) => [...prevData, userData[num].solarData[data1Index]]);
         setData1Index((prevIndex) => prevIndex + 1);
         if(userData[num].solarData[data1Index].Solar_production - userData[num].solarData[data1Index].Load_consumption <= 100){
-        dispatch(sendEmailAction())
+        dispatch1(sendEmailAction(userData[num].name, userData[num].Email))
         }
       }else{
         return () => clearInterval(interval);
       }
       // console.log(data)
       // console.log(selected)
-      console.log(userData[num].name)
+      // console.log(userData[num].name)
     }, 1000);
 
     return () => clearInterval(interval);
-  },[data.length, data1Index, dispatch, num, selected.length]);
+  },[data.length, data1Index, dispatch1, num, selected.length]);
 
   return (
     <div className='col-span-5 flex flex-col justify-center items-center px-4'>
-      {loading && <LoadingBox></LoadingBox>}
-      {error && <MessageBox variant='danger'>{error}</MessageBox>}
-      {email && <MessageBox variant='info'>Email sent successfully</MessageBox>}
-
       {/* <LineChart
         width={500}
         height={700}
@@ -145,7 +167,10 @@ const Home: React.FC = () => {
           <Line yAxisId="right-axis" dataKey="y" 
           stroke="blue" />
         </LineChart> */}
-
+{loadingSummary ? <LoadingBox></LoadingBox>
+:
+error ? <MessageBox variant='danger'>{error}</MessageBox>
+:
 <div className="w-full flex flex-around justify-center flex-wrap gap-6">
     <div className="flex flex-col p-4 shadow-xl bg-gradient-to-r from-red-400 via-orange-300 to-yellow-400 rounded-lg gap-y-3 lg:w-1/6"
     >
@@ -165,7 +190,7 @@ const Home: React.FC = () => {
         <span
           className="p-0.5 text-4xl text-white w-full text-center"
         >
-          12
+          {summary?.clients[0].numClients}
         </span>
       </div>
     </div>
@@ -188,7 +213,7 @@ const Home: React.FC = () => {
         <span
           className="p-0.5 text-4xl text-white w-full text-center"
         >
-          12
+          {summary?.batteries[0].numBatteries}
         </span>
       </div>
     </div>
@@ -212,7 +237,7 @@ const Home: React.FC = () => {
         <span
           className="p-0.5 text-4xl text-white w-full text-center"
         >
-          12
+          {summary?.solars[0].numSolars}
         </span>
       </div>
     </div>
@@ -237,7 +262,7 @@ const Home: React.FC = () => {
         <span
           className="p-0.5 text-4xl text-white w-full text-center"
         >
-          12
+          {summary?.inverters[0].numInverter}
         </span>
       </div>
     </div>
@@ -250,7 +275,7 @@ const Home: React.FC = () => {
         <span
           className="p-0.5 text-4xl text-white w-full text-center"
         >
-          12
+          {summary?.systems[0].numSystem}
         </span>
         <span
           className="text-xs font-medium" >
@@ -267,6 +292,7 @@ const Home: React.FC = () => {
     </div>
 
   </div>
+}
      {/* Start select box */}
      <div className="w-72 font-medium h-auto items-center self-center m-10 bg-red-400 rounded">
       <div
@@ -328,6 +354,9 @@ const Home: React.FC = () => {
     </div>
      {/* End select box */}
      {selected.length > 0 && <>
+      {loading && <LoadingBox></LoadingBox>}
+      {error && <MessageBox variant='danger'>{error}</MessageBox>}
+      {email && <MessageBox variant='info'>Email sent successfully</MessageBox>}
      <h1 className='text-xl'>User Consumption</h1>
      <div className=' w-full overflow-x-auto p-10'>
         <AreaChart width={960} height={300} data={data} className=" bg-slate-300 rounded-lg">
