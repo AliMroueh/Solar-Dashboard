@@ -131,9 +131,6 @@ const Home: React.FC = () => {
       }else{
         return () => clearInterval(interval);
       }
-      // console.log(data)
-      // console.log(selected)
-      // console.log(userData[num].name)
     }, 1000);
 
     return () => clearInterval(interval);
