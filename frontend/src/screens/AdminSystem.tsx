@@ -117,10 +117,6 @@ export default function AdminSystem(): JSX.Element {
         </button>
 {systems.map((system,index) => 
     <div className="grid grid-cols-1 gap-4" key={index}>
-       
-         <div className="p-4">
-            <h2 className="text-lg font-medium text-gray-900">{system.systemId.toString()}</h2>
-      </div> 
       <div className="p-4">
             <h2 className="text-lg font-medium text-gray-900">{system.client.name}</h2>
       </div>
