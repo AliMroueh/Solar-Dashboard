@@ -14,7 +14,7 @@ export interface Solar {
   _id: Number;
   type: string;
   solarImage: File;
-  strengh:Number;
+  strength:Number;
   description:string;
 
 }
