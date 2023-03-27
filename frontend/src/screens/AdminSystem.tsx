@@ -16,7 +16,7 @@ import { Inverter } from './AdminSolarInverter';
 
 interface System {
   systemId:Number,
-   clientId:any;
+  clientId:any;
   client: Client,
   battery: Battery,
   inverter: Inverter,
@@ -82,6 +82,7 @@ export default function AdminSystem(): JSX.Element {
 
   if (!loading) {
     console.log(systems);
+
   }
 
 
@@ -151,9 +152,21 @@ export default function AdminSystem(): JSX.Element {
         </div>
 
         <div className="flex flex-col">
-          <p>Solar Panels: </p>
-          <p>Batteries: </p>
-          <p>Inverters: </p>
+        <p>Solar Panels: 
+          <span>
+           {`${Number(system.numberSolarPanel) * Number(system.solarPanel.strength)}`}
+          </span>
+          </p>
+          <p>Batteries: 
+          <span>
+           {`${Number(system.numberBattery) * Number(system.battery.capacity)}`}
+          </span>
+          </p>
+          <p>Inverters: 
+          <span>
+           {`${Number(system.numberInverter) * Number(system.inverter.strength)}`}
+          </span>
+          </p>
         </div>
         
         <div className="flex">
