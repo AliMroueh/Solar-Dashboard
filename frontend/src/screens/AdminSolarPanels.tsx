@@ -112,7 +112,7 @@ export default function AdminSolarPanles(): JSX.Element {
                         Edit
                       </button>
                     </Link>
-                    <button type='button' className='delete w-auto p-2 bg-red-600 text-slate-200 rounded-md ml-2' onClick={(event) => deleteHandler(event, row._id)}>
+                    <button type='button' className='delete w-auto p-2 bg-red-600 text-slate-200 rounded-md ml-2 mt-2' onClick={(event) => deleteHandler(event, row._id)}>
                       Delete
                     </button>
                   </td>

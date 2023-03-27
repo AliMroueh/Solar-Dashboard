@@ -154,17 +154,18 @@ export default function AdminSystem(): JSX.Element {
         <div className="flex flex-col">
         <p>Solar Panels: 
           <span>
-           {`${Number(system.numberSolarPanel) * Number(system.solarPanel.strength)}`}
+          {` ${Math.floor(Number(system.numberSolarPanel) * Number(system.solarPanel.strength) / 220)} Amp`}
           </span>
           </p>
           <p>Batteries: 
           <span>
-           {`${Number(system.numberBattery) * Number(system.battery.capacity)}`}
+           {` ${Math.floor(Number(system.numberBattery) * Number(system.battery.capacity) / 220)} Amp`}
+
           </span>
           </p>
           <p>Inverters: 
           <span>
-           {`${Number(system.numberInverter) * Number(system.inverter.strength)}`}
+           {` ${Math.floor(Number(system.numberInverter) * Number(system.inverter.strength) /220)} Amp`}
           </span>
           </p>
         </div>

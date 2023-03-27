@@ -64,11 +64,6 @@ export default function AdminSolarBatteries(): JSX.Element {
         event.preventDefault();
       };
     
-    
- 
-
-    
-  
   return (
 
 
