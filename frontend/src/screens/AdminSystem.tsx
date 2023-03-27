@@ -112,7 +112,7 @@ export default function AdminSystem(): JSX.Element {
   }
   </div>
 )}
-  <button className='w-2/12 p-4 bg-orange-400 text-xl text-white font-semibold rounded-md self-end' onClick={() => addHandler()}>
+  <button className='p-4 bg-orange-400 text-xl text-white font-semibold rounded-md self-end' onClick={() => addHandler()}>
           Add User System
         </button>
 {systems.map((system,index) => 
@@ -124,7 +124,7 @@ export default function AdminSystem(): JSX.Element {
       <div className="p-4">
             <h2 className="text-lg font-medium text-gray-900">{system.client.name}</h2>
       </div>
-      <div className="bg-white rounded-lg shadow-lg overflow-hidden flex justify-between flex-wrap">
+      <div className="bg-white rounded-lg shadow-lg overflow-hidden flex justify-between flex-wrap sm: gap-2">
 
         <div className="flex">
           <img src={system.inverter.inverterImage} alt="Inverter Image" className="h-24 w-24 object-fill"/>
@@ -148,6 +148,12 @@ export default function AdminSystem(): JSX.Element {
             <h3 className="text-md font-medium text-gray-900">{system.solarPanel.type}</h3>
             <p className="text-sm text-gray-500">{system.numberSolarPanel}</p>
           </div>
+        </div>
+
+        <div className="flex flex-col">
+          <p>Solar Panels: </p>
+          <p>Batteries: </p>
+          <p>Inverters: </p>
         </div>
         
         <div className="flex">

@@ -47,7 +47,7 @@ const userData : UserData[]= [
     {   
         name:'mohamad',
         number: 1,
-        Email: 'alimroueh9999@gmail.com',
+        Email: 'mkalout0@gmail.com',
         solarData: [
             {date: '6 am', Solar_production: 500, Load_consumption: 200, Storage_production: 300},
             {date: '7 am', Solar_production: 600, Load_consumption: 300, Storage_production: 300},
