@@ -9,17 +9,18 @@ import { getAllSystemsAction,  deleteSystemAction } from '../actions/systemActio
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { SystemState } from '../reducers/systemReducer';
+import { RootState } from '../store';
 import { Client } from './AddClient';
 import { Solar } from './AddSolarPanels';
 import { Battery } from './AdminSolarBatteries';
 import { Inverter } from './AdminSolarInverter';
 
 
-interface SolarAPI{
+export interface SolarAPI{
   date: string,
-  Solar_production: Number,
-  Load_consumption: Number,
-  Storage_production: Number 
+  Solar_production: number,
+  Load_consumption: number,
+  Storage_production: number 
 }
 
 interface System {
@@ -60,8 +61,8 @@ interface DeleteSystemStateWithAllSystems extends SystemState {
 
 export default function AdminSystem(): JSX.Element {
   const navigate = useNavigate();
-  const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
-
+  // const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
+  const dispatch: ThunkDispatch<RootState, null, AnyAction>= useDispatch();
   const getAllSystems = useSelector<GetSystemStateWithAllSystems, GetallSystemsState>((state) => state.getAllSystems);
 
   const { loading, error, systems } = getAllSystems;

@@ -25,11 +25,15 @@ import {
 
 
 
-export const getAllSystemsAction = () => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+export const getAllSystemsAction = () : ThunkAction<void, RootState, null, AnyAction> => async (dispatch, getState) => {
   dispatch({ type: GET_ALL_SYSTEMS_REQUEST });
-
+  const {
+    userSignin: { userInfo },
+  } = getState();
   try {
-    const { data } = await axios.get('/api/systems/get');
+    const { data } = await axios.get('/api/systems/get', {
+      headers: { Authorization: `Bearer ${userInfo?.token}` },
+    });
 
     dispatch({
       type: GET_ALL_SYSTEMS_SUCCESS,
@@ -46,10 +50,16 @@ export const getAllSystemsAction = () => async (dispatch: ThunkDispatch<{}, {}, 
   }
 };
 
-export const addSystemAction = ({info}: any) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+export const addSystemAction = ({info}: any) : ThunkAction<void, RootState, null, AnyAction> => async (dispatch, getState) => {
     dispatch({ type: ADD_NEW_SYSTEM_REQUEST });
+
+    const {
+      userSignin: { userInfo },
+    } = getState();
     try {
-      const { data } = await axios.post(`/api/systems/create`, info);
+      const { data } = await axios.post(`/api/systems/create`, info, {
+        headers: { Authorization: `Bearer ${userInfo?.token}` },
+      });
   
       dispatch({
         type: ADD_NEW_SYSTEM_SUCCESS,
@@ -64,11 +74,16 @@ export const addSystemAction = ({info}: any) => async (dispatch: ThunkDispatch<{
     }
   };
 
-  export const updateSystemAction = (id: string, {info}:any) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+  export const updateSystemAction = (id: string, {info}:any) : ThunkAction<void, RootState, null, AnyAction> => async (dispatch, getState) => {
     
     dispatch({ type: UPDATE_SYSTEM_REQUEST });
+    const {
+      userSignin: { userInfo },
+    } = getState();
     try {
-      const { data } = await axios.put(`/api/systems/update/${id}`, info);
+      const { data } = await axios.put(`/api/systems/update/${id}`, info, {
+        headers: { Authorization: `Bearer ${userInfo?.token}` },
+      });
       dispatch({
         type: UPDATE_SYSTEM_SUCCESS,
         payload: data,
@@ -82,11 +97,15 @@ export const addSystemAction = ({info}: any) => async (dispatch: ThunkDispatch<{
     }
   };
   
-  export const deleteSystemAction = (id: Number) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+  export const deleteSystemAction = (id: Number) : ThunkAction<void, RootState, null, AnyAction> => async (dispatch, getState) => {
     dispatch({ type: DELETE_SYSTEM_REQUEST })
-    
+    const {
+      userSignin: { userInfo },
+    } = getState();
     try {
-      const { data } = await axios.delete(`/api/systems/delete/${id}`);
+      const { data } = await axios.delete(`/api/systems/delete/${id}`, {
+        headers: { Authorization: `Bearer ${userInfo?.token}` },
+      });
       dispatch({
         type: DELETE_SYSTEM_SUCCESS,
         payload: data,

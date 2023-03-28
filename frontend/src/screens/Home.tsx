@@ -15,7 +15,7 @@ import userData, { AllData } from '../components/userData';
 import { SystemState } from '../reducers/systemReducer';
 import { getAllSystemsAction, summarySys } from '../actions/systemActions';
 import { RootState } from '../store';
-import { GetallSystemsState, GetSystemStateWithAllSystems } from './AdminSystem';
+import { GetallSystemsState, GetSystemStateWithAllSystems, SolarAPI } from './AdminSystem';
 
 const Home: React.FC = () => {
 
@@ -42,7 +42,7 @@ const Home: React.FC = () => {
   interface getAllSummary extends SystemState {
     SysSummary: getSummary
   }
-  const [data, setData] = useState<AllData[]>([]);
+  const [data, setData] = useState<SolarAPI[]>([]);
   const [data1Index, setData1Index] = useState<number>(0);
   const [inputValue, setInputValue] = useState<string>("");
   const [selected, setSelected] = useState<string>("");
@@ -115,7 +115,7 @@ console.log(systems)
   // }, [data]);
 
   useEffect(()=> {
-    dispatch1(getAllSystemsAction());
+    dispatch(getAllSystemsAction());
     dispatch(summarySys())
     setData([])
     setData1Index(0)
@@ -130,9 +130,9 @@ console.log(systems)
     const interval = setInterval(() => {
       
       if (selected.length > 0 && data.length < 24) {
-        setData((prevData) => [...prevData, userData[num].solarData[data1Index]]);
+        setData((prevData) => [...prevData, systems[num].solarApi[data1Index]]);
         setData1Index((prevIndex) => prevIndex + 1);
-        if(userData[num].solarData[data1Index].Solar_production - userData[num].solarData[data1Index].Load_consumption <= 100){
+        if(systems[num].solarApi[data1Index].Solar_production - systems[num].solarApi[data1Index].Load_consumption <= 100){
         dispatch1(sendEmailAction(userData[num].name, userData[num].Email))
         }
       }else{
@@ -141,7 +141,25 @@ console.log(systems)
     }, 1000);
 
     return () => clearInterval(interval);
-  },[data.length, data1Index, dispatch1, num, selected.length]);
+  },[data.length, data1Index, dispatch1, num, selected.length, systems]);
+
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+      
+  //     if (selected.length > 0 && data.length < 24) {
+  //       setData((prevData) => [...prevData, userData[num].solarData[data1Index]]);
+  //       setData1Index((prevIndex) => prevIndex + 1);
+  //       if(userData[num].solarData[data1Index].Solar_production - userData[num].solarData[data1Index].Load_consumption <= 100){
+  //       dispatch1(sendEmailAction(userData[num].name, userData[num].Email))
+  //       }
+  //     }else{
+  //       return () => clearInterval(interval);
+  //     }
+  //   }, 1000);
+
+  //   return () => clearInterval(interval);
+  // },[data.length, data1Index, dispatch1, num, selected.length]);
 
   return (
     <div className='col-span-5 flex flex-col justify-center items-center px-4'>
@@ -351,7 +369,7 @@ error ? <MessageBox variant='danger'>{error}</MessageBox>
             }}
           >
             {/* {user.slice(0,10)} */}
-            {user.name}
+            {sys.client.name}
           </li>
         ))}
         {/* {userData?.map((user,index) => (
