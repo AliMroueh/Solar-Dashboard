@@ -13,8 +13,9 @@ import { BiChevronDown } from "react-icons/bi";
 import { AiOutlineSearch } from "react-icons/ai";
 import userData, { AllData } from '../components/userData';
 import { SystemState } from '../reducers/systemReducer';
-import { summarySys } from '../actions/systemActions';
+import { getAllSystemsAction, summarySys } from '../actions/systemActions';
 import { RootState } from '../store';
+import { GetallSystemsState, GetSystemStateWithAllSystems } from './AdminSystem';
 
 const Home: React.FC = () => {
 
@@ -59,6 +60,11 @@ const Home: React.FC = () => {
 
   const getAllData = useSelector<getAllSummary, getSummary>((state) => state.SysSummary);
   const { loading: loadingSummary, error: errorSymmary, summary } = getAllData;
+
+  const getAllSystems = useSelector<GetSystemStateWithAllSystems, GetallSystemsState>((state) => state.getAllSystems);
+
+const { loading: loadingSolarApi, error: errorSolarApi, systems } = getAllSystems;
+console.log(systems)
 
 
 
@@ -109,10 +115,11 @@ const Home: React.FC = () => {
   // }, [data]);
 
   useEffect(()=> {
+    dispatch1(getAllSystemsAction());
     dispatch(summarySys())
     setData([])
     setData1Index(0)
-  },[dispatch, num])
+  },[dispatch, dispatch1])
 
   if(!loadingSummary){
     console.log(summary)
@@ -320,7 +327,34 @@ error ? <MessageBox variant='danger'>{error}</MessageBox>
             className="placeholder:text-gray-700 p-2 outline-none"
           />
         </div>
-        {userData?.map((user,index) => (
+        {systems?.map((sys,index) => (
+          <li
+            key={index}
+            className={`p-2 text-sm hover:bg-sky-600 hover:text-white
+            ${
+              sys.client.name?.toLowerCase() === selected?.toLowerCase() &&
+              "bg-sky-600 text-white"
+            }
+            ${
+              sys.client.name?.toLowerCase().startsWith(inputValue)
+                ? "block"
+                : "hidden"
+            }`}
+            onClick={() => {
+              if (sys.client.name?.toLowerCase() !== selected.toLowerCase()) {
+                setSelected(sys.client.name);
+                setNum(index);
+                setOpen(false);
+                setInputValue("");
+
+              }
+            }}
+          >
+            {/* {user.slice(0,10)} */}
+            {user.name}
+          </li>
+        ))}
+        {/* {userData?.map((user,index) => (
           <li
             key={index}
             className={`p-2 text-sm hover:bg-sky-600 hover:text-white
@@ -344,9 +378,9 @@ error ? <MessageBox variant='danger'>{error}</MessageBox>
             }}
           >
             {/* {user.slice(0,10)} */}
-            {user.name}
+            {/* {user.name}
           </li>
-        ))}
+        ))} */} 
       </ul>
     </div>
      {/* End select box */}

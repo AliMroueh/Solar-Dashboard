@@ -14,6 +14,14 @@ import { Solar } from './AddSolarPanels';
 import { Battery } from './AdminSolarBatteries';
 import { Inverter } from './AdminSolarInverter';
 
+
+interface SolarAPI{
+  date: string,
+  Solar_production: Number,
+  Load_consumption: Number,
+  Storage_production: Number 
+}
+
 interface System {
   systemId:Number,
   clientId:any;
@@ -24,30 +32,18 @@ interface System {
   numberSolarPanel:String;
   numberBattery :String;
   numberInverter :String;
-
-  //  clientId:Client;
-  // // client: Client,
-  // BatteryId: Battery,
-  // inverterId: Inverter,
-  // solarPanel: Solar, 
-  // numberSolarPanel:String;
-  // numberBattery :String;
-  // numberInverter :String;
-
-
+  solarApi : SolarAPI[]
 }
 
-interface GetallSystemsState {
+export interface GetallSystemsState {
   loading: boolean;
   error: any[] | null | string;
   systems: System[];
 }
-interface GetSystemStateWithAllSystems extends SystemState {
+export interface GetSystemStateWithAllSystems extends SystemState {
   getAllSystems: GetallSystemsState;
 
 }
-
-
 
 interface DeleteSystemState {
   loading: boolean;

@@ -25,6 +25,7 @@ const systemSchema = new mongoose.Schema({
         ref: 'Inverter'
     },
     numberInverter: { type: Number, required: true },
+    solarApi: {type: Array, required: true},
 },
     {
         timestamps: true,
