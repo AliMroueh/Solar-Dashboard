@@ -256,21 +256,21 @@ console.log(id,clientId,
           numberBattery.toString(),
           inverterId,
            numberInverter.toString())
-  // dispatch(
+  dispatch(
     
-  //   updateSystemAction(String(id) ,{
-  //     info: {
+    updateSystemAction(String(id) ,{
+      info: {
 
-  //       clientId:clientId,
-  //       SolarPanelId: Solar,
-  //       numberSolarPanel: numberSolarPanel.toString(),
-  //       BatteryId: BatteryId,
-  //       numberBattery: numberBattery.toString(),
-  //       inverterId: inverterId,
-  //       numberInverter: numberInverter.toString()
-  //     }
-  //   })
-  // );
+        clientId:clientId,
+        SolarPanelId: Solar,
+        numberSolarPanel: numberSolarPanel.toString(),
+        BatteryId: BatteryId,
+        numberBattery: numberBattery.toString(),
+        inverterId: inverterId,
+        numberInverter: numberInverter.toString()
+      }
+    })
+  );
   
 
    

@@ -232,19 +232,19 @@ console.log(clients)
 
   const insertHandler = (e: { preventDefault: () => void;}) =>  {
   e.preventDefault();
-  // dispatch(
-    // addSystemAction({
-    //   info: {
-    //     clientId: clientId,
-    //     SolarPanelId: Solar,
-    //     numberSolarPanel: numberSolarPanel.toString(),
-    //     BatteryId: BatteryId,
-    //     numberBattery: numberBattery.toString(),
-    //     inverterId: inverterId,
-    //     numberInverter: numberInverter.toString()
-    //   }
-    // })
-  // );
+  dispatch(
+    addSystemAction({
+      info: {
+        clientId: clientId,
+        SolarPanelId: Solar,
+        numberSolarPanel: numberSolarPanel.toString(),
+        BatteryId: BatteryId,
+        numberBattery: numberBattery.toString(),
+        inverterId: inverterId,
+        numberInverter: numberInverter.toString()
+      }
+    })
+  );
   
   //  console.log(formData);
     // const system = {
