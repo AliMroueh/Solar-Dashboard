@@ -55,12 +55,7 @@ export default function AddSolarBatteryPanels() : JSX.Element{
     
       const navigate = useNavigate();
 
-  //      function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-  //   const newValue = parseInt(e.target.value);
-  //   setCapacity(newValue);
-  // }
-  
-  // e: React.FormEvent<HTMLFormElement>
+ 
       const insertHandler = (data: any) =>  {
       
         // e.preventDefault();
