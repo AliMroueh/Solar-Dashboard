@@ -254,21 +254,21 @@ console.log(id,clientId,
           numberBattery.toString(),
           inverterId,
            numberInverter.toString())
-  dispatch(
+  // dispatch(
     
-    updateSystemAction(String(id) ,{
-      info: {
+  //   updateSystemAction(String(id) ,{
+  //     info: {
 
-        clientId:clientId,
-        SolarPanelId: Solar,
-        numberSolarPanel: numberSolarPanel.toString(),
-        BatteryId: BatteryId,
-        numberBattery: numberBattery.toString(),
-        inverterId: inverterId,
-        numberInverter: numberInverter.toString()
-      }
-    })
-  );
+  //       clientId:clientId,
+  //       SolarPanelId: Solar,
+  //       numberSolarPanel: numberSolarPanel.toString(),
+  //       BatteryId: BatteryId,
+  //       numberBattery: numberBattery.toString(),
+  //       inverterId: inverterId,
+  //       numberInverter: numberInverter.toString()
+  //     }
+  //   })
+  // );
   
 
    
@@ -279,7 +279,7 @@ console.log(id,clientId,
 
 
 
-<div className='  flex flex-col justify-center w-full col-span-10'>
+<div className='  flex flex-col justify-center w-full bg-amber-100 col-span-10'>
 
 
 {loading && <LoadingBox></LoadingBox>}
@@ -336,10 +336,10 @@ console.log(id,clientId,
 
 
         <div className='flex flex-col text-white py-2'>
-          <label htmlFor='Description'>Description</label>
+          <label htmlFor='Description' className='font-bold text-white'>Numbee Panels</label>
           <input
             id='numberSolarPanel'
-            className='p-2 rounded-lg bg-white mt-2 text-black focus:border-orange-400 focus:bg-yellow-600 focus:outline-none'
+            className='p-2 rounded-lg bg-white mt-2 text-black focus:outline-none'
             type='number'
             value={numberSolarPanel}
             onChange={(e) => setNumberSolarPanel(e.target.value)}
@@ -363,10 +363,10 @@ console.log(id,clientId,
        </div>
 
        <div className='flex flex-col text-white py-2'>
-         <label htmlFor='Description'>Description</label>
+         <label htmlFor='Description' className='font-bold text-white'>Number Batteries</label>
          <input
            id='numberBattery'
-           className='p-2 rounded-lg bg-white mt-2 text-black focus:border-orange-400 focus:bg-yellow-600 focus:outline-none'
+           className='p-2 rounded-lg bg-white mt-2 text-black  focus:outline-none'
            type='number'
            value={numberBattery}
             onChange={(e) => setNumberBattery(e.target.value)}
@@ -394,10 +394,10 @@ console.log(id,clientId,
    
 
        <div className='flex flex-col text-white py-2'>
-         <label htmlFor='Description'>Description</label>
+         <label htmlFor='Description' className='font-bold text-white'>Number Inverters</label>
          <input
            id='numberBattery'
-           className='p-2 rounded-lg bg-white mt-2 text-black focus:border-orange-400 focus:bg-yellow-600 focus:outline-none'
+           className='p-2 rounded-lg bg-white mt-2 text-black  focus:outline-none'
            type='number'
            value={numberInverter}
             onChange={(e) => setnumberInverter(e.target.value)}
@@ -406,9 +406,11 @@ console.log(id,clientId,
         </div> 
 
 
-        <button className='w-1/4 my-5 py-2 bg-green-500 shadow-lg shadow-green-500/50 hover:shadow-green-500/40 text-white font-semibold rounded-lg' type="submit">
-          Update
+        <div className='flex flex-row justify-center'>
+     <button className='w-1/4 my-5 py-2 bg-slate-500 shadow-lg shadow0-slate-600/50 hover:shadow-slate-600/40 text-white font-bold text-xl rounded-lg' type="submit">
+        Update
         </button>
+     </div>
         
       </form>
     </div>

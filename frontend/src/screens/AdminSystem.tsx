@@ -109,12 +109,16 @@ export default function AdminSystem(): JSX.Element {
   : <MessageBox variant='danger'>{error}</MessageBox>
   }
   </div>
-)}
-  <button className='p-4 bg-orange-400 text-xl text-white font-semibold rounded-md self-end' onClick={() => addHandler()}>
+)} <div className='flex flex-row justify-center'>
+<button className='w-1/4 my-5 py-2 bg-orange-400 text-white font-bold text-xl rounded-lg' onClick={() => addHandler()}>
+     Add User System
+   </button>
+</div>
+  {/* <button className='p-4 bg-orange-400 text-xl text-white font-semibold rounded-md self-end' onClick={() => addHandler()}>
           Add User System
-        </button>
+        </button> */}
 {systems.map((system,index) => 
-    <div className="grid grid-cols-1 gap-4" key={index}>
+    <div className="grid grid-cols-1 gap-4 m-5" key={index}>
       <div className="p-4">
             <h2 className="text-lg font-medium text-gray-900">{system.client.name}</h2>
       </div>

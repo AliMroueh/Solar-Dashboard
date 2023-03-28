@@ -100,7 +100,7 @@ export default function UpdateSolarClient() {
   };
 
   return (
-    <div className='flex flex-col justify-center w-full col-span-10'>
+    <div className='flex flex-col bg-amber-100 justify-center w-full col-span-10'>
       {loading && <LoadingBox></LoadingBox>}
 
 {error && (
@@ -118,23 +118,23 @@ export default function UpdateSolarClient() {
       <form className='w-6/12 mx-auto rounded-lg bg-orange-400 p-8 px-8' onSubmit={handleSubmit(updateHandler)} >
         <h2 className='text-4xl text-white font-bold text-center'>Update Client</h2>
         <div className='flex flex-col text-white py-2'>
-          <label htmlFor='name'>Name</label>
+          <label htmlFor='name' className='font-bold text-white'>Name</label>
           <input
             id='name'
-            className='rounded-lg bg-white mt-2 p-2 text-black  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
+            className='rounded-lg bg-white mt-2 p-2 text-black focus:outline-none'
             type='text'
             // value={name}
             // onChange={(e) => setName(e.target.value)}
             // required
             {...register('name', { required: true,  maxLength: 255 })}
           />
-          {errors.name && (<p className="text-red-500">This field is required and cannot exceed 255 characters.</p>)}
+          {errors.name && (<p className="text-red-700 font-medium">This field is required and cannot exceed 255 characters.</p>)}
         </div>
         <div className='flex flex-col text-white py-2'>
-          <label htmlFor='email'>Email</label>
+          <label htmlFor='email' className='font-bold text-white'>Email</label>
           <input
             id='email'
-            className='rounded-lg bg-white mt-2 p-2 text-black  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
+            className='rounded-lg bg-white mt-2 p-2 text-black focus:outline-none'
             type='email'
             // value={email}
             // onChange={(e) => setEmail(e.target.value)}
@@ -145,42 +145,42 @@ export default function UpdateSolarClient() {
               maxLength: 255 
             })}
           />
-          {errors.email?.type === 'required' && <p className="text-red-500">This field is required.</p>}
-          {errors.email?.type === 'pattern' && <p className="text-red-500">Invalid email address.</p>}
-          {errors.email?.type === 'maxLength' && <p className="text-red-500">Cannot exceed 255 characters.</p>}
+          {errors.email?.type === 'required' && <p className="text-red-700 font-medium">This field is required.</p>}
+          {errors.email?.type === 'pattern' && <p className="text-red-700 font-medium">Invalid email address.</p>}
+          {errors.email?.type === 'maxLength' && <p className="text-red-700 font-medium">Cannot exceed 255 characters.</p>}
         </div>
         <div className='flex flex-col text-white py-2'>
-          <label htmlFor='address'>Address</label>
+          <label htmlFor='address' className='font-bold text-white'>Address</label>
           <input
             id='address'
-            className='rounded-lg bg-white mt-2 p-2 text-black  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
+            className='rounded-lg bg-white mt-2 p-2 text-black focus:outline-none'
             type='text'
             // value={address}
             // onChange={(e) => setAddress(e.target.value)}
             // required
             {...register('address', { required: true,  maxLength: 255 })}
           />
-          {errors.address && (<p className="text-red-500">This field is required and cannot exceed 255 characters.</p>)}
+          {errors.address && (<p className="text-red-700 font-medium">This field is required and cannot exceed 255 characters.</p>)}
         </div>
         <div className='flex flex-col text-white py-2'>
-          <label htmlFor='phone'>Phone</label>
+          <label htmlFor='phone' className='font-bold text-white'>Phone</label>
           <input
             id='phone'
-            className='rounded-lg bg-white mt-2 p-2 text-black  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
+            className='rounded-lg bg-white mt-2 p-2 text-black focus:outline-none'
             type='text'
             // value={phone}
             // onChange={(e) => setPhone(e.target.value)}
             // required
             {...register('phone', { required: true,  maxLength: 999999999999999 })}
           />
-          {errors.phone && (<p className="text-red-500">This field is required and cannot exceed 20 characters.</p>)}
+          {errors.phone && (<p className="text-red-700 font-medium">This field is required and cannot exceed 20 characters.</p>)}
         </div>
         <div className='flex flex-col text-white py-2'>
-          <label htmlFor='file'>Add Image</label>
+          <label htmlFor='file' className='font-bold text-white'>Add Image</label>
           <input
             id='file'
            
-            className='rounded-lg bg-white mt-2 p-2 text-black  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
+            className='rounded-lg bg-white mt-2 p-2 text-black focus:outline-none'
             type='file'
             
             // onChange={e => setClientImage(e.target.files)}
@@ -190,15 +190,17 @@ export default function UpdateSolarClient() {
               
           
           />
-           {errors.clientImage && ( <p className="text-red-500">This field is required.</p>)}
+           {errors.clientImage && ( <p className="text-red-700 font-medium">This field is required.</p>)}
         </div>
         {/* <div className='flex justify-between text-gray-400 py-2'>
          
           <Link className='text-teal-500 hover:font-semibold' to={`/signin`}>Sign-In</Link>
         </div> */}
-        <button className='w-1/4 my-5 py-2 bg-green-500 shadow-lg shadow-green-500/50 hover:shadow-green-500/40 text-white font-semibold rounded-lg' type="submit">
-          Update Client
+           <div className='flex flex-row justify-center'>
+     <button className='w-1/4 my-5 py-2 bg-slate-500 shadow-lg shadow0-slate-600/50 hover:shadow-slate-600/40 text-white font-bold text-xl rounded-lg' type="submit">
+          Update
         </button>
+     </div>
         
       </form>
     </div>

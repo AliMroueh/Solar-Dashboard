@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom'
 
 function NavBar() {
   return (
-    <nav className="col-span-2 border-r border-gray-200 min-h-[90vh] pt-8 px-1 flex flex-col items-start justify-between  bg-gradient-to-r from-slate-50 via-slate-50 to-slate-400 ">
+    <nav className="col-span-2  min-h-[90vh] pt-8 px-1 flex flex-col items-start justify-between bg-orange-400 ">
       <div className="space-y-8 w-full ">
         {navLinks.slice(0, 6).map((link) => (
           <NavItem link={link} key={link.id} />
@@ -41,16 +41,16 @@ function NavItem({ link }: { link: Link1 }) {
       onClick={() => setActiveNav(link.id)}
       key={link.id}
       className={`w-full flex items-center justify-start space-x-8 px-5 cursor-pointer
-       group hover:border-gray-900 border-l-4 border-transparent ${
-         activeNav === link.id && "border-gray-900 "
+       group hover:border-white border-l-4 border-transparent ${
+         activeNav === link.id && "border-white  font-bold"
        } `}
     >
     
       <Link to={link.link} className='flex w-full'>
         <span className="mr-5"> {link.icon}</span>
         <h1
-          className={`text-gray-600 group-hover:text-black xl:flex hidden ${
-            activeNav === link.id && "text-black "
+          className={`text-white group-hover:text-white  xl:flex hidden ${
+            activeNav === link.id && "text-white font-bold"
           }} `}
         >
           {link.title}

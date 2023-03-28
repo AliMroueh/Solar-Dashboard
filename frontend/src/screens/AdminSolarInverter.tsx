@@ -75,7 +75,7 @@ export default function AdminSolarInverter(): JSX.Element {
   return (
 
 
-    <div className='bg-white  flex flex-col justify-start w-full col-span-10 p-5'>
+    <div className='bg-amber-100  flex flex-col justify-start w-full col-span-10 p-5'>
           <button className='w-auto p-4 bg-orange-400 text-xl text-white font-semibold rounded-md self-end' onClick={() => addHandler()}>
             Add Inverter
           </button>
@@ -83,21 +83,21 @@ export default function AdminSolarInverter(): JSX.Element {
             <div>loading...</div>
           ) : (
             <div className='overflow-x-auto'>
-            <table className='shadow-2x1 font-[Poppins] border-2 border-orange-600 mt-4 w-full overflow-x-auto'>
+            <table className='shadow-2x1 font-[Poppins] border-2 border-slate-300 mt-4 w-full overflow-x-auto'>
             {/* // <table className='shadow-2x1 font-[Poppins] border-2 border-cyan-200 w-11/12 mx-auto'> */}
               <thead className='text-white'>
                 <tr>
-                  <th className='py-3  bg-orange-400 font-bold text-lg text-center'>ID</th>
-                  <th className='py-3  bg-orange-400 font-bold text-lg text-center'>Type</th>
-                  <th className='py-3  bg-orange-400 font-bold text-lg text-center'>Strength</th>
-                  <th className='py-3  bg-orange-400 font-bold text-lg text-center'>Description</th>
-                  <th className='py-3  bg-orange-400 font-bold text-lg text-center'>Image</th>
-                  <th className='py-3  bg-orange-400 font-bold text-lg text-center'>Option</th>
+                  <th className='py-3  bg-slate-500 font-bold text-lg text-center'>ID</th>
+                  <th className='py-3  bg-slate-500 font-bold text-lg text-center'>Type</th>
+                  <th className='py-3  bg-slate-500 font-bold text-lg text-center'>Strength</th>
+                  <th className='py-3  bg-slate-500 font-bold text-lg text-center'>Description</th>
+                  <th className='py-3  bg-slate-500 font-bold text-lg text-center'>Image</th>
+                  <th className='py-3  bg-slate-500 font-bold text-lg text-center'>Option</th>
                 </tr>
               </thead>
               <tbody>
                 {inverters.map((row, index) => (
-                  <tr key={index} className='hover:bg-yellow-100 bg-yellow-300 cursor-pointer duration-300'>
+                  <tr key={index} className='hover:bg-yellow-100 bg-orange-400 cursor-pointer duration-300'>
                     <td className='py-3 px-6 text-center'>{row._id.toString()}</td>
                     <td className='py-3 px-6 text-center'>{row.type}</td>
                     <td className='py-3 px-6 text-center'>{row.strength}</td>
@@ -105,11 +105,11 @@ export default function AdminSolarInverter(): JSX.Element {
                     <td className='py-3 px-6 text-center xs:py-0'><img src={row.inverterImage} alt="Battery" className='md:w-40 xs:w-full' /> </td>
                     <td className='py-3 px-6 text-center'>
                     <Link to={`/UpdateInverterPanel/${row._id}?type=${row.type}&strength=${row.strength}&description=${row.description}&batteryImage=${row.inverterImage}`}>
-                        <button type='button' className='edit w-auto p-2 bg-green-600 text-slate-200 rounded-md'>
+                        <button type='button' className='edit w-auto p-2 bg-green-600 text-slate-100 rounded-md'>
                           Edit
                         </button>
                       </Link>
-                      <button type='button' className='delete w-auto p-2 bg-red-600 text-slate-200 rounded-md ml-2 mt-2' onClick={(event) => deleteHandler(event, row._id)}>
+                      <button type='button' className='delete w-auto p-2 bg-red-600 text-slate-100 rounded-md ml-2 mt-2' onClick={(event) => deleteHandler(event, row._id)}>
                         Delete
                       </button>
                     </td>

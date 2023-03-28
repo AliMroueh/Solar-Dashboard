@@ -231,19 +231,19 @@ console.log(clients)
 
   const insertHandler = (e: { preventDefault: () => void;}) =>  {
   e.preventDefault();
-  dispatch(
-    addSystemAction({
-      info: {
-        clientId: clientId,
-        SolarPanelId: Solar,
-        numberSolarPanel: numberSolarPanel.toString(),
-        BatteryId: BatteryId,
-        numberBattery: numberBattery.toString(),
-        inverterId: inverterId,
-        numberInverter: numberInverter.toString()
-      }
-    })
-  );
+  // dispatch(
+    // addSystemAction({
+    //   info: {
+    //     clientId: clientId,
+    //     SolarPanelId: Solar,
+    //     numberSolarPanel: numberSolarPanel.toString(),
+    //     BatteryId: BatteryId,
+    //     numberBattery: numberBattery.toString(),
+    //     inverterId: inverterId,
+    //     numberInverter: numberInverter.toString()
+    //   }
+    // })
+  // );
   
   //  console.log(formData);
     // const system = {
@@ -268,7 +268,7 @@ console.log(clients)
 
 
 
-<div className='  flex flex-col justify-center w-full col-span-10'>
+<div className='  flex flex-col justify-center bg-amber-100 w-full col-span-10'>
 
 
 {loading && <LoadingBox></LoadingBox>}
@@ -298,7 +298,7 @@ console.log(clients)
            <div className='input_style'>
             <select value={clientId} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
              onChange={(e) => setClientId(e.target.value)}>
-               <option value='choose solar panels'>choose client </option>
+               <option value='choose solar panels' className='font-bold text-white'>choose client </option>
                {clients.map((r, index) =>
                  <option value={r._id.toString()}>
                    {r.name}
@@ -325,7 +325,7 @@ console.log(clients)
 
 
         <div className='flex flex-col text-white py-2'>
-          <label htmlFor='Description'>Description</label>
+          <label htmlFor='Description' className='font-bold text-white'>Number Panels</label>
           <input
             id='numberSolarPanel'
             className='p-2 rounded-lg bg-white mt-2 text-black focus:border-orange-400 focus:bg-yellow-600 focus:outline-none'
@@ -352,7 +352,7 @@ console.log(clients)
        </div>
 
        <div className='flex flex-col text-white py-2'>
-         <label htmlFor='Description'>Description</label>
+         <label htmlFor='Description' className='font-bold text-white'>Number Batteries</label>
          <input
            id='numberBattery'
            className='p-2 rounded-lg bg-white mt-2 text-black focus:border-orange-400 focus:bg-yellow-600 focus:outline-none'
@@ -383,7 +383,7 @@ console.log(clients)
    
 
        <div className='flex flex-col text-white py-2'>
-         <label htmlFor='Description'>Description</label>
+         <label htmlFor='Description' className='font-bold text-white'>Number Inverters</label>
          <input
            id='numberBattery'
            className='p-2 rounded-lg bg-white mt-2 text-black focus:border-orange-400 focus:bg-yellow-600 focus:outline-none'
@@ -395,9 +395,11 @@ console.log(clients)
         </div> 
 
 
-        <button className='w-1/4 my-5 py-2 bg-green-500 shadow-lg shadow-green-500/50 hover:shadow-green-500/40 text-white font-semibold rounded-lg' type="submit">
-          Add Panel
+        <div className='flex flex-row justify-center'>
+     <button className='w-1/4 my-5 py-2 bg-slate-500 shadow-lg shadow0-slate-600/50 hover:shadow-slate-600/40 text-white font-bold text-xl rounded-lg' type="submit">
+          Add System
         </button>
+     </div>
         
       </form>
     </div>

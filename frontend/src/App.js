@@ -25,82 +25,82 @@ import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   const userSignin = useSelector(state => state.userSignin);
-  const {userInfo, loading, error} = userSignin;
+  const { userInfo, loading, error } = userSignin;
 
   return (
     <BrowserRouter>
       {userInfo && <Header />}
       <div className='w-full min-h-[90vh] grid grid-cols-12'>
-      {userInfo && <NavBar />}
-        <div className='grid grid-cols-1 xl:grid-cols-5 col-span-10 w-full p-3'> 
+        {userInfo && <NavBar />}
+        <div className='grid grid-cols-1 xl:grid-cols-5 col-span-10 w-full '>
           <Routes>
-            <Route path="/register" element={<RegisterScreen />}/>
-            <Route path="/signin" element={<SigninScreen />}/>
+            <Route path="/register" element={<RegisterScreen />} />
+            <Route path="/signin" element={<SigninScreen />} />
             <Route index element={
-            <PrivateRoute>
-            <Home />
-            </PrivateRoute>}/>  
+              <PrivateRoute>
+                <Home />
+              </PrivateRoute>} />
             <Route path="/AdminClients" element={
-            <PrivateRoute>
-              <AdminSolarClients />
-          </PrivateRoute>}/>
+              <PrivateRoute>
+                <AdminSolarClients />
+              </PrivateRoute>} />
             <Route path="/AdminSolarPanels" element={
-            <PrivateRoute>
-            <AdminSolarPanels />
-            </PrivateRoute>}/>
+              <PrivateRoute>
+                <AdminSolarPanels />
+              </PrivateRoute>} />
             <Route path="/AdminSolarInverter" element={<PrivateRoute>
-            <AdminSolarInverter />
-            </PrivateRoute>}/>
+              <AdminSolarInverter />
+            </PrivateRoute>} />
             <Route path="/AdminSolarBatteries" element={<PrivateRoute>
-            <AdminSolarBatteries />
-            </PrivateRoute>}/>
+              <AdminSolarBatteries />
+            </PrivateRoute>} />
             <Route path="/AddClient" element={
-            <PrivateRoute>
-            <AddSolarClient />
-            </PrivateRoute>}/>
+              <PrivateRoute>
+                <AddSolarClient />
+              </PrivateRoute>} />
             <Route path="/AddSolarPanels" element={
-            <PrivateRoute>
-              <AddSolarPanels />
-              </PrivateRoute>}/>
+              <PrivateRoute>
+                <AddSolarPanels />
+              </PrivateRoute>} />
             <Route path="/AddBatteryPanel" element={
-            <PrivateRoute>
-              <AddSolarBatteryPanels />
-              </PrivateRoute>}/>
+              <PrivateRoute>
+                <AddSolarBatteryPanels />
+              </PrivateRoute>} />
             <Route path="/AddSolarInverter" element={
-            <PrivateRoute>
-            <AddSolarInverter />
-            </PrivateRoute>}/>
+              <PrivateRoute>
+                <AddSolarInverter />
+              </PrivateRoute>} />
             <Route path="/AddBatteryPanel" element={
-            <PrivateRoute>
-            <AddSolarBatteryPanels />
-            </PrivateRoute>}/>
+              <PrivateRoute>
+                <AddSolarBatteryPanels />
+              </PrivateRoute>} />
             <Route path="/EditSolarPanels/:id" element={<PrivateRoute>
-            <EditSolarPanels />
-            </PrivateRoute>}/>
+              <EditSolarPanels />
+            </PrivateRoute>} />
             <Route path="/UpdateBatteryPanel/:id" element={<PrivateRoute>
-            <UpdateBatteryPanel/>
-            </PrivateRoute>}/>
+              <UpdateBatteryPanel />
+            </PrivateRoute>} />
             <Route path="/UpdateInverterPanel/:id" element={<PrivateRoute>
-            <UpdateInverterPanel/>
-            </PrivateRoute>}/>
+              <UpdateInverterPanel />
+            </PrivateRoute>} />
             <Route path="/UpdateClient/:id" element={
-            <PrivateRoute>
-            <UpdateSolarClient />
-            </PrivateRoute>}/>
+              <PrivateRoute>
+                <UpdateSolarClient />
+              </PrivateRoute>} />
             <Route path="/AddUserSystem" element={
-            <PrivateRoute>
-            <AddUserSystem />
-            </PrivateRoute>}/>
+              <PrivateRoute>
+                <AddUserSystem />
+              </PrivateRoute>} />
             <Route path="/UpdateUserSystem/:id" element={<PrivateRoute>
-            <UpdateUserSystem />
-            </PrivateRoute>}/>
+              <UpdateUserSystem />
+            </PrivateRoute>} />
             {/* AdminSystem */}
             <Route path="/AdminSystem" element={
-            <PrivateRoute>
-              <AdminSystem />
-              </PrivateRoute>}/>
+              <PrivateRoute>
+                <AdminSystem />
+              </PrivateRoute>} />
           </Routes>
-        </div> 
+        </div>
       </div>
     </BrowserRouter>
   );

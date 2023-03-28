@@ -86,24 +86,10 @@ export default function UpdateBatteryPanel() {
     formData.append('description', data.description);  
     dispatch(updateBatteryAction(String(id), formData));
   }
-  // const insertHandler = (data: any) =>  {
-      
-  //   // e.preventDefault();
-  //     const formData = new FormData();
-
-  //     if (data.batteryImage && data.batteryImage.length > 0) {
-  //       formData.append('batteryImage', data.batteryImage[0]);
-  //     }
-  //     formData.append('type', data.type);
-  //     formData.append('capacity', data.capacity.toString());
-  //     formData.append('description', data.description);
-
-  //     dispatch(addNewBatteryAction(formData));
-    
-  // };
+ 
 
   return (
-    <div className='flex flex-col justify-center w-full col-span-10'>
+    <div className='flex flex-col justify-center bg-amber-100 w-full col-span-10'>
       {loading && <LoadingBox></LoadingBox>}
 
       {error && (
@@ -121,69 +107,58 @@ export default function UpdateBatteryPanel() {
       <form className='w-6/12 mx-auto rounded-lg bg-orange-400 p-8 px-8' onSubmit={handleSubmit(updateHandler)} >
         <h2 className='text-4xl text-white font-bold text-center'>Update Battery</h2>
         <div className='flex flex-col text-white py-2'>
-          <label htmlFor='type'>Type</label>
+          <label htmlFor='type' className='font-bold text-white'>Type</label>
           <input
             id='type'
-            className='rounded-lg bg-white mt-2 p-2 text-black  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
+            className='rounded-lg bg-white mt-2 p-2 text-black focus:outline-none'
             type='text'
-            // value={type}
-            // onChange={(e) => setType(e.target.value)}
-            // required
+         
             {...register('type', { required: true,  maxLength: 25 })}
           />
           {errors.type && (<p className="text-red-500">This field is required and cannot exceed 25 characters.</p>)}
         </div>
         <div className='flex flex-col text-white py-2'>
-          <label htmlFor='capacity'>Capacity</label>
+          <label htmlFor='capacity' className='font-bold text-white'>Capacity</label>
           <input
             id='capacity'
-            className='rounded-lg bg-white mt-2 p-2 text-black focus:border-orange-400 focus:bg-yellow-600 focus:outline-none'
+            className='rounded-lg bg-white mt-2 p-2 text-black focus:outline-none'
            
             type='text'
-            // value={capacity}
-            // onChange={(e) => setCapacity(e.target.value)}
-            // required
-            // min={100}
-            // max={999}
-  
+     
             {...register('capacity', { required: true, min: 100, max: 999 })}
           />
            {errors.capacity &&( <p className="text-red-800">This field is required and must be between 100 and 999.</p>)}
         </div>
         <div className='flex flex-col text-white py-2'>
-          <label htmlFor='Description'>Description</label>
+          <label htmlFor='Description' className='font-bold text-white'>Description</label>
           <input
             id='Description'
-            className='rounded-lg bg-white mt-2 p-2 text-black focus:border-orange-400 focus:bg-yellow-600 focus:outline-none'
+            className='rounded-lg bg-white mt-2 p-2 text-black focus:outline-none'
             type='text'
-            // value={description}
-            // onChange={(e) => setDescription(e.target.value)}
-            // required
+           
             maxLength={255}
             {...register('description', { required: true, maxLength: 255 })}
           />
           {errors.description && ( <p className="text-red-800">This field is required and cannot exceed 255 characters.</p>)}
         </div>
         <div className='flex flex-col text-white py-2'>
-          <label htmlFor='file'>Add Image</label>
+          <label htmlFor='file' className='font-bold text-white'>Add Image</label>
           <input
             id='file'
            
-            className='rounded-lg bg-white mt-2 p-2 text-black focus:border-orange-400 focus:bg-yellow-600 focus:outline-none'
+            className='rounded-lg bg-white mt-2 p-2 text-black focus:outline-none'
             type='file'
-            
-            // onChange={e => setBatteryImage(e.target.files)}   
+         
             {...register('batteryImage', { required: true })}
           />
           {errors.batteryImage && ( <p className="text-red-800">This field is required.</p>)}
         </div>
-        {/* <div className='flex justify-between text-gray-400 py-2'>
        
-          <Link className='text-teal-500 hover:font-semibold' to={`/signin`}>Sign-In</Link>
-        </div> */}
-        <button className='w-1/4 my-5 py-2 bg-green-500 shadow-lg shadow-green-500/50 hover:shadow-green-500/40 text-white font-semibold rounded-lg' type="submit">
-          Update Battery
+          <div className='flex flex-row justify-center'>
+     <button className='w-1/4 my-5 py-2 bg-slate-500 shadow-lg shadow0-slate-600/50 hover:shadow-slate-600/40 text-white font-bold text-xl rounded-lg' type="submit">
+          Update
         </button>
+     </div>
         
       </form>
     </div>
