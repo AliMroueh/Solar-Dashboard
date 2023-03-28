@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Dispatch } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 
 import {
@@ -17,14 +17,19 @@ import {
   DELETE_BATTERY_SUCCESS,
   DELETE_BATTERY_FAILURE
 } from '../constants/batteryConstants';
+import { RootState } from '../store';
 
 
 
-export const getAllBatteriesAction = () => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+export const getAllBatteriesAction = () : ThunkAction<void, RootState, null, AnyAction> => async (dispatch, getState) => {
   dispatch({ type: GET_ALL_BATTERIES_REQUEST });
-
+  const {
+    userSignin: { userInfo },
+  } = getState();
   try {
-    const { data } = await axios.get('/api/batteries/get');
+    const { data } = await axios.get('/api/batteries/get' ,{
+      headers: { Authorization: `Bearer ${userInfo?.token}` },
+    });
 
     dispatch({
       type: GET_ALL_BATTERIES_SUCCESS,
@@ -41,10 +46,15 @@ export const getAllBatteriesAction = () => async (dispatch: ThunkDispatch<{}, {}
   }
 };
 
-export const addNewBatteryAction = (info: any) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+export const addNewBatteryAction = (info: any) : ThunkAction<void, RootState, null, AnyAction> => async (dispatch, getState) => {
     dispatch({ type: ADD_NEW_BATTERY_REQUEST });
+    const {
+      userSignin: { userInfo },
+    } = getState();
     try {
-      const { data } = await axios.post(`/api/batteries/create`, info);
+      const { data } = await axios.post(`/api/batteries/create`, info ,{
+        headers: { Authorization: `Bearer ${userInfo?.token}` },
+      });
   
       dispatch({
         type: ADD_NEW_BATTERY_SUCCESS,
@@ -59,11 +69,16 @@ export const addNewBatteryAction = (info: any) => async (dispatch: ThunkDispatch
     }
   };
 
-  export const updateBatteryAction = (id: string, info:any) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+  export const updateBatteryAction = (id: string, info:any) : ThunkAction<void, RootState, null, AnyAction> => async (dispatch, getState) => {
     
     dispatch({ type: UPDATE_BATTERY_REQUEST });
+    const {
+      userSignin: { userInfo },
+    } = getState();
     try {
-      const { data } = await axios.put(`/api/batteries/battery/update/${id}`, info);
+      const { data } = await axios.put(`/api/batteries/battery/update/${id}`, info ,{
+        headers: { Authorization: `Bearer ${userInfo?.token}` },
+      });
       dispatch({
         type: UPDATE_BATTERY_SUCCESS,
         payload: data,
@@ -77,11 +92,15 @@ export const addNewBatteryAction = (info: any) => async (dispatch: ThunkDispatch
     }
   };
   
-  export const deleteBatteryAction = (id: Number) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+  export const deleteBatteryAction = (id: Number) : ThunkAction<void, RootState, null, AnyAction> => async (dispatch, getState) => {
     dispatch({ type: DELETE_BATTERY_REQUEST })
-    
+    const {
+      userSignin: { userInfo },
+    } = getState();
     try {
-      const { data } = await axios.delete(`/api/batteries/battery/delete/${id}`);
+      const { data } = await axios.delete(`/api/batteries/battery/delete/${id}` ,{
+        headers: { Authorization: `Bearer ${userInfo?.token}` },
+      });
       dispatch({
         type: DELETE_BATTERY_SUCCESS,
         payload: data,

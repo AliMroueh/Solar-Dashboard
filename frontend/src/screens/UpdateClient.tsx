@@ -11,6 +11,7 @@ import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { useForm } from 'react-hook-form';
 import { UPDATE_CLIENT_RESET } from '../constants/clientConstants';
+import { RootState } from '../store';
 interface Client {
     _id: string;
     name: string;
@@ -54,8 +55,8 @@ export default function UpdateSolarClient() {
   // const Address = new URLSearchParams(location.search).get('address') ?? '';
   // const Phone = new URLSearchParams(location.search).get('phone') ?? '';
   
-  const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
-
+  // const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
+  const dispatch: ThunkDispatch<RootState, null, AnyAction>= useDispatch();
   const [open, setOpen] = useState(false);
   const [clientImage, setClientImage] = useState<FileList | null>(null);
 

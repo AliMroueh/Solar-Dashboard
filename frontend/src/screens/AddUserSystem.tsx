@@ -18,6 +18,7 @@ import { ClientState } from '../reducers/clientReducer';
 import { getAllBatteriesAction } from '../actions/batteryActions';
 import { getAllClientsAction } from '../actions/clientActions';
 import { getAllInverterAction } from '../actions/inverterActions';
+import { RootState } from '../store';
 
 
 
@@ -142,8 +143,8 @@ interface GetInverterStateWithAllInverters extends InverterState {
 
 export default function AddUserSystem() : JSX.Element{
   // const { register, handleSubmit,  formState: { errors } } = useForm(({ mode: 'onChange' }));
-    const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
-      
+    // const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
+    const dispatch: ThunkDispatch<RootState, null, AnyAction>= useDispatch();
 
     const navigate = useNavigate();
 

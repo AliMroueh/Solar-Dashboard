@@ -39,7 +39,7 @@ import {
     USER_SIGNOUT
   } from "../constants/userConstants";
   
-  interface UserSigninState {
+ export interface UserSigninState {
     loading?: boolean;
     error?: string;
     userInfo?: UserInfo;
@@ -52,7 +52,7 @@ import {
     token: string;
   }
   
-  interface UserRegisterState {
+  export interface UserRegisterState {
     loading?: boolean;
     error?: string;
     userInfo?: UserInfo;

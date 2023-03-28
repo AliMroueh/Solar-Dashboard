@@ -6,6 +6,7 @@ import React, { useEffect } from 'react';
     import { BatteryState } from '../reducers/batteryReducer';
     import { ThunkDispatch } from 'redux-thunk';
     import { AnyAction } from 'redux';
+import { RootState } from '../store';
 
     export interface Battery {
       _id: Number;
@@ -37,7 +38,8 @@ import React, { useEffect } from 'react';
     }
 
 export default function AdminSolarBatteries(): JSX.Element {
-    const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
+    // const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
+    const dispatch: ThunkDispatch<RootState, null, AnyAction>= useDispatch();
      
       const navigate = useNavigate();
       const getAllBatteries = useSelector<GetBatteryStateWithAllBatteries, GetallBatteriesState>((state) => state.getAllBatteries);

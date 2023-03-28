@@ -3,39 +3,64 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 // import LoadingBox from '../components/LoadingBox';
 // import MessageBox from '../components/MessageBox';
-import { useForm } from 'react-hook-form';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { registerAction } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import { AnyAction } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { userInfo } from '../store';
+import { UserRegisterState } from '../reducers/userReducers';
 
 
-export default function RegisterScreen(props) {
+// export default function RegisterScreen() {
+
+    // const RegisterScreen: React.FC = () => {
+export default function RegisterScreen() : JSX.Element{
+    interface UserState {
+        loading: boolean;
+        error: string | null;
+        userInfo: userInfo;
+      }
+
+    interface getUser extends UserRegisterState  {
+    userRegister: UserState;
+    }
+
+    
+type Inputs = {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+  };
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-    // const [name, setName] = useState('');
-    // const [confirmpassword, setConfirmPassword] = useState('');
-    // const [email,setEmail] = useState('');
-    // const [password, setPassword] = useState('')
+    // const dispatch = useDispatch();
+    const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
 
-    const {
-        handleSubmit,
-        register,
-        getValues,
-        formState: { errors },
-    } = useForm();
+    // const {
+    //     handleSubmit,
+    //     register,
+    //     getValues,
+    //     formState: { errors },
+    // } = useForm();
+    const { register, handleSubmit, getValues, formState: { errors } } = useForm<Inputs>(({ mode: 'onChange' }));
 
-    const userRegister = useSelector(state => state.userRegister);
+    const userRegister = useSelector<getUser, UserState>((state) => state.userRegister);
     const { userInfo, loading, error } = userRegister;
 
-    const submitHandler = ({ name, email, password }) => {
-        // TODO: signin action
-        // if(password !== confirmpassword){
-        //     alert('Password and confirm password are not match');
-        // }else{
+    // const submitHandler = ({ name, email, password }: {name:string, email: string, password: string}) => {
+    //     dispatch(registerAction(name, email, password));
+    // };
+    const submitHandler: SubmitHandler<Inputs> = ({ name, email, password }) => {
         dispatch(registerAction(name, email, password));
-        // }
-    };
+      };
+//     const submitHandlerWrapper = (submitHandler: typeof submitHandler) =>
+//   (data: SubmitHandler<FieldValues>) => {
+//     const { name, email, password } = data;
+//     submitHandler({ name, email, password });
+//   };
 
     useEffect(() => {
         if (userInfo) {
@@ -55,6 +80,8 @@ export default function RegisterScreen(props) {
                     {loading && <LoadingBox></LoadingBox>}
                     {error && <MessageBox variant='danger'>{error}</MessageBox>}
                     <form className='max-w-[400px] w-full mx-auto rounded-lg bg-orange-400 p-8 px-8'
+                        // onSubmit={handleSubmit(submitHandler)}
+                        // onSubmit={handleSubmit(submitHandlerWrapper(submitHandler))}
                         onSubmit={handleSubmit(submitHandler)}
                     >
                         <h2 className='text-4xl text-white font-bold text-center'>Create </h2>
@@ -134,3 +161,5 @@ export default function RegisterScreen(props) {
         </div>
     )
 }
+
+// export default RegisterScreen;

@@ -6,6 +6,7 @@ import React, { useEffect } from 'react';
     import { ClientState } from '../reducers/clientReducer';
     import { ThunkDispatch } from 'redux-thunk';
     import { AnyAction } from 'redux';
+import { RootState } from '../store';
 
     interface Client {
         _id: Number;
@@ -37,7 +38,8 @@ import React, { useEffect } from 'react';
     }
 
 export default function AdminSolarClients(): JSX.Element {
-    const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
+    // const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
+    const dispatch: ThunkDispatch<RootState, null, AnyAction>= useDispatch();
      
       const navigate = useNavigate();
       const getAllClients = useSelector<GetClientStateWithAllClients, GetallClientsState>((state) => state.getAllClients);

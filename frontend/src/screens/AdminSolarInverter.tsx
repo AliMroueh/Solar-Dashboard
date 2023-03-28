@@ -6,6 +6,7 @@ import { getAllInverterAction, deleteInverterAction } from '../actions/inverterA
 import { InverterState } from '../reducers/inverterReducer';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
+import { RootState } from '../store';
 
 
 export interface Inverter {
@@ -43,7 +44,8 @@ interface GetInverterStateWithAllInverters extends InverterState {
 
 
 export default function AdminSolarInverter(): JSX.Element {
-  const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
+  // const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
+  const dispatch: ThunkDispatch<RootState, null, AnyAction>= useDispatch();
      
   const navigate = useNavigate();
   const getAllInverter = useSelector<GetInverterStateWithAllInverters, GetallInvertersState>((state) => state.getAllInverter);

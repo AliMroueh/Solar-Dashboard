@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { ADD_NEW_INVERTER_RESET } from '../constants/inverterConstants';
+import { RootState } from '../store';
 
 interface Inverter {
   _id: Number;
@@ -31,25 +32,19 @@ interface AddallInvertersState {
     }
 export default function AddSolarInverter() : JSX.Element{
   const { register, handleSubmit,  formState: { errors } } = useForm(({ mode: 'onChange' }));
-    const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
-    
-    
-   
-    
-      
+    // const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
+    const dispatch: ThunkDispatch<RootState, null, AnyAction>= useDispatch();
+
       const addInverter = useSelector<AddInverterStateWithAllInverters, AddallInvertersState>((state) => state.addInverter);
       const { loading, error, inverters, success } = addInverter;
-    
+      const navigate = useNavigate();
       useEffect(() => {
         if(success){
           dispatch({type: ADD_NEW_INVERTER_RESET})
           navigate('/AdminSolarInverter');
         }
-      }, [inverters]);
-    
-      const navigate = useNavigate();
-
-      
+      }, [dispatch, inverters, navigate, success]);
+          
       const insertHandler = (data: any) =>  {
       
         // e.preventDefault();

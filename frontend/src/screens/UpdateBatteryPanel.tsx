@@ -12,6 +12,7 @@ import { useForm } from 'react-hook-form';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { UPDATE_BATTERY_RESET } from '../constants/batteryConstants';
+import { RootState } from '../store';
 
 
 interface Battery {
@@ -51,7 +52,8 @@ export default function UpdateBatteryPanel() {
 // const Description = new URLSearchParams(location.search).get('description') ?? '';
 
   
-  const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
+  // const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
+  const dispatch: ThunkDispatch<RootState, null, AnyAction>= useDispatch();
 
   // const [open, setOpen] = useState(false);
   // const [batteryImage, setBatteryImage] = useState<FileList | null>(null);

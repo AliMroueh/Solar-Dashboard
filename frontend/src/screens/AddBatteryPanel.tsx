@@ -11,6 +11,7 @@ import { useForm } from 'react-hook-form';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { ADD_NEW_BATTERY_RESET } from '../constants/batteryConstants';
+import { RootState } from '../store';
 
 interface Battery {
   _id: Number;
@@ -32,8 +33,17 @@ interface AddallBatteriesState {
     }
 export default function AddSolarBatteryPanels() : JSX.Element{
   const { register, handleSubmit,  formState: { errors } } = useForm(({ mode: 'onChange' }));
-    const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
-        
+    // const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
+    
+    const dispatch: ThunkDispatch<RootState, null, AnyAction>= useDispatch();
+      // const [open, setOpen] = useState(false);
+      // const [batteryImage, setBatteryImage] = useState<FileList | null>(null);
+
+      // const [type, setType] = useState('');
+      // const [capacity, setCapacity] = useState<number>(0);
+      // const [description, setDescription] = useState('');
+     
+      
       const addBattery = useSelector<AddBatteryStateWithAllBatteries, AddallBatteriesState>((state) => state.addBattery);
       const { loading, error, success, batteries } = addBattery;
      

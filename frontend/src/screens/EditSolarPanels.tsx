@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { UPDATE_SOLAR_RESET } from '../constants/solarConstants';
+import { RootState } from '../store';
 
 
 
@@ -49,7 +50,8 @@ export default function EditSolarPanels() : JSX.Element{
   }, [location.search, setValue]);
 
 
-    const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
+    // const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
+    const dispatch: ThunkDispatch<RootState, null, AnyAction>= useDispatch();
     
       
       const editSolar = useSelector<EditSolarStateWithAllSolars, EditallSolarsState>((state) => state.updateSolar);

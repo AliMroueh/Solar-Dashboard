@@ -4,10 +4,12 @@ import { Navigate } from 'react-router-dom';
 import { RootState } from '../store';
 
 type Props = {
-  children: React.ReactNode;
+  // children: React.ReactNode;
+  children: JSX.Element;
 }
 
-const PrivateRoute = ({children}: Props) =>{
+export default function PrivateRoute({children}: Props) : JSX.Element{
+// const PrivateRoute = ({children}: Props) =>{
 
     const userSignin = useSelector((state: RootState) => state.userSignin);
 
@@ -15,7 +17,25 @@ const PrivateRoute = ({children}: Props) =>{
     return userInfo ? children : <Navigate to="/signin" />
 }
 
-export default PrivateRoute;
+// export default PrivateRoute;
+
+// import { useSelector } from 'react-redux';
+// import { Navigate, Route } from 'react-router-dom';
+// import { RootState } from '../store';
+
+// type Props = {
+//   path: string;
+//   element: React.ReactNode;
+// };
+
+// const PrivateRoute = ({ path, element }: Props) => {
+//   const userSignin = useSelector((state: RootState) => state.userSignin);
+//   const { userInfo } = userSignin;
+  
+//   return userInfo ? <Route path={path} element={element} /> : <Navigate to="/signin" />;
+// };
+
+// export default PrivateRoute;
 
 // import { useSelector } from 'react-redux';
 // // import { Navigate } from 'react-router-dom';
@@ -36,3 +56,5 @@ export default PrivateRoute;
 // }
 
 // export default PrivateRoute;
+
+
