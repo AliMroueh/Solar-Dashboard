@@ -6,6 +6,7 @@ import {  getAllSolarAction, deleteSolarAction } from '../actions/solarActions';
 import { SolarState } from '../reducers/solarReducer';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
+import { RootState } from '../store';
 
     interface Solar {
       _id: Number;
@@ -39,7 +40,8 @@ import { AnyAction } from 'redux';
    
 
 export default function AdminSolarPanles(): JSX.Element {
-    const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
+    // const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
+    const dispatch: ThunkDispatch<RootState, null, AnyAction>= useDispatch();
      
       const navigate = useNavigate();
       const getAllSolars = useSelector<GetSolarStateWithAllSolars, GetallSolarsState>((state) => state.getAllSolars);

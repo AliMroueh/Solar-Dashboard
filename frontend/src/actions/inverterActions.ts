@@ -1,6 +1,6 @@
 import axios from "axios";
 import { AnyAction} from "redux";
-import { ThunkDispatch } from "redux-thunk";
+import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
 
 import {
@@ -22,15 +22,20 @@ import {
 
   
 } from '../constants/inverterConstants'
+import { RootState } from "../store";
 
 
 
-export const getAllInverterAction = () => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+export const getAllInverterAction = () : ThunkAction<void, RootState, null, AnyAction> => async (dispatch, getState) => {
     dispatch({ type: GET_ALL_INVERTERS_REQUEST })
-
+    const {
+        userSignin: { userInfo },
+      } = getState();
     try {
 
-        const { data } = await axios.get('/api/inverters/get')
+        const { data } = await axios.get('/api/inverters/get' ,{
+            headers: { Authorization: `Bearer ${userInfo?.token}` },
+          })
 
         dispatch({
             type: GET_ALL_INVERTERS_SUCCESS,
@@ -49,13 +54,16 @@ export const getAllInverterAction = () => async (dispatch: ThunkDispatch<{}, {},
 
 //insert category
 
-export const addInverterAction =  (info: any) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+export const addInverterAction =  (info: any) : ThunkAction<void, RootState, null, AnyAction> => async (dispatch, getState) => {
     dispatch({ type: ADD_NEW_INVERTER_REQUEST })
-
-   
+    const {
+        userSignin: { userInfo },
+      } = getState();
     try {
 
-        const { data } = await axios.post(`/api/inverters/create`, info)
+        const { data } = await axios.post(`/api/inverters/create`, info ,{
+            headers: { Authorization: `Bearer ${userInfo?.token}` },
+          })
         dispatch({
             type: ADD_NEW_INVERTER_SUCCESS,
             payload: data,
@@ -72,16 +80,16 @@ export const addInverterAction =  (info: any) => async (dispatch: ThunkDispatch<
 
 
 // UPDATE 
-export const updateInverterAction  = (id: string, info:any) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+export const updateInverterAction  = (id: string, info:any) : ThunkAction<void, RootState, null, AnyAction> => async (dispatch, getState) =>{
 
     dispatch({ type: UPDATE_INVERTER_REQUEST })
-    
+    const {
+        userSignin: { userInfo },
+      } = getState();
     try {
-
-
-        const { data } = await axios.put(`/api/inverters/inverter/update/${id}`, info)
-
-
+        const { data } = await axios.put(`/api/inverters/inverter/update/${id}`, info ,{
+            headers: { Authorization: `Bearer ${userInfo?.token}` },
+          })
         dispatch({
             type: UPDATE_INVERTER_SUCCESS,
             payload: data,
@@ -98,13 +106,15 @@ export const updateInverterAction  = (id: string, info:any) => async (dispatch: 
 
 
 //DELTE
-export const deleteInverterAction = (id: Number) => async (dispatch: ThunkDispatch<{}, {}, AnyAction>) => {
+export const deleteInverterAction = (id: Number) : ThunkAction<void, RootState, null, AnyAction> => async (dispatch, getState) => {
     dispatch({ type: DELETE_INVERTER_REQUEST })
-   
+    const {
+        userSignin: { userInfo },
+      } = getState();
     try {
-
-
-        const { data } = await axios.delete(`/api/inverters/inverter/delete/${id}`)
+        const { data } = await axios.delete(`/api/inverters/inverter/delete/${id}` ,{
+            headers: { Authorization: `Bearer ${userInfo?.token}` },
+          })
 
 
 

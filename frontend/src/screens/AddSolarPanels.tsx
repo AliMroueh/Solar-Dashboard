@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { ADD_NEW_SOLAR_RESET } from '../constants/solarConstants';
+import { RootState } from '../store';
 export interface Solar {
   _id: Number;
   type: string;
@@ -30,8 +31,8 @@ interface AddallSolarsState {
     }
 export default function AddSolarPanels() : JSX.Element{
   const { register, handleSubmit,  formState: { errors } } = useForm(({ mode: 'onChange' }));
-    const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
-    
+    // const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
+    const dispatch: ThunkDispatch<RootState, null, AnyAction>= useDispatch();
  
       
       const addSolar = useSelector<AddSolarStateWithAllSolars, AddallSolarsState>((state) => state.addSolar);

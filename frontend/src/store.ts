@@ -95,7 +95,7 @@ import { sendEmailReducer } from "./reducers/emailReducer";
 import { getAllSystemsReducer, addSystemReducer, updateSystemReducer, deleteSystemReducer, SysSummaryReducer } from "./reducers/systemReducer";
 import { userRegisterReducer, userSigninReducer } from "./reducers/userReducers";
 
-interface userInfo {
+export interface userInfo {
     id: string,
     name: string,
     email: string,

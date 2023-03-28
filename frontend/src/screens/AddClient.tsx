@@ -11,6 +11,7 @@ import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { useForm } from 'react-hook-form';
 import { ADD_NEW_CLIENT_RESET } from '../constants/clientConstants';
+import { RootState } from '../store';
 
 export interface Client {
   _id: Number;
@@ -33,7 +34,8 @@ interface AddallClientsState {
     }
 export default function AddSolarClient() : JSX.Element{
   const { register, handleSubmit,  formState: { errors } } = useForm(({ mode: 'onChange' }));
-    const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
+    // const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
+    const dispatch: ThunkDispatch<RootState, null, AnyAction>= useDispatch();
     const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
     
       // const [open, setOpen] = useState(false);

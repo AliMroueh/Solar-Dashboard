@@ -11,6 +11,7 @@ import { updateInverterAction } from '../actions/inverterActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { UPDATE_INVERTER_RESET } from '../constants/inverterConstants';
+import { RootState } from '../store';
 
 interface Inverter {
   _id: string;
@@ -47,9 +48,8 @@ export default function UpdateInverterPanel() : JSX.Element {
   }, [location.search, setValue]);
 
 
-    const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
-    
-    
+    // const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
+    const dispatch: ThunkDispatch<RootState, null, AnyAction>= useDispatch();
         const updateInverter = useSelector<UpdateInverterStateWithAllInverters, UpdateallInvertersState>((state) => state.updateInverter);
       const { loading, error, inverters ,success } = updateInverter;
    

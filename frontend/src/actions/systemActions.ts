@@ -3,8 +3,7 @@ import { Dispatch } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import { RootState } from '../store'; // replace with your root state type
-
+import { RootState } from '../store'; 
 import {
   GET_ALL_SYSTEMS_REQUEST,
   GET_ALL_SYSTEMS_SUCCESS,
