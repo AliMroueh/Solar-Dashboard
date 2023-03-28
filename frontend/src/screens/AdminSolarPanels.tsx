@@ -90,11 +90,11 @@ export default function AdminSolarPanles(): JSX.Element {
           {/* // <table className='shadow-2x1 font-[Poppins] border-2 border-cyan-200 w-11/12 mx-auto'> */}
             <thead className='text-white'>
               <tr>
-                <th className='py-3  bg-slate-600 font-bold text-xl text-center'>Type</th>
-                <th className='py-3  bg-slate-600 font-bold text-xl text-center'>Strength</th>
-                <th className='py-3  bg-slate-600 font-bold text-xl text-center'>Description</th>
-                <th className='py-3  bg-slate-600 font-bold text-xl text-center'>Image</th>
-                <th className='py-3  bg-slate-600 font-bold text-xl text-center'>Option</th>
+                <th className='py-3  bg-slate-500 font-bold text-xl text-center'>Type</th>
+                <th className='py-3  bg-slate-500 font-bold text-xl text-center'>Strength</th>
+                <th className='py-3  bg-slate-500 font-bold text-xl text-center'>Description</th>
+                <th className='py-3  bg-slate-500 font-bold text-xl text-center'>Image</th>
+                <th className='py-3  bg-slate-500 font-bold text-xl text-center'>Option</th>
               </tr>
             </thead>
             <tbody>

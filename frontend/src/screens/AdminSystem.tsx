@@ -118,14 +118,14 @@ export default function AdminSystem(): JSX.Element {
           Add User System
         </button> */}
 {systems.map((system,index) => 
-    <div className="grid grid-cols-1 gap-4 m-5" key={index}>
+    <div className="grid grid-cols-1 gap-4 m-5 " key={index}>
       <div className="p-4">
             <h2 className="text-lg font-medium text-gray-900">{system.client.name}</h2>
       </div>
-      <div className="bg-white rounded-lg shadow-lg overflow-hidden flex justify-between flex-wrap sm: gap-2">
+      <div className="bg-orange-400 rounded-lg shadow-lg overflow-hidden flex justify-between flex-wrap sm: gap-2">
 
         <div className="flex">
-          <img src={system.inverter.inverterImage} alt="Inverter Image" className="h-24 w-24 object-fill"/>
+          <img src={system.inverter.inverterImage} alt="Inverter Image"  className="h-24 border-white w-24 object-fill"/>
           <div className="ml-4">
             <h3 className="text-md font-medium text-gray-900">{system.inverter.type}</h3>
             <p className="text-sm text-gray-500">{system.numberInverter}</p>

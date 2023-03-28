@@ -89,7 +89,6 @@ export default function AdminSolarInverter(): JSX.Element {
             {/* // <table className='shadow-2x1 font-[Poppins] border-2 border-cyan-200 w-11/12 mx-auto'> */}
               <thead className='text-white'>
                 <tr>
-                  <th className='py-3  bg-slate-500 font-bold text-lg text-center'>ID</th>
                   <th className='py-3  bg-slate-500 font-bold text-lg text-center'>Type</th>
                   <th className='py-3  bg-slate-500 font-bold text-lg text-center'>Strength</th>
                   <th className='py-3  bg-slate-500 font-bold text-lg text-center'>Description</th>
@@ -99,8 +98,7 @@ export default function AdminSolarInverter(): JSX.Element {
               </thead>
               <tbody>
                 {inverters.map((row, index) => (
-                  <tr key={index} className='hover:bg-yellow-100 bg-orange-400 cursor-pointer duration-300'>
-                    <td className='py-3 px-6 text-center'>{row._id.toString()}</td>
+                  <tr key={index} className='bg-orange-400 cursor-pointer duration-300'>
                     <td className='py-3 px-6 text-center'>{row.type}</td>
                     <td className='py-3 px-6 text-center'>{row.strength}</td>
                     <td className='py-3 px-6 text-center max-w-xs min-h-full'>{row.description}</td>
