@@ -2,32 +2,59 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { signin } from '../actions/userActions';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import { ThunkDispatch } from 'redux-thunk';
+import { AnyAction } from 'redux';
+import { userInfo } from '../store';
+import { UserSigninState } from '../reducers/userReducers';
 
-export default function SigninScreen() {
+
+export interface UserState {
+    loading: boolean;
+    error: string | null;
+    userInfo: userInfo;
+  }
+
+export interface getUser extends UserSigninState  {
+    userSignin: UserState;
+}
+
+// export default function SigninScreen() {
+export default function SigninScreen() : JSX.Element{
+    type Inputs = {
+        name: string;
+        email: string;
+        password: string;
+        confirmPassword: string;
+      };
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
+    const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
 
     // const [email,setEmail] = useState('');
     // const [password, setPassword] = useState('')
 
-    const userSignin = useSelector(state => state.userSignin);
+    const userSignin = useSelector<getUser,UserState>(state => state.userSignin);
     const { userInfo, loading, error } = userSignin;
 
-    const {
-        handleSubmit,
-        register,
-        formState: { errors },
-    } = useForm();
+    // const {
+    //     handleSubmit,
+    //     register,
+    //     formState: { errors },
+    // } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm<Inputs>(({ mode: 'onChange' }));
 
-    const submitHandler = ({ email, password }) => {
-        // e.preventDefault();
-        // TODO: signin action
+    // const submitHandler = ({ email, password }) => {
+    //     // e.preventDefault();
+    //     // TODO: signin action
+    //     dispatch(signin(email, password));
+    // };
+    const submitHandler: SubmitHandler<Inputs> = ({ email, password }) => {
         dispatch(signin(email, password));
-    };
+      };
     useEffect(() => {
         if (userInfo) {
             navigate('/');

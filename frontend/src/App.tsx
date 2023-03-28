@@ -19,12 +19,14 @@ import AddUserSystem from "./screens/AddUserSystem";
 import AdminSystem from "./screens/AdminSystem";
 import UpdateUserSystem from "./screens/UpdateUserSystem";
 import RegisterScreen from "./screens/RegisterScreen";
-import SigninScreen from "./screens/SigninScreen";
+import SigninScreen, { getUser, UserState } from "./screens/SigninScreen";
 import { useSelector } from "react-redux";
 import PrivateRoute from "./components/PrivateRoute";
 
-function App() {
-  const userSignin = useSelector(state => state.userSignin);
+// function App() {
+export default function App() : JSX.Element{
+
+  const userSignin = useSelector<getUser,UserState>(state => state.userSignin);
   const {userInfo, loading, error} = userSignin;
 
   return (
@@ -36,10 +38,23 @@ function App() {
           <Routes>
             <Route path="/register" element={<RegisterScreen />}/>
             <Route path="/signin" element={<SigninScreen />}/>
-            <Route index element={
-            <PrivateRoute>
-            <Home />
-            </PrivateRoute>}/>  
+            {/* <PrivateRoute path="/" element={<Home />} /> */}
+            <Route
+            index
+            element={
+              <PrivateRoute>
+                <Home />
+              </PrivateRoute>
+            }
+          />
+            {/* <PrivateRoute path="/" element={<Home />}/>
+            <PrivateRoute path="/AdminClients" element={<AdminSolarClients />}/>
+            <PrivateRoute path="/AdminSolarPanels" element={<AdminSolarPanels />}/>
+            <PrivateRoute path="/AdminSolarInverter" element={<AdminSolarInverter />}/>
+            <PrivateRoute path="/AdminSolarBatteries" element={<AdminSolarBatteries />}/>
+        <Route index element={
+            <PrivateRoute path="/" element={<Home />}/>
+          }/>   */}
             <Route path="/AdminClients" element={
             <PrivateRoute>
               <AdminSolarClients />
@@ -54,6 +69,11 @@ function App() {
             <Route path="/AdminSolarBatteries" element={<PrivateRoute>
             <AdminSolarBatteries />
             </PrivateRoute>}/>
+            {/* <PrivateRoute path="/AddClient" element={<AddSolarClient />}/>
+            <PrivateRoute path="/AddSolarPanels" element={<AddSolarPanels />}/>
+            <PrivateRoute path="/AddBatteryPanel" element={<AddSolarBatteryPanels />}/>
+            <PrivateRoute path="/AdminSolarInverter" element={<AdminSolarInverter />}/>
+            <PrivateRoute path="/AdminSolarBatteries" element={<AdminSolarBatteries />}/> */}
             <Route path="/AddClient" element={
             <PrivateRoute>
             <AddSolarClient />
@@ -66,6 +86,11 @@ function App() {
             <PrivateRoute>
               <AddSolarBatteryPanels />
               </PrivateRoute>}/>
+            {/* <PrivateRoute path="/AddSolarInverter" element={<AddSolarInverter />}/>
+            <PrivateRoute path="/AddBatteryPanel" element={<AddSolarBatteryPanels />}/>
+            <PrivateRoute path="/EditSolarPanels/:id" element={<EditSolarPanels />}/>
+            <PrivateRoute path="/UpdateBatteryPanel/:id" element={<UpdateBatteryPanel />}/>
+            <PrivateRoute path="/UpdateInverterPanel/:id" element={<UpdateInverterPanel />}/> */}
             <Route path="/AddSolarInverter" element={
             <PrivateRoute>
             <AddSolarInverter />
@@ -83,6 +108,10 @@ function App() {
             <Route path="/UpdateInverterPanel/:id" element={<PrivateRoute>
             <UpdateInverterPanel/>
             </PrivateRoute>}/>
+            {/* <PrivateRoute path="/UpdateClient/:id" element={<UpdateSolarClient />}/>
+            <PrivateRoute path="/AddUserSystem" element={<AddUserSystem />}/>
+            <PrivateRoute path="/UpdateUserSystem/:id" element={<UpdateUserSystem />}/>
+            <PrivateRoute path="/AdminSystem" element={<AdminSystem />}/> */}
             <Route path="/UpdateClient/:id" element={
             <PrivateRoute>
             <UpdateSolarClient />
@@ -106,4 +135,4 @@ function App() {
   );
 }
 
-export default App;
+// export default App;
