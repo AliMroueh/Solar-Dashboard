@@ -34,7 +34,7 @@ export default function App() : JSX.Element{
   return (
     <BrowserRouter>
       {userInfo && <Header />}
-      <div className='w-full min-h-[90vh] grid grid-cols-12'>
+      <div className='w-full min-h-[90vh] grid grid-cols-12 bg-amber-100'>
         {userInfo && <NavBar />}
         <div className='grid grid-cols-1 xl:grid-cols-5 col-span-10 w-full '>
           <Routes>

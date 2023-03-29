@@ -101,7 +101,7 @@ export default function AdminSolarClients(): JSX.Element {
                 <td className='py-3 px-6 text-center'>{row.email}</td>
                 <td className='py-3 px-6 text-center'>{row.address}</td>
                 <td className='py-3 px-6 text-center'>{row.phone}</td>
-                <td className='py-3 px-6 text-center'><div className='flex flex-row justify-center'><img src={row.clientImage} alt="Client" /></div> </td>
+                <td className='py-3 px-6 text-center xs:py-0'><div className='flex flex-row justify-center'><img src={row.clientImage} alt="Client" className='w-32' /></div> </td>
                 <td className='py-3 px-6 text-center'>
                 <Link to={`/UpdateClient/${row._id}?name=${row.name}&email=${row.email}&address=${row.address}&phone=${row.phone}&clientImage=${row.clientImage}`}>
                     <button type='button' className='edit w-auto p-2 bg-green-600 text-slate-100 rounded-md'>
