@@ -125,7 +125,7 @@ export default function AdminSystem(): JSX.Element {
       <div className="bg-slate-500 rounded-lg shadow-lg overflow-hidden flex justify-between flex-wrap sm: gap-2">
 
         <div className="flex">
-          <img src={system.inverter.inverterImage} alt="Inverter Image"  className="h-24 m-2 border-white w-24 object-fill"/>
+          <img src={system.inverter.inverterImage} alt="Inverter Image"  className="h-24 m-2 w-24 object-fill"/>
           <div className="ml-4">
             <h3 className="text-md font-medium text-xl m-2 text-white">{system.inverter.type}</h3>
             <p className="text-sm text-gray-500">{system.numberInverter}</p>
@@ -133,7 +133,7 @@ export default function AdminSystem(): JSX.Element {
         </div>
 
         <div className="flex">
-          <img src={system.battery.batteryImage} alt="Battery Image" className="h-24 w-24 object-fill"/>
+          <img src={system.battery.batteryImage} alt="Battery Image" className="h-24 m-2 w-24 object-fill"/>
           <div className="ml-4">
             <h3 className="text-md font-medium text-xl m-2 text-white">{system.battery.type}</h3>
             <p className="text-sm text-gray-500">{system.numberBattery}</p>
@@ -141,27 +141,27 @@ export default function AdminSystem(): JSX.Element {
         </div>
 
         <div className="flex">
-          <img src={system.battery.batteryImage} alt="Solar Panel Image" className="h-24 w-24 object-fill"/>
+          <img src={system.battery.batteryImage} alt="Solar Panel Image" className="h-24 m-2 w-24 object-fill"/>
           <div className="ml-4">
             <h3 className="text-md font-medium m-2 text-xl text-white">{system.solarPanel.type}</h3>
             <p className="text-sm text-gray-500">{system.numberSolarPanel}</p>
           </div>
         </div>
 
-        <div className="flex flex-col">
-        <p>Solar Panels: 
-          <span>
+        <div className="flex flex-col m-2">
+        <p className='text-white'>Solar Panels: 
+          <span className='text-white'>
           {` ${Math.floor(Number(system.numberSolarPanel) * Number(system.solarPanel.strength) / 220)} Amp`}
           </span>
           </p>
-          <p>Batteries: 
-          <span>
+          <p className='text-white'>Batteries: 
+          <span className='text-white'>
            {` ${Math.floor(Number(system.numberBattery) * Number(system.battery.capacity) / 220)} Amp`}
 
           </span>
           </p>
-          <p>Inverters: 
-          <span>
+          <p className='text-white'>Inverters: 
+          <span className='text-white'>
            {` ${Math.floor(Number(system.numberInverter) * Number(system.inverter.strength) /220)} Amp`}
           </span>
           </p>
