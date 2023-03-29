@@ -37,57 +37,65 @@ interface Props {
     }
 
 return (
-    <div className="App">
+    <div className=' flex flex-col bg-amber-100 justify-center w-full col-span-10'>
       <header className="App-header">
         {loading && <LoadingBox></LoadingBox>}
         {error && <MessageBox>{error}</MessageBox>}
         {email && <MessageBox variant='info'>Email sent successfully</MessageBox>}
-        <form onSubmit={submitHandler}>
-          <h1>Send Email</h1>
-          <div>
-            <label htmlFor="name">Name</label>
+        <form className='w-6/12 mx-auto rounded-lg bg-orange-400 p-8 px-8' onSubmit={submitHandler}>
+          <h1 className='text-4xl text-white font-bold text-center'>Send Email</h1>
+          <div className='flex flex-col text-white py-2'>
+            <label className='font-bold text-white' htmlFor="name">Name</label>
             <input
               onChange={(e) => setName(e.target.value)}
               type="text"
+              className='rounded-lg text-black bg-white mt-2 p-2 focus:outline-none'
               value={name}
             ></input>
           </div>
-          <div>
-            <label htmlFor="email">Email</label>
+          <div className='flex flex-col text-white py-2'>
+            <label  className='font-bold text-white' htmlFor="email">Email</label>
             <input
               onChange={(e) => setEmail1(e.target.value)}
               type="email"
+              className='rounded-lg text-black bg-white mt-2 p-2 focus:outline-none'
               value={email1}
             ></input>
           </div>
-          <div>
-            <label htmlFor="subject">Subject</label>
+          <div className='flex flex-col text-white py-2'>
+            <label className='font-bold text-white' htmlFor="subject">Subject</label>
             <input
               id="subject"
               type="text"
+              className='rounded-lg text-black bg-white mt-2 p-2 focus:outline-none'
               onChange={(e) => setSubject(e.target.value)}
               value={subject}
             ></input>
           </div>
-          <div>
-            <label htmlFor="message">Message</label>
+          <div className='flex flex-col text-white py-2'>
+            <label className='font-bold text-white' htmlFor="message">Message</label>
             <textarea
               id="message"
               onChange={(e) => setMessage(e.target.value)}
+              className="w-full px-0 text-sm mt-2 p-2 text-gray-900 rounded-lg bg-white h-24" placeholder=" Write a comment..." 
               value={message}
             ></textarea>
           </div>
           <div>
             <label></label>
-            <button className='p-5 bg-red-500'
+            <div className='flex flex-row justify-center'>
+            <button className='w-1/4 my-5 py-2 bg-slate-500 shadow-lg shadow0-slate-600/50 hover:shadow-slate-600/40 text-white font-bold text-xl rounded-lg'
             disabled={loading || name==='' || email1==='' || subject === '' || message === ''} 
             type="submit">
-              Sending...
+              Sending
               {/* {loading ? 'Sending...' : 'Submit'} */}
             </button>
+            </div>
           </div>
         </form>
       </header>
     </div>
   );
 }
+
+
