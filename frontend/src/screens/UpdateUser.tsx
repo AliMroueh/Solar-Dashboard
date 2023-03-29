@@ -1,210 +1,162 @@
-
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { addClientAction} from '../actions/clientActions';
-import { ClientState } from '../reducers/clientReducer';
-import { ThunkDispatch } from 'redux-thunk';
-import { AnyAction } from 'redux';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux'
+// import LoadingBox from '../components/LoadingBox';
+// import MessageBox from '../components/MessageBox';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import { detailsUser, registerAction, updateUserProfile } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-import { useForm } from 'react-hook-form';
-import { ADD_NEW_CLIENT_RESET } from '../constants/clientConstants';
-import { RootState } from '../store';
+import { AnyAction } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { userInfo } from '../store';
+import { UserRegisterState } from '../reducers/userReducers';
+import { getUser, UserState } from './SigninScreen';
 
-export interface Client {
-  _id: Number;
-  name: string;
-  clientImage: File;
-  email:string;
-  address:string;
-  phone:Number;
-}
-interface AddallClientsState {
-   
-    loading: boolean;
-    error: any[] | null;
-    clients: Client[];
-    success: boolean;
-  }
-  interface AddClientStateWithAllClients extends ClientState  {
-    addClient: AddallClientsState;
-      
-    }
 export default function UpdateUser() : JSX.Element{
-  const { register, handleSubmit,  formState: { errors } } = useForm(({ mode: 'onChange' }));
-    // const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
-    const dispatch: ThunkDispatch<RootState, null, AnyAction>= useDispatch();
-    const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    
-      // const [open, setOpen] = useState(false);
-      // const [clientImage, setClientImage] = useState<FileList | null>(null);
+    const navigate = useNavigate();
+    // const dispatch = useDispatch();
+    const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
 
-      // const [name, setName] = useState('');
-      // const [email, setEmail] = useState('');
-      // const [address, setAddress] = useState('');
-      // const [phone, setPhone] = useState<number>(0);
-      
-      const addClient = useSelector<AddClientStateWithAllClients, AddallClientsState>((state) => state.addClient);
-      const { loading, error, clients, success } = addClient;
-      const navigate = useNavigate();
-     
-      useEffect(() => {
-        if(success){
-          dispatch({type: ADD_NEW_CLIENT_RESET})
-          navigate('/AdminClients')
-        }
-     }, [clients]);
-      
+    const userSignin = useSelector<getUser,UserState>(state => state.userSignin);
+    const {userInfo, loading, error} = userSignin;
     
-      
-      // function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-      //   const newValue = parseInt(e.target.value);
-      //   setPhone(newValue);
-      // }
-      // e: React.FormEvent<HTMLFormElement>
-      const insertHandler = (data: any) => {
-        // e.preventDefault();
-          const formData = new FormData();
+type Inputs = {
+    name: string;
+    email: string;
+    Oldpassword: string;
+    Newpassword: string;
+    confirmPassword: string;
+  };
+
+    const { register, handleSubmit, getValues, formState: { errors },setValue } = useForm<Inputs>(({ mode: 'onChange' }));
+
+    useEffect(() => {
+        const name = userInfo.name;
+        const email = userInfo.email;
     
-          if (data.clientImage && data.clientImage.length > 0) {
-            formData.append('clientImage', data.clientImage[0]);
-          }
-          formData.append('name', data.name);
-          formData.append('email', data.email);
-          formData.append('address', data.address);
-          formData.append('phone', data.phone.toString());
-         
-          
+        setValue('name', name);
+        setValue('email', email);
+      }, [setValue, userInfo.email, userInfo.name]);
 
-
-          dispatch(addClientAction(formData));
-          
-         
+    const submitHandler: SubmitHandler<Inputs> = ({ name, email, Oldpassword, Newpassword}) => {
+        dispatch(updateUserProfile({userId : userInfo._id,name, email, Oldpassword, Newpassword}));
       };
 
-      // if(!loading && !error){
-      //   navigate('/AdminClients');
-      // }
-    
-    //   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    //     event.preventDefault();
-    //     insertHandler();
-    //   };
-    
+      if(!loading){
+        console.log(userInfo)
+      }
+    // useEffect(() => {
+    //     if (userInfo) {
+    //         navigate('/');
+    //     }
+    //     if (error) {
+    //         console.log(error)
+    //     }
+    // }, [navigate, userInfo, error]);
+    return (
+        <div className='col-span-5 absolute top-0 left-0'>
+            <div className='grid grid-cols-1 sm:grid-cols-2 h-screen w-full'>
+                <div className='hidden sm:block'>
+                    <img className='w-full h-full object-cover' src="./solar-panels.jpg" alt="" />
+                </div>
+                <div className='bg-white  flex flex-col justify-center'>
+                    {loading && <LoadingBox></LoadingBox>}
+                    {error && <MessageBox variant='danger'>{error}</MessageBox>}
+                    <form className='max-w-[400px] w-full mx-auto rounded-lg bg-orange-400 p-8 px-8'
+                        // onSubmit={handleSubmit(submitHandler)}
+                        // onSubmit={handleSubmit(submitHandlerWrapper(submitHandler))}
+                        onSubmit={handleSubmit(submitHandler)}
+                    >
+                        <h2 className='text-4xl text-white font-bold text-center'>Update </h2>
+                        <div className='flex flex-col text-white py-2'>
+                            <label htmlFor='name'>Name</label>
+                            <input className='rounded-lg text-black bg-white mt-2 p-2  focus:border-orange-400 focus:outline-none'
+                                type="text"
+                                id='name'
+                                autoFocus
+                                {...register('name', {
+                                    required: 'Please enter name',
+                                })}
+                            />
+                            {errors.name && (
+                                <div className="text-red-500">{errors.name.message}</div>
+                            )}
+                        </div>
+                        <div className='flex flex-col text-white py-2'>
+                            <label>Email</label>
+                            <input className='rounded-lg text-black bg-white mt-2 p-2  focus:border-orange-400 focus:outline-none' type="email"
+                                {...register('email', {
+                                    required: 'Please enter email',
+                                    pattern: {
+                                        value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/i,
+                                        message: 'Please enter valid email',
+                                    },
+                                })}
+                            />
+                            {errors.email && (
+                                <div className="text-red-500">{errors.email.message}</div>
+                            )}
+                        </div>
+                        <div className='flex flex-col text-white py-2'>
+                            <label>Old Password</label>
+                            <input className='p-2 rounded-lg text-black bg-white mt-2 focus:border-orange-400 focus:outline-none' type="password"
+                                {...register('Oldpassword', {
+                                    required: 'Please enter password',
+                                    minLength: { value: 6, message: 'password is more than 5 chars' },
+                                })}
+                                autoFocus
+                            />
+                            {errors.Oldpassword && (
+                                <div className="text-red-500 ">{errors.Oldpassword.message}</div>
+                            )}
+                        </div>
+                        <div className='flex flex-col text-white py-2'>
+                            <label>New Password</label>
+                            <input className='p-2 rounded-lg text-black bg-white mt-2 focus:border-orange-400 focus:outline-none' type="password"
+                                {...register('Newpassword', {
+                                    required: 'Please enter password',
+                                    minLength: { value: 6, message: 'password is more than 5 chars' },
+                                })}
+                                autoFocus
+                            />
+                            {errors.Newpassword && (
+                                <div className="text-red-500 ">{errors.Newpassword.message}</div>
+                            )}
+                        </div>
+                        <div className='flex flex-col text-white py-2'>
+                            <label>Confirm Password</label>
+                            <input className='p-2 rounded-lg text-black bg-white mt-2 focus:border-orange-400 focus:outline-none' type="password"
+                                {...register('confirmPassword', {
+                                    required: 'Please enter confirm password',
+                                    validate: (value) => value === getValues('Newpassword'),
+                                    minLength: {
+                                        value: 6,
+                                        message: 'confirm password is more than 5 chars',
+                                    },
+                                })}
+                            />
+                            {errors.confirmPassword && (
+                                <div className="text-red-500 ">
+                                    {errors.confirmPassword.message}
+                                </div>
+                            )}
+                            {errors.confirmPassword &&
+                                errors.confirmPassword.type === 'validate' && (
+                                    <div className="text-red-500 ">Password do not match</div>
+                                )}
+                        </div>
+                        <div className='flex justify-between text-white py-2'>
+                            Already have an account? {' '}
+                            <Link className='text-white hover:font-semibold' to={`/signin`}>Sign-In</Link>
+                        </div>
+                        <button className='w-full my-5 py-2 bg-green-500 shadow-lg shadow-green-500/50 hover:shadow-green-500/40 text-white  font-semibold rounded-lg'>Register</button>
 
-    // const submitHandler = () =>{
-    //     console.log('hello')
-    // }
-  return (
-
-
-<div className='flex flex-col justify-center w-full col-span-10'>
-{loading && <LoadingBox></LoadingBox>}
-
-{error && (
-  <div>
-    {typeof error === 'object' ? error.map((err) => (
-      <MessageBox key={err.msg} variant="danger">
-
-        {err.msg}
-      </MessageBox>
-    ))
-  : <MessageBox variant='danger'>{error}</MessageBox>
-  }
-  </div>
-)}
-      <form className='w-6/12 mx-auto rounded-lg bg-orange-400 p-8 px-8' onSubmit={handleSubmit(insertHandler)} >
-        <h2 className='text-4xl text-white font-bold text-center'>Add Client</h2>
-        <div className='flex flex-col text-white py-2'>
-          <label htmlFor='name'>Name</label>
-          <input
-            id='name'
-            className='rounded-lg bg-white mt-2 p-2 text-black  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
-            type='text'
-        
-            // onChange={(e) => setName(e.target.value)}
-            // required
-            {...register('name', { required: true,  maxLength: 255 })}
-          />
-          {errors.name && (<p className="text-red-500">This field is required and cannot exceed 255 characters.</p>)}
+                    </form>
+                </div>
+            </div>
         </div>
-        <div className='flex flex-col text-white py-2'>
-          <label htmlFor='email'>Email</label>
-          <input
-            id='email'
-            className='rounded-lg bg-white mt-2 p-2 text-black focus:border-orange-400 focus:bg-yellow-600 focus:outline-none'
-            type='email'
-          
-            // onChange={(e) => setEmail(e.target.value)}
-            // required
-            {...register('email', { 
-              required: true, 
-              pattern: EMAIL_REGEX,
-              maxLength: 255 
-            })}
-
-          />
-          {errors.email?.type === 'required' && <p className="text-red-500">This field is required.</p>}
-          {errors.email?.type === 'pattern' && <p className="text-red-500">Invalid email address.</p>}
-          {errors.email?.type === 'maxLength' && <p className="text-red-500">Cannot exceed 255 characters.</p>}
-  
-        </div>
-        <div className='flex flex-col text-white py-2'>
-          <label htmlFor='address'>Address</label>
-          <input
-            id='address'
-            className='rounded-lg bg-white mt-2 p-2 text-black focus:border-orange-400 focus:bg-yellow-600 focus:outline-none'
-            type='text'
-           
-            // onChange={(e) => setAddress(e.target.value)}
-            // required
-            {...register('address', { required: true,  maxLength: 255 })}
-          />
-          {errors.address && (<p className="text-red-500">This field is required and cannot exceed 255 characters.</p>)}
-        </div>
-        <div className='flex flex-col text-white py-2'>
-          <label htmlFor='phone'>Phone</label>
-          <input
-            id='phone'
-            className='rounded-lg bg-white mt-2 p-2 text-black focus:border-orange-400 focus:bg-yellow-600 focus:outline-none'
-            type='text'
-           
-            // onChange={(e) => setPhone(e.target.value)}
-            // required
-            {...register('phone', { required: true,  maxLength: 999999999999999 })}
-          />
-          {errors.phone && (<p className="text-red-500">This field is required and cannot exceed 20 characters.</p>)}
-        </div>
-        <div className='flex flex-col text-white py-2'>
-          <label htmlFor='file'>Add Image</label>
-          <input
-            id='file'
-           
-            className='p-2 rounded-lg bg-white mt-2 text-black focus:border-orange-400 focus:bg-gray-600 focus:outline-none'
-            type='file'
-            
-            // onChange={e => setClientImage(e.target.files)}
-
-            {...register('clientImage', { required: true })}
-              
-          
-          />
-          {errors.clientImage && ( <p className="text-red-500">This field is required.</p>)}
-        </div>
-        {/* <div className='flex justify-between text-gray-400 py-2'>
-         
-          <Link className='text-teal-500 hover:font-semibold' to={`/signin`}>Sign-In</Link>
-        </div> */}
-        <button className='w-1/4 my-5 py-2 bg-green-500 shadow-lg shadow-green-500/50 hover:shadow-green-500/40 text-white font-semibold rounded-lg' type="submit">
-          Add Client
-        </button>
-        
-      </form>
-    </div>
-  );
+    )
 }
 
-
-
+// export default RegisterScreen;

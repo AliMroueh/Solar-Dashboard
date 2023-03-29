@@ -96,6 +96,7 @@ import { getAllSystemsReducer, addSystemReducer, updateSystemReducer, deleteSyst
 import { userRegisterReducer, userSigninReducer } from "./reducers/userReducers";
 
 export interface userInfo {
+    _id?: string,
     id: string,
     name: string,
     email: string,
