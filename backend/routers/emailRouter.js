@@ -6,7 +6,7 @@ import passport from "passport";
 const emailRouter = express.Router();
 
 emailRouter.post('/',
-passport.authenticate('jwt', { session: false }),
+// passport.authenticate('jwt', { session: false }),
  expressAsyncHandler(async(req,res) => {
   console.log(req.body)
   const {name, email, subject, message}= req.body;
