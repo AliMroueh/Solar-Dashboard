@@ -17,16 +17,16 @@ import { getAllSystemsAction, summarySys } from '../actions/systemActions';
 import { RootState } from '../store';
 import { GetallSystemsState, GetSystemStateWithAllSystems, SolarAPI } from './AdminSystem';
 
-const Home: React.FC = () => {
-
-  interface EmailState {
-    loading: boolean;
-    error: string | null;
-    email: string;
+export interface EmailState {
+  loading: boolean;
+  error: string | null;
+  email: string;
+}
+export interface getEmail extends emailState  {
+  sendEmail: EmailState;
   }
-  interface getEmail extends emailState  {
-    sendEmail: EmailState;
-    }
+
+const Home: React.FC = () => {
 
   interface getSummary{
     loading: boolean;
@@ -133,7 +133,7 @@ console.log(systems)
         setData((prevData) => [...prevData, systems[num].solarApi[data1Index]]);
         setData1Index((prevIndex) => prevIndex + 1);
         if(systems[num].solarApi[data1Index].Solar_production - systems[num].solarApi[data1Index].Load_consumption <= 100){
-        dispatch1(sendEmailAction(userData[num].name, userData[num].Email))
+        dispatch1(sendEmailAction(userData[num].name, userData[num].Email,'high consumption','5afef 2estehlak ya man'))
         }
       }else{
         return () => clearInterval(interval);

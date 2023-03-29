@@ -22,6 +22,8 @@ import RegisterScreen from "./screens/RegisterScreen";
 import SigninScreen, { getUser, UserState } from "./screens/SigninScreen";
 import { useSelector } from "react-redux";
 import PrivateRoute from "./components/PrivateRoute";
+import SendEmail from "./screens/sendEmail";
+import UpdateUser from "./screens/UpdateUser";
 
 // function App() {
 export default function App() : JSX.Element{
@@ -128,6 +130,15 @@ export default function App() : JSX.Element{
               <PrivateRoute>
                 <AdminSystem />
               </PrivateRoute>} />
+            <Route path="/email" element={
+            <PrivateRoute>
+              <SendEmail />
+            </PrivateRoute>} />
+
+            <Route path="/updateUser" element={
+            <PrivateRoute>
+              <UpdateUser />
+            </PrivateRoute>} />
           </Routes>
         </div>
       </div>

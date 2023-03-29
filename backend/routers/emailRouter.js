@@ -6,15 +6,19 @@ const emailRouter = express.Router();
 
 emailRouter.post('/', expressAsyncHandler(async(req,res) => {
   console.log(req.body)
+  const {name, email, subject, message}= req.body;
   try{
     mailgun()
   .messages()
   .send(
     {
       from: 'John Doe <john@mg.yourdomain.com>',
-      to: `${req.body.name} <${req.body.email}>`,
-      subject: `high consumption`,
-      html: '<p>5afef 2estehlak ya man</p>',
+      // from: `${sender} <john@mg.yourdomain.com>`,
+      to: `${name} <${email}>`,
+      // subject: `high consumption`,
+      subject: `${subject}`,
+      // html: '<p>5afef 2estehlak ya man</p>',
+      html: `<p>${message}</p>`,
     },
     (error, body) => {
       if (error) {

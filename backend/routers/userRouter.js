@@ -123,9 +123,6 @@ expressAsyncHandler(async(req,res)=>{
             });
         });
 }))
-
-
-
 //get data
 
 userRouter.get('/',

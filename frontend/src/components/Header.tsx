@@ -9,13 +9,24 @@ import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
 import { useDispatch } from "react-redux";
 import { signout } from "../actions/userActions";
+import { useSelector } from "react-redux";
+import { getUser, UserState } from "../screens/SigninScreen";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
+
+  const navigate = useNavigate()
+  const userSignin = useSelector<getUser,UserState>(state => state.userSignin);
+  const {userInfo, loading, error} = userSignin;
 
   const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
 
   const Signout = () => {
     dispatch(signout())
+  }
+
+  const redirectUser = () =>{ 
+    navigate('/updateUser')
   }
   return (
     <div className=" w-full py-6 
@@ -39,9 +50,10 @@ function Header() {
       </div>
       {/* icons */}
       <div className="items-center justify-end space-x-6 font-medium text-white  flex w-full">
-        <BellIcon className="header-icon" />
+        {/* <BellIcon className="header-icon" />
         <InboxIcon className="header-icon" />
-        <UserCircleIcon className="header-icon" />
+        <UserCircleIcon className="header-icon" /> */}
+        <button onClick={redirectUser}>{userInfo.name}</button>
         <button  onClick={Signout}>Sign Out</button>
       </div>
     </div>
