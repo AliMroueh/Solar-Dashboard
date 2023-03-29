@@ -141,7 +141,9 @@ export default function AdminSystem(): JSX.Element {
         </div>
 
         <div className="flex">
-          <img src={system.battery.batteryImage} alt="Solar Panel Image" className="h-24 m-2 w-24 object-fill"/>
+
+          <img src={system.solarPanel.solarImage} alt="Solar Panel Image" className="h-24 m-2 w-24 object-fill"/>
+
           <div className="ml-4">
             <h3 className="text-md font-medium m-2 text-xl text-white">{system.solarPanel.type}</h3>
             <p className="text-sm text-gray-500">{system.numberSolarPanel}</p>

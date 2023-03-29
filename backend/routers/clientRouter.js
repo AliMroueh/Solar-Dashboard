@@ -7,6 +7,7 @@ import shortid from'shortid';
 import Client from '../models/clientModel.js';
 import { body, validationResult} from 'express-validator';
 import expressAsyncHandler from 'express-async-handler';
+import passport from 'passport';
 const clientRouter = express.Router();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -27,7 +28,9 @@ const storage = multer.diskStorage({
 
 
 
-  clientRouter.post("/create", upload.single("clientImage"),
+  clientRouter.post("/create",
+  passport.authenticate('jwt', { session: false }),
+   upload.single("clientImage"),
   [
     // Validate the fields
 
@@ -92,7 +95,9 @@ const storage = multer.diskStorage({
   ));
 
 
-clientRouter.put('/client/update/:id', upload.single("clientImage"),
+clientRouter.put('/client/update/:id',
+passport.authenticate('jwt', { session: false }),
+ upload.single("clientImage"),
 expressAsyncHandler(async (req, res) => {
     const client = await Client.findById(req.params.id);
 
@@ -127,7 +132,9 @@ expressAsyncHandler(async (req, res) => {
 }));
 
 
-clientRouter.get('/get', (req, res) => {
+clientRouter.get('/get',
+passport.authenticate('jwt', { session: false }),
+ (req, res) => {
     Client.find().exec((err, clients) => {
         if (err) {
             res.json({ message: err.message });
@@ -142,7 +149,9 @@ clientRouter.get('/get', (req, res) => {
 
   
 
-clientRouter.delete('/client/delete/:id', expressAsyncHandler(async (req, res) => {
+clientRouter.delete('/client/delete/:id',
+passport.authenticate('jwt', { session: false }),
+ expressAsyncHandler(async (req, res) => {
   try {
     const client = await Client.findById(req.params.id);
     if (!client) {

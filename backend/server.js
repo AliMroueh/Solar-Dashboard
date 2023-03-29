@@ -7,10 +7,11 @@ import solarRouter from "./routers/solarRouter.js";
 import inverterRouter from "./routers/inverterRouter.js";
 import emailRouter from "./routers/emailRouter.js"
 
-import { mailgun } from "./utils.js";
+import { applyPassportStrategy, mailgun } from "./utils.js";
 import path from "path";
 import { fileURLToPath } from 'url';
 import systemRouter from "./routers/systemRouter.js";
+import passport from "passport";
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -34,6 +35,9 @@ mongoose.connect(`mongodb+srv://yasser:database@main.twjbt8n.mongodb.net/solar-s
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/public', express.static(path.join(__dirname, 'uploads')));
+app.use(passport.initialize());
+// Apply strategy to passport
+applyPassportStrategy(passport);
 
 app.use('/api/users', userRouter);
 app.use('/api/batteries', batteryRouter);

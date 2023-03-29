@@ -7,6 +7,7 @@ import multer from 'multer';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
 import expressAsyncHandler from 'express-async-handler';
+import passport from "passport";
 
 const inverterRouter = express.Router();
 
@@ -25,6 +26,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 inverterRouter.post("/create",
+passport.authenticate('jwt', { session: false }),
     upload.single("inverterImage"),
     [
 
@@ -109,15 +111,9 @@ inverterRouter.post("/create",
     }
     ));
 
+inverterRouter.put('/inverter/update/:id',
+passport.authenticate('jwt', { session: false }), upload.single("inverterImage"),
 
-
-
-
-
-
-
-
-inverterRouter.put('/inverter/update/:id', upload.single("inverterImage"),
     [
         // Validate the fields
         body('type', 'Please enter a type').trim().notEmpty().isString().isLength({ max: 25 })
@@ -178,7 +174,8 @@ inverterRouter.put('/inverter/update/:id', upload.single("inverterImage"),
 
 
 
-inverterRouter.get('/get', (req, res) => {
+inverterRouter.get('/get',
+passport.authenticate('jwt', { session: false }), (req, res) => {
     Inverter.find().exec((err, inverter) => {
         if (err) {
             res.json({ message: err.message });
@@ -190,12 +187,8 @@ inverterRouter.get('/get', (req, res) => {
     })
 });
 
-
-
-
-
-
 inverterRouter.delete('/inverter/delete/:id',
+passport.authenticate('jwt', { session: false }),
     expressAsyncHandler(async (req, res) => {
         try {
             const inverter = await Inverter.findById(req.params.id);

@@ -8,6 +8,7 @@ import Battery from '../models/batteryModel.js'
 // import Battery from '../models/batteryModel.js';
 import { body, validationResult } from 'express-validator';
 import expressAsyncHandler from 'express-async-handler';
+import passport from 'passport';
 const batteryRouter = express.Router();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -24,7 +25,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 batteryRouter.post("/create", upload.single("batteryImage"),
-
+passport.authenticate('jwt', { session: false }),
   [
     // Validate the fields
     body('type', 'Please enter a type').trim().notEmpty().isString().isLength({ max: 25 })
@@ -78,7 +79,8 @@ batteryRouter.post("/create", upload.single("batteryImage"),
   }
 ));
 
-batteryRouter.put('/battery/update/:id', upload.single("batteryImage"),
+batteryRouter.put('/battery/update/:id',
+passport.authenticate('jwt', { session: false }), upload.single("batteryImage"),
 [
   // Validate the fields
   body('type', 'Please enter a type').trim().notEmpty().isString().isLength({ max: 25 })
@@ -137,7 +139,8 @@ expressAsyncHandler(async (req, res) => {
     }
   }));
 
-batteryRouter.get('/get', (req, res) => {
+batteryRouter.get('/get',
+passport.authenticate('jwt', { session: false }), (req, res) => {
   Battery.find().exec((err, batteries) => {
     if (err) {
       res.json({ message: err.message });
@@ -150,6 +153,7 @@ batteryRouter.get('/get', (req, res) => {
 });
 
 batteryRouter.delete('/battery/delete/:id',
+passport.authenticate('jwt', { session: false }),
 expressAsyncHandler(async (req, res) => {
   try {
     const battery = await Battery.findById(req.params.id);

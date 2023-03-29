@@ -14,10 +14,9 @@ import { RootState } from '../store';
 export interface Solar {
   _id: Number;
   type: string;
-  solarImage: File;
+  solarImage: string;
   strength:Number;
   description:string;
-
 }
 interface AddallSolarsState {
    
