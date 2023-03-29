@@ -78,6 +78,7 @@ expressAsyncHandler(async (req, res) => {
 );
 
 userRouter.put('/profile',
+passport.authenticate('jwt', { session: false }),
 expressAsyncHandler(async(req,res) => {
     // res.send(req.body.name)
     const user = await User.findById(req.body.userId);

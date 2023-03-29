@@ -7,6 +7,7 @@ import multer from 'multer';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
 import expressAsyncHandler from 'express-async-handler';
+import passport from 'passport';
 const solarRouter = express.Router();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -22,7 +23,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-solarRouter.post("/create", upload.single("solarImage"),
+solarRouter.post("/create",
+passport.authenticate('jwt', { session: false }), upload.single("solarImage"),
     [
         body('type', 'Please enter a type').trim().notEmpty().isString().isLength({ max: 25 })
             .withMessage('Type must be a string with maximum length of 25 characters'),
@@ -76,11 +78,9 @@ solarRouter.post("/create", upload.single("solarImage"),
         });
     }
     ));
-
-
-
-
-solarRouter.put('/solar/update/:id', upload.single("solarImage"),
+solarRouter.put('/solar/update/:id',
+passport.authenticate('jwt', { session: false }),
+ upload.single("solarImage"),
     [
         // Validate the fields
         body('type', 'Please enter a type').trim().notEmpty().isString().isLength({ max: 25 })
@@ -139,7 +139,9 @@ solarRouter.put('/solar/update/:id', upload.single("solarImage"),
         }
     }));
 
-solarRouter.get('/get', (req, res) => {
+solarRouter.get('/get',
+passport.authenticate('jwt', { session: false }),
+ (req, res) => {
     Solar.find().exec((err, solars) => {
         if (err) {
             res.json({ message: err.message });
@@ -151,10 +153,8 @@ solarRouter.get('/get', (req, res) => {
     })
 });
 
-
-
-
 solarRouter.delete('/solar/delete/:id',
+passport.authenticate('jwt', { session: false }),
     expressAsyncHandler(async (req, res) => {
         try {
             const solar = await Solar.findById(req.params.id);

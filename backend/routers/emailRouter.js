@@ -1,10 +1,13 @@
 import { mailgun } from "../utils.js";
 import express from 'express';
 import expressAsyncHandler from "express-async-handler";
+import passport from "passport";
 
 const emailRouter = express.Router();
 
-emailRouter.post('/', expressAsyncHandler(async(req,res) => {
+emailRouter.post('/',
+passport.authenticate('jwt', { session: false }),
+ expressAsyncHandler(async(req,res) => {
   console.log(req.body)
   const {name, email, subject, message}= req.body;
   try{

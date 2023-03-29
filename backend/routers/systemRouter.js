@@ -11,6 +11,7 @@ import System from '../models/systemModel.js';
 import Client from '../models/clientModel.js';
 import Battery from '../models/batteryModel.js';
 import Inverter from '../models/inverterModel.js';
+import passport from 'passport';
 
 const systemRouter = express.Router();
 
@@ -68,6 +69,7 @@ systemRouter.get(
   );
 
 systemRouter.post("/create",
+passport.authenticate('jwt', { session: false }),
     [
         body('clientId', 'Please choose a client').trim().notEmpty().isString().withMessage('Type must be a string with maximum length of 25 characters'),
         body('SolarPanelId', 'Please enter a Solar Panel').trim().notEmpty().isString().withMessage('solarPanelId must be a three digit number'),
@@ -164,7 +166,9 @@ systemRouter.post("/create",
 //     })
 // });
 
-systemRouter.get('/get', async (req, res) => {
+systemRouter.get('/get',
+passport.authenticate('jwt', { session: false }),
+ async (req, res) => {
     try {
         const systems = await System.find().exec();
         const clients = await Promise.all(systems.map(sys => Client.findById(sys.clientId).exec()));
@@ -192,6 +196,7 @@ systemRouter.get('/get', async (req, res) => {
 
 
 systemRouter.put('/update/:id',
+passport.authenticate('jwt', { session: false }),
     [
         body('clientId', 'Please choose a client').trim().notEmpty().isString().withMessage('Type must be a string with maximum length of 25 characters'),
         body('SolarPanelId', 'Please enter a Solar Panel').trim().notEmpty().isString().withMessage('solarPanelId must be a three digit number'),
@@ -232,6 +237,7 @@ systemRouter.put('/update/:id',
     }));
 
 systemRouter.delete('/delete/:id',
+passport.authenticate('jwt', { session: false }),
     expressAsyncHandler(async (req, res) => {
         try {
             const system = await System.findById(req.params.id);
