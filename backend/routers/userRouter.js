@@ -81,13 +81,14 @@ userRouter.put('/profile',
 expressAsyncHandler(async(req,res) => {
     // res.send(req.body.name)
     const user = await User.findById(req.body.userId);
+    console.log(req.body)
     if(user){
         // res.send({message: "user exists"});
 
         user.name = req.body.name || user.name;
         user.email = req.body.email || user.email;
-        if(req.body.password){
-            user.password = bcrypt.hashSync(req.body.password, 8);
+        if(req.body.Newpassword){
+            user.password = bcrypt.hashSync(req.body.Newpassword, 8);
         }
         const updatedUser = await user.save();
         res.send({
@@ -97,7 +98,7 @@ expressAsyncHandler(async(req,res) => {
             token: generateToken(updatedUser),
         });
     }else{
-        res.status(401).send({message: "unKnown id"});
+        res.status(401).send({message: `unKnown id ${req.body.userId}`});
     }
 }))
 
