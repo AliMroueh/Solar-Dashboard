@@ -217,6 +217,13 @@ console.log(clients)
     
 
 
+    useEffect(() => {
+      if(success){
+        dispatch({type: ADD_NEW_SYSTEM_RESET})
+        navigate('/AdminSystem');
+      }
+    }, [navigate,systems]);
+
 
 
      if (!loadingsol) {

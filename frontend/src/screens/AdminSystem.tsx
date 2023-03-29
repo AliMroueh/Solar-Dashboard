@@ -96,7 +96,7 @@ export default function AdminSystem(): JSX.Element {
 
 
   return (
-  <div className='col-span-5'>
+  <div className='col-span-5 bg-amber-100'>
     {loading && <LoadingBox></LoadingBox>}
     {error && (
   <div>
@@ -118,16 +118,16 @@ export default function AdminSystem(): JSX.Element {
           Add User System
         </button> */}
 {systems.map((system,index) => 
-    <div className="grid grid-cols-1 gap-4 m-5" key={index}>
+    <div className="grid grid-cols-1 gap-4 m-5 " key={index}>
       <div className="p-4">
             <h2 className="text-lg font-medium text-gray-900">{system.client.name}</h2>
       </div>
-      <div className="bg-white rounded-lg shadow-lg overflow-hidden flex justify-between flex-wrap sm: gap-2">
+      <div className="bg-slate-500 rounded-lg shadow-lg overflow-hidden flex justify-between flex-wrap sm: gap-2">
 
         <div className="flex">
-          <img src={system.inverter.inverterImage} alt="Inverter Image" className="h-24 w-24 object-fill"/>
+          <img src={system.inverter.inverterImage} alt="Inverter Image"  className="h-24 m-2 border-white w-24 object-fill"/>
           <div className="ml-4">
-            <h3 className="text-md font-medium text-gray-900">{system.inverter.type}</h3>
+            <h3 className="text-md font-medium text-xl m-2 text-white">{system.inverter.type}</h3>
             <p className="text-sm text-gray-500">{system.numberInverter}</p>
           </div>
         </div>
@@ -135,7 +135,7 @@ export default function AdminSystem(): JSX.Element {
         <div className="flex">
           <img src={system.battery.batteryImage} alt="Battery Image" className="h-24 w-24 object-fill"/>
           <div className="ml-4">
-            <h3 className="text-md font-medium text-gray-900">{system.battery.type}</h3>
+            <h3 className="text-md font-medium text-xl m-2 text-white">{system.battery.type}</h3>
             <p className="text-sm text-gray-500">{system.numberBattery}</p>
           </div>
         </div>
@@ -143,7 +143,7 @@ export default function AdminSystem(): JSX.Element {
         <div className="flex">
           <img src={system.battery.batteryImage} alt="Solar Panel Image" className="h-24 w-24 object-fill"/>
           <div className="ml-4">
-            <h3 className="text-md font-medium text-gray-900">{system.solarPanel.type}</h3>
+            <h3 className="text-md font-medium m-2 text-xl text-white">{system.solarPanel.type}</h3>
             <p className="text-sm text-gray-500">{system.numberSolarPanel}</p>
           </div>
         </div>

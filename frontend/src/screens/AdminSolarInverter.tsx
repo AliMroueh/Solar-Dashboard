@@ -89,7 +89,6 @@ export default function AdminSolarInverter(): JSX.Element {
             {/* // <table className='shadow-2x1 font-[Poppins] border-2 border-cyan-200 w-11/12 mx-auto'> */}
               <thead className='text-white'>
                 <tr>
-                  <th className='py-3  bg-slate-500 font-bold text-lg text-center'>ID</th>
                   <th className='py-3  bg-slate-500 font-bold text-lg text-center'>Type</th>
                   <th className='py-3  bg-slate-500 font-bold text-lg text-center'>Strength</th>
                   <th className='py-3  bg-slate-500 font-bold text-lg text-center'>Description</th>
@@ -99,12 +98,11 @@ export default function AdminSolarInverter(): JSX.Element {
               </thead>
               <tbody>
                 {inverters.map((row, index) => (
-                  <tr key={index} className='hover:bg-yellow-100 bg-orange-400 cursor-pointer duration-300'>
-                    <td className='py-3 px-6 text-center'>{row._id.toString()}</td>
+                  <tr key={index} className='bg-orange-400 cursor-pointer duration-300'>
                     <td className='py-3 px-6 text-center'>{row.type}</td>
                     <td className='py-3 px-6 text-center'>{row.strength}</td>
                     <td className='py-3 px-6 text-center max-w-xs min-h-full'>{row.description}</td>
-                    <td className='py-3 px-6 text-center xs:py-0'><img src={row.inverterImage} alt="Battery" className='md:w-40 xs:w-full' /> </td>
+                    <td className='py-3 px-6 text-center xs:py-0'><div className='flex flex-row justify-center'><img src={row.inverterImage} alt="Battery" className='md:w-40 xs:w-full' /></div> </td>
                     <td className='py-3 px-6 text-center'>
                     <Link to={`/UpdateInverterPanel/${row._id}?type=${row.type}&strength=${row.strength}&description=${row.description}&batteryImage=${row.inverterImage}`}>
                         <button type='button' className='edit w-auto p-2 bg-green-600 text-slate-100 rounded-md'>

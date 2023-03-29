@@ -194,7 +194,7 @@ console.log(systems)
 error ? <MessageBox variant='danger'>{error}</MessageBox>
 :
 <div className="w-full flex flex-around justify-center flex-wrap gap-6">
-    <div className="flex flex-col p-4 shadow-xl bg-gradient-to-r from-red-400 via-orange-400 to-yellow-500 rounded-lg gap-y-3 lg:w-1/6"
+    <div className="flex flex-col p-4 shadow-xl bg-gradient-to-r from-red-400 via-orange-300 to-yellow-400 rounded-lg gap-y-3 lg:w-1/6"
     >
       <div className="flex items-center gap-x-3">
         <div className="p-2 bg-white-800 rounded-lg">
@@ -221,7 +221,7 @@ error ? <MessageBox variant='danger'>{error}</MessageBox>
 
 
 
-    <div className="flex flex-col p-4 shadow-xl bg-gradient-to-r from-yellow-500 via-orange-400 to-red-400 rounded-lg gap-y-3 lg:w-1/6"
+    <div className="flex flex-col p-4 shadow-xl bg-gradient-to-r from-yellow-400 via-orange-300 to-red-400 rounded-lg gap-y-3 lg:w-1/6"
     >
       <div className="flex items-center gap-x-3">
         <div className="p-2 bg-white-800 rounded-lg">
@@ -247,7 +247,7 @@ error ? <MessageBox variant='danger'>{error}</MessageBox>
       </div>
     </div>
 
-    <div className="flex flex-col p-4 shadow-xl bg-gradient-to-r from-red-500 via-orange-400 to-yellow-400  rounded-lg gap-y-3 lg:w-1/6"
+    <div className="flex flex-col p-4 shadow-xl bg-gradient-to-r from-red-400 via-orange-300 to-yellow-400  rounded-lg gap-y-3 lg:w-1/6"
     >
       <div className="flex items-center gap-x-3">
         <div className="p-2 bg-white-800 rounded-lg">
@@ -273,7 +273,7 @@ error ? <MessageBox variant='danger'>{error}</MessageBox>
       </div>
     </div>
 
-    <div className="flex flex-col p-4 shadow-xl bg-gradient-to-r from-yellow-400 via-orange-400 to-red-500 rounded-lg gap-y-3 lg:w-1/6"
+    <div className="flex flex-col p-4 shadow-xl bg-gradient-to-r from-yellow-400 via-orange-300 to-red-400 rounded-lg gap-y-3 lg:w-1/6"
     >
       <div className="flex items-center gap-x-3">
         <div className="p-2 bg-white-800 rounded-lg">
@@ -300,7 +300,7 @@ error ? <MessageBox variant='danger'>{error}</MessageBox>
       </div>
     </div>
 
-    <div className="flex flex-col p-4 shadow-xl bg-gradient-to-r from-red-500 via-orange-400 to-yellow-400 rounded-lg gap-y-3 lg:w-1/6"
+    <div className="flex flex-col p-4 shadow-xl bg-gradient-to-r from-red-400 via-orange-300 to-yellow-400 rounded-lg gap-y-3 lg:w-1/6"
     >
       <div className="flex items-center gap-x-3">
         <div className="p-2 bg-white-800 rounded-lg">

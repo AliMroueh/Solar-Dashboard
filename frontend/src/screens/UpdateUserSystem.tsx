@@ -10,7 +10,7 @@ import { AnyAction } from 'redux';
 import { useForm } from 'react-hook-form';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-import { ADD_NEW_SYSTEM_RESET } from '../constants/systemConstants';
+import { UPDATE_SYSTEM_RESET } from '../constants/systemConstants';
 import { getAllSolarAction } from '../actions/solarActions';
 import { SolarState } from '../reducers/solarReducer';
 import { BatteryState } from '../reducers/batteryReducer';
@@ -176,12 +176,12 @@ export default function UpdateUserSystem() : JSX.Element{
       const updateSystem = useSelector<UpdateSystemStateWithAllSystems, UpdateAllSystemsState>((state) => state.updateSystem);
       const { loading, error, systems, success } = updateSystem;
       
-      useEffect(() => {
-        if(success){
-          // dispatch({type: ADD_NEW_INVERTER_RESET})
-          navigate('/AdminSystem');
-        }
-      }, [navigate, success]);
+      // useEffect(() => {
+      //   if(success){
+      //     // dispatch({type: ADD_NEW_INVERTER_RESET})
+      //     navigate('/AdminSystem');
+      //   }
+      // }, [navigate, success]);
 
 
       const getAllSolars = useSelector<GetSolarStateWithAllSolars, GetallSolarsState>((state) => state.getAllSolars);
@@ -236,7 +236,12 @@ export default function UpdateUserSystem() : JSX.Element{
     }, [clientId])
     
 
-
+    useEffect(() => {
+      if(success){
+        dispatch({type: UPDATE_SYSTEM_RESET})
+        navigate('/AdminSystem');
+      }
+    }, [navigate,systems]);
 
 
      if (!loadingsol) {
