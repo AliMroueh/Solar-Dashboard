@@ -43,6 +43,10 @@ expressAsyncHandler(async(req,res) => {
 userRouter.post('/register', expressAsyncHandler(async(req,res) => {
     const passValidation =  /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
     const emailValidation = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    const isExist = User.findOne({email: req.body.email});
+    if(isExist){
+      return res.status(400).send({message: 'User already exists'})
+    }
     if(!req.body.email.match(emailValidation)){
         res.status(401).send({message : "Email should be like example@gmail.com"});
     }else if(!req.body.password.match(passValidation)){

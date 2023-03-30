@@ -8,6 +8,7 @@ import { fileURLToPath } from 'url';
 import fs from 'fs';
 import expressAsyncHandler from 'express-async-handler';
 import passport from 'passport';
+import System from '../models/systemModel.js';
 const solarRouter = express.Router();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -160,6 +161,12 @@ passport.authenticate('jwt', { session: false }),
             const solar = await Solar.findById(req.params.id);
             if (!solar) {
                 return res.status(404).json({ message: 'solar not found' });
+            }
+
+            const isSystemExists = await System.findOne({SolarPanelId: solar._id})
+
+            if(isSystemExists){
+              await System.deleteOne({SolarPanelId: solar._id})
             }
 
             // Remove the battery image from the server file system

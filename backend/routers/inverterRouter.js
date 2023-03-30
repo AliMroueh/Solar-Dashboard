@@ -8,6 +8,7 @@ import { fileURLToPath } from 'url';
 import fs from 'fs';
 import expressAsyncHandler from 'express-async-handler';
 import passport from "passport";
+import System from "../models/systemModel.js";
 
 const inverterRouter = express.Router();
 
@@ -196,6 +197,11 @@ passport.authenticate('jwt', { session: false }),
                 return res.status(404).json({ message: 'inverter not found' });
             }
 
+            const isSystemExists = await System.findOne({inverterId: inverter._id})
+
+            if(isSystemExists){
+              await System.deleteOne({inverterId: inverter._id})
+            }
             // Remove the battery image from the server file system
             if (inverter.inverterImage) {
                 const imagePath = path.join(path.dirname(__dirname), "uploads/") + inverter.inverterImage.split('/').pop();

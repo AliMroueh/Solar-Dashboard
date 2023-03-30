@@ -8,6 +8,7 @@ import Client from '../models/clientModel.js';
 import { body, validationResult} from 'express-validator';
 import expressAsyncHandler from 'express-async-handler';
 import passport from 'passport';
+import System from '../models/systemModel.js';
 const clientRouter = express.Router();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -23,10 +24,6 @@ const storage = multer.diskStorage({
   });
   const upload = multer({ storage });
   
-
-
-
-
 
   clientRouter.post("/create",
   passport.authenticate('jwt', { session: false }),
@@ -60,6 +57,13 @@ const storage = multer.diskStorage({
         await fs.promises.unlink(req.file.path);
       }
       return res.status(400).json({ message: "Please enter all the required fields" });
+    }
+
+    const isExist = await Client.findOne({email: req.body.email});
+
+    if(isExist){
+     res.status(400).json({message: "Email already exists"})
+     return;
     }
 
     const emailValidation = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -154,6 +158,12 @@ passport.authenticate('jwt', { session: false }),
  expressAsyncHandler(async (req, res) => {
   try {
     const client = await Client.findById(req.params.id);
+
+    const isSystemExists = await System.findOne({clientId: client._id})
+
+    if(isSystemExists){
+      await System.deleteOne({clientId: client._id})
+    }
     if (!client) {
       return res.status(404).json({ message: 'Client not found' });
     }
