@@ -25,5 +25,5 @@
   },
   "include": [
     "src"
-, "src/screens/AdminClients.tsx"  ]
+, "src/screens/AdminClients.tsx", "src/screens/UpdateBatteryPanel.tsx"  ]
 }

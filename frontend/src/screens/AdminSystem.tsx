@@ -33,7 +33,8 @@ interface System {
   numberSolarPanel:String;
   numberBattery :String;
   numberInverter :String;
-  solarApi : SolarAPI[]
+  solarApi : SolarAPI[];
+  SystemNumber: Number
 }
 
 export interface GetallSystemsState {
@@ -120,7 +121,8 @@ export default function AdminSystem(): JSX.Element {
 {systems.map((system,index) => 
     <div className="grid grid-cols-1 gap-4 m-5 " key={index}>
       <div className="p-4">
-            <h2 className="text-lg font-medium text-gray-900">{system.client.name}</h2>
+            <h2 className="text-lg font-medium text-gray-900">
+              {`${system.client.name} System ${system.SystemNumber}`}</h2>
       </div>
       <div className="bg-slate-500 rounded-lg shadow-lg overflow-hidden flex justify-between flex-wrap sm: gap-2">
 

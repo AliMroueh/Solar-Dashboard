@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef  } from 'react';
 import socketIOClient from 'socket.io-client';
 import { LineChart, XAxis, Tooltip, CartesianGrid, Line, YAxis, AreaChart, Legend, Area } from 'recharts';
 import { useDispatch } from 'react-redux';
@@ -46,15 +46,13 @@ const Home: React.FC = () => {
   const [data1Index, setData1Index] = useState<number>(0);
   const [inputValue, setInputValue] = useState<string>("");
   const [selected, setSelected] = useState<string>("");
+  const previousSelectValue = useRef("");
   const [open, setOpen] = useState<boolean>(false);
   const [num, setNum] = useState<number>(0);
-  const [users, setUsers] = useState<string[]>([]);
 
-  // const dispatch: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
+
   const dispatch: ThunkDispatch<RootState, null, AnyAction>= useDispatch();
   const dispatch1: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
-// const dispatch2: ThunkDispatch<RootState, null, AnyAction> = useDispatch();
-
   const sendEmail = useSelector<getEmail, EmailState>((state) => state.sendEmail);
   const { loading, error, email } = sendEmail;
 
@@ -64,9 +62,6 @@ const Home: React.FC = () => {
   const getAllSystems = useSelector<GetSystemStateWithAllSystems, GetallSystemsState>((state) => state.getAllSystems);
 
 const { loading: loadingSolarApi, error: errorSolarApi, systems } = getAllSystems;
-console.log(systems)
-
-
 
   // useEffect(() =>{
   //   dispatch(sendEmailAction())
@@ -114,17 +109,26 @@ console.log(systems)
   // }} , 5000)
   // }, [data]);
 
+  useEffect(() => {
+    previousSelectValue.current = selected;
+
+    if(previousSelectValue.current.slice(-2) !== selected){
+      setData([])
+      setData1Index(0)
+      console.log(previousSelectValue.current)
+      console.log(selected)
+    }else{
+      console.log(previousSelectValue.current.slice(-2))
+      console.log(selected)
+    }
+  }, [previousSelectValue, selected]);
+
   useEffect(()=> {
     dispatch(getAllSystemsAction());
     dispatch(summarySys())
     setData([])
     setData1Index(0)
-  },[dispatch, dispatch1])
-
-  if(!loadingSummary){
-    console.log(summary)
-    console.log(summary?.clients[0].numClients)
-  }
+  },[dispatch])
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -133,62 +137,20 @@ console.log(systems)
         setData((prevData) => [...prevData, systems[num].solarApi[data1Index]]);
         setData1Index((prevIndex) => prevIndex + 1);
         if(systems[num].solarApi[data1Index].Solar_production - systems[num].solarApi[data1Index].Load_consumption <= 100){
+
         dispatch1(sendEmailAction(userData[num].name, userData[num].Email,'high consumption','5afef 2estehlak ya man'))
         }
       }else{
         return () => clearInterval(interval);
       }
-    }, 1000);
+    }, 3000);
 
     return () => clearInterval(interval);
   },[data.length, data1Index, dispatch1, num, selected.length, systems]);
 
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-      
-  //     if (selected.length > 0 && data.length < 24) {
-  //       setData((prevData) => [...prevData, userData[num].solarData[data1Index]]);
-  //       setData1Index((prevIndex) => prevIndex + 1);
-  //       if(userData[num].solarData[data1Index].Solar_production - userData[num].solarData[data1Index].Load_consumption <= 100){
-  //       dispatch1(sendEmailAction(userData[num].name, userData[num].Email))
-  //       }
-  //     }else{
-  //       return () => clearInterval(interval);
-  //     }
-  //   }, 1000);
-
-  //   return () => clearInterval(interval);
-  // },[data.length, data1Index, dispatch1, num, selected.length]);
-
   return (
     <div className='col-span-5 bg-amber-100 flex flex-col justify-center items-center px-4'>
-      {/* <LineChart
-        width={500}
-        height={700}
-        data={data}
-        margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <CartesianGrid stroke="#f5f5f5" />
-        <XAxis dataKey="name" />
-        <YAxis yAxisId="left-axis" />
-        <Tooltip />
-        
-        <Line type="monotone" dataKey="x" stroke="#ff7300" yAxisId={0} />
-        <Line type="monotone" dataKey="y" stroke="#387908" yAxisId={1} />
-      </LineChart> */}
-
-{/* <LineChart width={1100} height={400} data={data}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis yAxisId="left-axis" />
-          <YAxis yAxisId="right-axis" orientation="right" />
-          <Line yAxisId="left-axis" dataKey="x" 
-           stroke="pink"/>
-          <Line yAxisId="right-axis" dataKey="y" 
-          stroke="blue" />
-        </LineChart> */}
+    
 {loadingSummary ? <LoadingBox></LoadingBox>
 :
 error ? <MessageBox variant='danger'>{error}</MessageBox>
@@ -201,8 +163,6 @@ error ? <MessageBox variant='danger'>{error}</MessageBox>
         </div>
         <span
           className="text-xs font-medium" >
-          {/* : className="stat.status === 'up' ? 'text-accent-green' : 'text-accent-red'"
-        > */}
         <div>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-14 h-14 bg-white border-solid border-2 text-yellow-500 p-2 rounded-full relative right-16">
   <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
@@ -213,7 +173,7 @@ error ? <MessageBox variant='danger'>{error}</MessageBox>
         <span
           className="p-0.5 text-4xl text-white w-full text-center"
         >
-          {summary?.clients[0].numClients}
+          {summary?.clients[0]?.numClients || 0}
         </span>
       </div>
     </div>
@@ -229,8 +189,6 @@ error ? <MessageBox variant='danger'>{error}</MessageBox>
         <p className='text-white text-3xl font-bold'>Batteries</p>
         <span
           className="text-xs font-medium" >
-          {/* : className="stat.status === 'up' ? 'text-accent-green' : 'text-accent-red'"
-        > */}
         <div>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-14 h-14  bg-white border-solid border-2  text-yellow-500 p-2 rounded-full relative bottom-11 right-20">
   <path strokeLinecap="round" strokeLinejoin="round" d="M21 10.5h.375c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125H21M3.75 18h15A2.25 2.25 0 0021 15.75v-6a2.25 2.25 0 00-2.25-2.25h-15A2.25 2.25 0 001.5 9.75v6A2.25 2.25 0 003.75 18z" />
@@ -242,7 +200,7 @@ error ? <MessageBox variant='danger'>{error}</MessageBox>
         <span
           className=" text-4xl text-white w-full text-center"
         >
-          {summary?.batteries[0].numBatteries}
+          {summary?.batteries[0]?.numBatteries || 0}
         </span>
       </div>
     </div>
@@ -255,8 +213,6 @@ error ? <MessageBox variant='danger'>{error}</MessageBox>
         <p className='text-white text-3xl font-bold'>Panels:</p>
         <span
           className="text-xs font-medium" >
-          {/* : className="stat.status === 'up' ? 'text-accent-green' : 'text-accent-red'"
-        > */}
         <div>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-14 h-14 bg-white border-solid border-2 text-yellow-500 p-2 rounded-full relative bottom-11">
         <path strokeLinecap="round" strokeLinejoin="round" d="M6 6.878V6a2.25 2.25 0 012.25-2.25h7.5A2.25 2.25 0 0118 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 004.5 9v.878m13.5-3A2.25 2.25 0 0119.5 9v.878m0 0a2.246 2.246 0 00-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0121 12v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6c0-.98.626-1.813 1.5-2.122" />
@@ -268,7 +224,7 @@ error ? <MessageBox variant='danger'>{error}</MessageBox>
         <span
           className="p-0.5 text-4xl text-white w-full text-center"
         >
-          {summary?.solars[0].numSolars}
+          {summary?.solars[0]?.numSolars || 0}
         </span>
       </div>
     </div>
@@ -281,8 +237,6 @@ error ? <MessageBox variant='danger'>{error}</MessageBox>
         <p className='text-white text-3xl font-bold'>Inverters:</p>
         <span
           className="text-xs font-medium" >
-          {/* : className="stat.status === 'up' ? 'text-accent-green' : 'text-accent-red'"
-        > */}
         <div>
           
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-14 h-14 bg-white border-solid border-2 text-yellow-500 p-2 rounded-full relative bottom-11">
@@ -295,7 +249,7 @@ error ? <MessageBox variant='danger'>{error}</MessageBox>
         <span
           className="p-0.5 text-4xl text-white w-full text-center"
         >
-          {summary?.inverters[0].numInverter}
+          {summary?.inverters[0]?.numInverter || 0}
         </span>
       </div>
     </div>
@@ -309,12 +263,10 @@ error ? <MessageBox variant='danger'>{error}</MessageBox>
         <span
           className="p-0.5 text-4xl text-white w-full text-center"
         >
-          {summary?.systems[0].numSystem}
+          {summary?.systems[0]?.numSystem || 0}
         </span>
         <span
           className="text-xs font-medium" >
-          {/* : className="stat.status === 'up' ? 'text-accent-green' : 'text-accent-red'"
-        > */}
         <div>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-14 h-14 bg-white border-solid border-2  text-yellow-500 p-2 rounded-full relative left-2">
   <path strokeLinecap="round" strokeLinejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
@@ -338,8 +290,8 @@ error ? <MessageBox variant='danger'>{error}</MessageBox>
       >
         {selected
           ? selected?.length > 25
-            ? selected?.substring(0, 25) + "..."
-            : selected.slice(0,10)
+            ? selected
+            : selected
           : "Select User"}
         <BiChevronDown size={20} className={`${open && "rotate-180"}`} />
       </div>
@@ -363,17 +315,17 @@ error ? <MessageBox variant='danger'>{error}</MessageBox>
             key={index}
             className={`p-2 text-sm hover:bg-sky-600 hover:text-white
             ${
-              sys.client.name?.toLowerCase() === selected?.toLowerCase() &&
+              `${sys.client.name} System ${sys.SystemNumber}`?.toLowerCase() === selected?.toLowerCase() &&
               "bg-sky-600 text-white"
             }
             ${
-              sys.client.name?.toLowerCase().startsWith(inputValue)
+              `${sys.client.name} System ${sys.SystemNumber}`?.toLowerCase().startsWith(inputValue)
                 ? "block"
                 : "hidden"
             }`}
             onClick={() => {
-              if (sys.client.name?.toLowerCase() !== selected.toLowerCase()) {
-                setSelected(sys.client.name);
+              if (`${sys.client.name} System ${sys.SystemNumber}`?.toLowerCase() !== selected.toLowerCase()) {
+                setSelected(`${sys.client.name} System ${sys.SystemNumber}`);
                 setNum(index);
                 setOpen(false);
                 setInputValue("");
@@ -382,36 +334,10 @@ error ? <MessageBox variant='danger'>{error}</MessageBox>
             }}
           >
             {/* {user.slice(0,10)} */}
-            {sys.client.name}
+            {`${sys.client.name} System ${sys.SystemNumber}`}
           </li>
         ))}
-        {/* {userData?.map((user,index) => (
-          <li
-            key={index}
-            className={`p-2 text-sm hover:bg-sky-600 hover:text-white
-            ${
-              user.name?.toLowerCase() === selected?.toLowerCase() &&
-              "bg-sky-600 text-white"
-            }
-            ${
-              user.name?.toLowerCase().startsWith(inputValue)
-                ? "block"
-                : "hidden"
-            }`}
-            onClick={() => {
-              if (user.name?.toLowerCase() !== selected.toLowerCase()) {
-                setSelected(user.name);
-                setNum(user.number);
-                setOpen(false);
-                setInputValue("");
-
-              }
-            }}
-          >
-            {/* {user.slice(0,10)} */}
-            {/* {user.name}
-          </li>
-        ))} */} 
+        
       </ul>
     </div>
      {/* End select box */}

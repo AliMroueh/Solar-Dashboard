@@ -55,7 +55,7 @@ export default function MessageBox(props: props) {
         if (props.variant === 'info') {
             const timer = setTimeout(() => {
                 setIsVisible(false);
-            }, 2000);
+            }, 4000);
 
             return () => clearTimeout(timer);
         }

@@ -5,7 +5,7 @@ const systemSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'Client',
-        unique: true
+        // unique: true
     },
     SolarPanelId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -26,6 +26,7 @@ const systemSchema = new mongoose.Schema({
     },
     numberInverter: { type: Number, required: true },
     solarApi: {type: Array, required: true},
+    SystemNumber: {type: Number, required: true, default:0}
 },
     {
         timestamps: true,

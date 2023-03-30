@@ -96,10 +96,13 @@ passport.authenticate('jwt', { session: false }),
         }
 
         const clientInSolar = await System.findOne({ clientId: req.body.clientId });
-
-        if (clientInSolar) {
-            return res.status(401).json({ message: "client is already exists in Solar" })
+        if(clientInSolar){
+          console.log(clientInSolar.SystemNumber)
         }
+
+        let theSystemNumber = (clientInSolar && clientInSolar.SystemNumber + 1) || 0
+        
+
         // Create the battery object
         const sysObj = {
             clientId: req.body.clientId,
@@ -134,9 +137,10 @@ passport.authenticate('jwt', { session: false }),
               {date: '3 am', Solar_production: 400, Load_consumption: 200, Storage_production: 300},
               {date: '4 am', Solar_production: 300, Load_consumption: 100, Storage_production: 300},
               {date: '5 am', Solar_production: 400, Load_consumption: 100, Storage_production: 300},
-            ]
+            ],
+            SystemNumber: theSystemNumber
         };
-
+console.log(sysObj)
         // Save the battery to the database
         const sys = new System(sysObj);
         sys.save((error, system) => {
@@ -186,6 +190,7 @@ passport.authenticate('jwt', { session: false }),
             inverter: inverter[index],
             numberInverter: sys.numberInverter,
             solarApi: sys.solarApi,
+            SystemNumber: sys.SystemNumber+1
         }));
        
         return res.send(result);
