@@ -100,7 +100,7 @@ export default function AdminSolarInverter(): JSX.Element {
                 {inverters.map((row, index) => (
                   <tr key={index} className='bg-orange-400 cursor-pointer duration-300'>
                     <td className='py-3 px-6 text-center'>{row.type}</td>
-                    <td className='py-3 px-6 text-center'>{row.strength}</td>
+                    <td className='py-3 px-6 text-center'>{`${row.strength} KW`}</td>
                     <td className='py-3 px-6 text-center max-w-xs min-h-full'>{row.description}</td>
                     <td className='py-3 px-6 text-center xs:py-0'><div className='flex flex-row justify-center'><img src={row.inverterImage} alt="Battery" className='md:w-40 xs:w-full' /></div> </td>
                     <td className='py-3 px-6 text-center'>

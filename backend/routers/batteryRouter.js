@@ -9,6 +9,7 @@ import Battery from '../models/batteryModel.js'
 import { body, validationResult } from 'express-validator';
 import expressAsyncHandler from 'express-async-handler';
 import passport from 'passport';
+import System from '../models/systemModel.js';
 const batteryRouter = express.Router();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -160,7 +161,11 @@ expressAsyncHandler(async (req, res) => {
     if (!battery) {
       return res.status(404).json({ message: 'Battery not found' });
     }
+    const isSystemExists = await System.findOne({BatteryId: battery._id})
 
+    if(isSystemExists){
+      await System.deleteOne({BatteryId: battery._id})
+    }
     // Remove the battery image from the server file system
     if (battery.batteryImage) {
       const imagePath = path.join(path.dirname(__dirname), "uploads/") + battery.batteryImage.split('/').pop();

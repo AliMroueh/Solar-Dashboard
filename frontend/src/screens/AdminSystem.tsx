@@ -141,8 +141,8 @@ export default function AdminSystem(): JSX.Element {
         onChange={(e) => setQuery(e.target.value.toLowerCase())}
       />
    
-        {systems.filter((system) =>
-          system.client.name.toLowerCase().includes(query)
+        {systems?.filter((system) =>
+          system?.client?.name.toLowerCase().includes(query)
         ).map((system,index) => 
         <div className="grid grid-cols-1 gap-4 mt-10 " key={index}>
           <div className="p-2 bg-orange-400 w-32  rounded-lg ">

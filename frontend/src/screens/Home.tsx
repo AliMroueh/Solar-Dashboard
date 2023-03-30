@@ -321,17 +321,17 @@ error ? <MessageBox variant='danger'>{error}</MessageBox>
             key={index}
             className={`p-2 text-sm hover:bg-sky-600 hover:text-white
             ${
-              `${sys.client.name} System ${sys.SystemNumber}`?.toLowerCase() === selected?.toLowerCase() &&
+              `${sys?.client?.name} System ${sys?.SystemNumber}`?.toLowerCase() === selected?.toLowerCase() &&
               "bg-sky-600 text-white"
             }
             ${
-              `${sys.client.name} System ${sys.SystemNumber}`?.toLowerCase().startsWith(inputValue)
+              `${sys?.client?.name} System ${sys?.SystemNumber}`?.toLowerCase().startsWith(inputValue)
                 ? "block"
                 : "hidden"
             }`}
             onClick={() => {
-              if (`${sys.client.name} System ${sys.SystemNumber}`?.toLowerCase() !== selected.toLowerCase()) {
-                setSelected(`${sys.client.name} System ${sys.SystemNumber}`);
+              if (`${sys?.client?.name} System ${sys?.SystemNumber}`?.toLowerCase() !== selected.toLowerCase()) {
+                setSelected(`${sys?.client?.name} System ${sys?.SystemNumber}`);
                 setNum(index);
                 setOpen(false);
                 setInputValue("");
@@ -340,7 +340,7 @@ error ? <MessageBox variant='danger'>{error}</MessageBox>
             }}
           >
             {/* {user.slice(0,10)} */}
-            {`${sys.client.name} System ${sys.SystemNumber}`}
+            {`${sys?.client?.name} System ${sys?.SystemNumber}`}
           </li>
         ))}
         

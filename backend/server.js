@@ -22,8 +22,8 @@ const __dirname = path.dirname(__filename);
 // mongodb+srv://yasser:database@main.twjbt8n.mongodb.net/solar-system?retryWrites=true&w=majority`
 const app = express();
 mongoose.set('strictQuery', true)
-mongoose.connect(`mongodb+srv://yasser:database@main.twjbt8n.mongodb.net/solar-system?retryWrites=true&w=majority`, {
-  // mongoose.connect('mongodb://localhost/solar', {
+// mongoose.connect(`mongodb+srv://yasser:database@main.twjbt8n.mongodb.net/solar-system?retryWrites=true&w=majority`, {
+  mongoose.connect('mongodb://localhost/solar', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
