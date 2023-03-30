@@ -90,7 +90,7 @@ export default function AdminSolarBatteries(): JSX.Element {
               </thead>
               <tbody>
                 {batteries.map((row, index) => (
-                  <tr key={index} className='hover:bg-yellow-100 bg-orange-400 cursor-pointer duration-300'>
+                  <tr key={index} className='bg-orange-400 cursor-pointer duration-300'>
                     <td className='py-3 px-6 text-center'>{row.type}</td>
                     <td className='py-3 px-6 text-center w-20'>{`${row.capacity} A`}</td>
                     <td className='py-3 px-6 text-center max-w-xs min-h-full'>{row.description}</td>
