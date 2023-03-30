@@ -148,7 +148,7 @@ export default function AdminSystem(): JSX.Element {
           <div className="p-2 bg-orange-400 w-32  rounded-lg ">
                 <h2 className="text-lg font-medium text-gray-900">{system.client.name}</h2>
           </div>
-          <div className="bg-slate-500 rounded-lg shadow-lg overflow-hidden flex justify-between flex-wrap sm: gap-2">
+          <div className="bg-slate-500 rounded-lg shadow-lg overflow-hidden flex justify-between mr-10 flex-wrap sm: gap-2">
     
             <div className="flex">
               <img src={system.inverter.inverterImage} alt="Inverter Image"  className="h-24 m-2 w-24 object-fill"/>

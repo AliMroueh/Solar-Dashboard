@@ -121,7 +121,7 @@ export default function AddSolarClient() : JSX.Element{
           <label htmlFor='name'>Name</label>
           <input
             id='name'
-            className='rounded-lg bg-white mt-2 p-2 text-black  focus:border-orange-400 focus:bg-yellow-400 focus:outline-none'
+            className='rounded-lg bg-white mt-2 p-2 text-black focus:outline-none'
             type='text'
         
             // onChange={(e) => setName(e.target.value)}
@@ -134,7 +134,7 @@ export default function AddSolarClient() : JSX.Element{
           <label htmlFor='email'>Email</label>
           <input
             id='email'
-            className='rounded-lg bg-white mt-2 p-2 text-black focus:border-orange-400 focus:bg-yellow-600 focus:outline-none'
+            className='rounded-lg bg-white mt-2 p-2 text-black focus:outline-none'
             type='email'
           
             // onChange={(e) => setEmail(e.target.value)}
@@ -155,7 +155,7 @@ export default function AddSolarClient() : JSX.Element{
           <label htmlFor='address'>Address</label>
           <input
             id='address'
-            className='rounded-lg bg-white mt-2 p-2 text-black focus:border-orange-400 focus:bg-yellow-600 focus:outline-none'
+            className='rounded-lg bg-white mt-2 p-2 text-black focus:outline-none'
             type='text'
            
             // onChange={(e) => setAddress(e.target.value)}
@@ -168,7 +168,7 @@ export default function AddSolarClient() : JSX.Element{
           <label htmlFor='phone'>Phone</label>
           <input
             id='phone'
-            className='rounded-lg bg-white mt-2 p-2 text-black focus:border-orange-400 focus:bg-yellow-600 focus:outline-none'
+            className='rounded-lg bg-white mt-2 p-2 text-black  focus:outline-none'
             type='text'
            
             // onChange={(e) => setPhone(e.target.value)}

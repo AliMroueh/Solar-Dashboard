@@ -107,7 +107,7 @@ export default function EditSolarPanels() : JSX.Element{
           <label htmlFor='type' className='font-bold text-white'>Type</label>
           <input
             id='type'
-            className='rounded-lg text-white  bg-white mt-2 p-2  focus:outline-none'
+            className='rounded-lg text-black  bg-white mt-2 p-2  focus:outline-none'
             type='text'
           //  value={type}
           //   onChange={(e) => setType(e.target.value)}

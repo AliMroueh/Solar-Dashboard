@@ -336,7 +336,7 @@ console.log(clients)
           <label htmlFor='Description' className='font-bold text-white'>Number Panels</label>
           <input
             id='numberSolarPanel'
-            className='p-2 rounded-lg bg-white mt-2 text-black focus:border-orange-400 focus:bg-yellow-600 focus:outline-none'
+            className='p-2 rounded-lg bg-white mt-2 text-black focus:outline-none'
             type='number'
             value={numberSolarPanel}
             onChange={(e) => setNumberSolarPanel(e.target.value)}
@@ -363,7 +363,7 @@ console.log(clients)
          <label htmlFor='Description' className='font-bold text-white'>Number Batteries</label>
          <input
            id='numberBattery'
-           className='p-2 rounded-lg bg-white mt-2 text-black focus:border-orange-400 focus:bg-yellow-600 focus:outline-none'
+           className='p-2 rounded-lg bg-white mt-2 text-black focus:outline-none'
            type='number'
            value={numberBattery}
             onChange={(e) => setNumberBattery(e.target.value)}
@@ -394,7 +394,7 @@ console.log(clients)
          <label htmlFor='Description' className='font-bold text-white'>Number Inverters</label>
          <input
            id='numberBattery'
-           className='p-2 rounded-lg bg-white mt-2 text-black focus:border-orange-400 focus:bg-yellow-600 focus:outline-none'
+           className='p-2 rounded-lg bg-white mt-2 text-black focus:outline-none'
            type='number'
            value={numberInverter}
             onChange={(e) => setnumberInverter(e.target.value)}
