@@ -155,7 +155,7 @@ const { loading: loadingSolarApi, error: errorSolarApi, systems } = getAllSystem
   },[data.length, data1Index, dispatch1, num, selected.length, systems]);
 
   return (
-    <div className='col-span-5 bg-amber-100 flex flex-col justify-center items-center px-4'>
+    <div className='col-span-5 bg-amber-100 flex flex-col m-5 justify-center items-center px-4'>
     
 {loadingSummary ? <LoadingBox></LoadingBox>
 :
@@ -175,7 +175,7 @@ error ? <MessageBox variant='danger'>{error}</MessageBox>
         </svg>
         </div>
         </span>
-        <p className='text-white font-bold -ml-12'>Clients</p>
+        <p className='text-white font-bold text-xl'>Clients:</p>
         <span
           className="p-0.5 text-4xl text-white w-full text-center"
         >
@@ -192,7 +192,7 @@ error ? <MessageBox variant='danger'>{error}</MessageBox>
       <div className="flex items-center gap-x-3">
         <div className="p-2 bg-white-800 rounded-lg">
         </div>
-        <p className='text-white text-3xl font-bold'>Batteries</p>
+        <p className='text-white text-xl font-bold'>Batteries:</p>
         <span
           className="text-xs font-medium" >
         <div>
@@ -216,7 +216,7 @@ error ? <MessageBox variant='danger'>{error}</MessageBox>
       <div className="flex items-center gap-x-3">
         <div className="p-2 bg-white-800 rounded-lg">
         </div>
-        <p className='text-white text-3xl font-bold'>Panels:</p>
+        <p className='text-white text-xl font-bold'>Panels:</p>
         <span
           className="text-xs font-medium" >
         <div>
@@ -240,7 +240,7 @@ error ? <MessageBox variant='danger'>{error}</MessageBox>
       <div className="flex items-center gap-x-3">
         <div className="p-2 bg-white-800 rounded-lg">
         </div>
-        <p className='text-white text-3xl font-bold'>Inverters:</p>
+        <p className='text-white text-xl font-bold'>Inverters:</p>
         <span
           className="text-xs font-medium" >
         <div>
@@ -263,7 +263,7 @@ error ? <MessageBox variant='danger'>{error}</MessageBox>
     <div className="flex flex-col p-4 shadow-xl bg-gradient-to-r from-red-400 via-orange-300 to-yellow-400 rounded-lg gap-y-3 lg:w-1/6"
     >
       <div className="flex items-center gap-x-3">
-        <div className="p-2 bg-white-800 rounded-lg">
+        <div className="p-2 bg-white-800 ml-10 rounded-lg">
         </div>
         <p className='text-white text-xl font-bold'>User Sytem:</p>
         <span
@@ -353,7 +353,7 @@ error ? <MessageBox variant='danger'>{error}</MessageBox>
       {email && <MessageBox variant='info'>Email sent successfully</MessageBox>}
      <h1 className='text-xl'>User Consumption</h1>
      <div className=' w-full overflow-x-auto p-10'>
-        <AreaChart width={960} height={300} data={data} className=" bg-white rounded-lg">
+        <AreaChart width={1200} height={300}  data={data} className="bg-white rounded-lg">
             <CartesianGrid className='bg-red-500'></CartesianGrid>
             <XAxis dataKey="date"></XAxis>
             <YAxis></YAxis>
