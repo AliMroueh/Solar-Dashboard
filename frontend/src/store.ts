@@ -91,7 +91,7 @@ import { addInverterReducer, deleteInverterReducer, getAllInverterReducer, updat
 import { getAllBatteriesReducer, addBatteryReducer, updateBatteryReducer, deleteBatteryReducer } from "./reducers/batteryReducer";
 import { getAllClientsReducer, addClientReducer, updateClientReducer, deleteClientReducer } from "./reducers/clientReducer";
 import { addSolarReducer, deleteSolarReducer, getAllSolarReducer, updateSolarReducer } from "./reducers/solarReducer";
-import { sendEmailReducer } from "./reducers/emailReducer";
+import { sendEmailReducer, sendEmailReducer1 } from "./reducers/emailReducer";
 import { getAllSystemsReducer, addSystemReducer, updateSystemReducer, deleteSystemReducer, SysSummaryReducer } from "./reducers/systemReducer";
 import { userRegisterReducer, userSigninReducer } from "./reducers/userReducers";
 
@@ -151,6 +151,7 @@ const reducer = combineReducers({
   deleteClient: deleteClientReducer,
 
   sendEmail: sendEmailReducer,
+  sendEmail1: sendEmailReducer1,
   SysSummary: SysSummaryReducer
 });
 

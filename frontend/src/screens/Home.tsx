@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef  } from 'react';
 import socketIOClient from 'socket.io-client';
 import { LineChart, XAxis, Tooltip, CartesianGrid, Line, YAxis, AreaChart, Legend, Area } from 'recharts';
 import { useDispatch } from 'react-redux';
-import { sendEmailAction } from '../actions/emailActions';
+import { sendEmailAction, sendEmailAction1 } from '../actions/emailActions';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import { useSelector } from 'react-redux';
@@ -53,8 +53,8 @@ const Home: React.FC = () => {
 
   const dispatch: ThunkDispatch<RootState, null, AnyAction>= useDispatch();
   const dispatch1: ThunkDispatch<{}, {}, AnyAction> = useDispatch();
-  const sendEmail = useSelector<getEmail, EmailState>((state) => state.sendEmail);
-  const { loading, error, email } = sendEmail;
+  const sendEmail1 = useSelector<getEmail, EmailState>((state) => state.sendEmail);
+  const { loading, error, email } = sendEmail1;
 
   const getAllData = useSelector<getAllSummary, getSummary>((state) => state.SysSummary);
   const { loading: loadingSummary, error: errorSymmary, summary } = getAllData;
@@ -62,6 +62,10 @@ const Home: React.FC = () => {
   const getAllSystems = useSelector<GetSystemStateWithAllSystems, GetallSystemsState>((state) => state.getAllSystems);
 
 const { loading: loadingSolarApi, error: errorSolarApi, systems } = getAllSystems;
+
+// console.log(email)
+// console.log(summary)
+// console.log(systems)
 
   // useEffect(() =>{
   //   dispatch(sendEmailAction())
@@ -138,7 +142,9 @@ const { loading: loadingSolarApi, error: errorSolarApi, systems } = getAllSystem
         setData1Index((prevIndex) => prevIndex + 1);
         if(systems[num].solarApi[data1Index].Solar_production - systems[num].solarApi[data1Index].Load_consumption <= 100){
 
-        dispatch1(sendEmailAction(userData[num].name, userData[num].Email,'high consumption','5afef 2estehlak ya man'))
+        dispatch1(sendEmailAction1(systems[num]?.client?.name, systems[num]?.client?.email,'High Energy Consumption Alert',systems[num].solarApi[data1Index].date,systems[num].solarApi[data1Index].Solar_production,systems[num].solarApi[data1Index].Load_consumption,systems[num].solarApi[data1Index].Storage_production))
+
+        console.log(systems[num]?.client?.name, systems[num]?.client?.email)
         }
       }else{
         return () => clearInterval(interval);

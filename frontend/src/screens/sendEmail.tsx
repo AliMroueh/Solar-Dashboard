@@ -6,6 +6,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { sendEmailAction } from '../actions/emailActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import { emailState } from '../reducers/emailReducer';
 import { EmailState, getEmail } from './Home';
 
 
