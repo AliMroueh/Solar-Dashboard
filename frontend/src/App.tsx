@@ -24,6 +24,7 @@ import { useSelector } from "react-redux";
 import PrivateRoute from "./components/PrivateRoute";
 import SendEmail from "./screens/sendEmail";
 import UpdateUser from "./screens/UpdateUser";
+import NotFoundScreen from "./screens/NotFoundScreen";
 
 // function App() {
 export default function App() : JSX.Element{
@@ -139,6 +140,8 @@ export default function App() : JSX.Element{
             <PrivateRoute>
               <UpdateUser />
             </PrivateRoute>} />
+            
+            <Route path='*' element={<NotFoundScreen />} />
           </Routes>
         </div>
       </div>
