@@ -77,9 +77,20 @@ export default function AdminSolarClients(): JSX.Element {
 
 
 <div className='bg-amber-100  flex flex-col justify-start w-full col-span-10 p-5'>
+<div className=' flex flex-row justify-start w-full col-span-10 p-5'>
+  <div  className=' flex flex-1 justify-start w-full col-span-10 p-5'>
+                  <Link to={`/email`}>
+                    <button type='button' className='w-32 ml-5 my-5 py-2 bg-slate-500 shadow-lg shadow0-slate-600/50 hover:shadow-slate-600/40 text-white font-bold text-xl rounded-lg'>
+                     send Email
+                    </button>
+                  </Link>
+                  </div>
+                  <div  className=' flex flex-row justify-end w-full col-span-10 p-5'>
       <button className='w-auto p-4 bg-orange-400 text-xl text-white font-semibold rounded-md self-end' onClick={() => addHandler()}>
         Add Clients
       </button>
+      </div>
+      </div>
       {loading ? (
         <div>loading...</div>
       ) : (
