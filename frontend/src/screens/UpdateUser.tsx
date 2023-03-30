@@ -55,15 +55,10 @@ type Inputs = {
     //     }
     // }, [navigate, userInfo, error]);
     return (
-        <div className='col-span-5 absolute top-0 left-0'>
-            <div className='grid grid-cols-1 sm:grid-cols-2 h-screen w-full'>
-                <div className='hidden sm:block'>
-                    <img className='w-full h-full object-cover' src="./solar-panels.jpg" alt="" />
-                </div>
-                <div className='bg-white  flex flex-col justify-center'>
-                    {loading && <LoadingBox></LoadingBox>}
-                    {error && <MessageBox variant='danger'>{error}</MessageBox>}
-                    <form className='max-w-[400px] w-full mx-auto rounded-lg bg-orange-400 p-8 px-8'
+        <div className='bg-amber-100 flex flex-col justify-center w-full col-span-10'>
+              {loading && <LoadingBox></LoadingBox>}
+                   {error && <MessageBox variant='danger'>{error}</MessageBox>}
+                   <form className='w-6/12 mx-auto rounded-lg bg-orange-400 p-8 px-8'
                         // onSubmit={handleSubmit(submitHandler)}
                         // onSubmit={handleSubmit(submitHandlerWrapper(submitHandler))}
                         onSubmit={handleSubmit(submitHandler)}
@@ -150,12 +145,12 @@ type Inputs = {
                             Already have an account? {' '}
                             <Link className='text-white hover:font-semibold' to={`/signin`}>Sign-In</Link>
                         </div>
-                        <button className='w-full my-5 py-2 bg-green-500 shadow-lg shadow-green-500/50 hover:shadow-green-500/40 text-white  font-semibold rounded-lg'>Register</button>
-
+                        <div className='flex flex-row justify-center'>
+                        <button className='w-1/4 my-5 py-2 bg-slate-500 shadow-lg shadow0-slate-600/50 hover:shadow-slate-600/40 text-white font-bold text-xl rounded-lg'>Update</button>
+                         </div>
                     </form>
-                </div>
-            </div>
         </div>
+    
     )
 }
 
