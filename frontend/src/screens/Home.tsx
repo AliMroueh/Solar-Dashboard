@@ -353,7 +353,7 @@ error ? <MessageBox variant='danger'>{error}</MessageBox>
       {email && <MessageBox variant='info'>Email sent successfully</MessageBox>}
      <h1 className='text-xl'>User Consumption</h1>
      <div className=' w-full overflow-x-auto p-10'>
-        <AreaChart width={1200} height={300}  data={data} className="bg-white rounded-lg">
+        <AreaChart width={1250} height={300}  data={data} className="bg-white rounded-lg">
             <CartesianGrid className='bg-red-500'></CartesianGrid>
             <XAxis dataKey="date"></XAxis>
             <YAxis></YAxis>
