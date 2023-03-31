@@ -197,9 +197,12 @@ export default function AddSolarClient() : JSX.Element{
          
           <Link className='text-teal-500 hover:font-semibold' to={`/signin`}>Sign-In</Link>
         </div> */}
-        <button className='w-1/4 my-5 py-2 bg-green-500 shadow-lg shadow-green-500/50 hover:shadow-green-500/40 text-white font-semibold rounded-lg' type="submit">
+          <div className='flex flex-row justify-center'>
+     <button className='w-1/4 my-5 py-2 bg-slate-500 shadow-lg shadow0-slate-600/50 hover:shadow-slate-600/40 text-white font-bold text-xl rounded-lg' type="submit">
           Add Client
         </button>
+     </div>
+        
         
       </form>
     </div>

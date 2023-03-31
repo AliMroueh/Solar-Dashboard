@@ -111,7 +111,11 @@ type Inputs = {
                             <input className='p-2 rounded-lg text-black bg-white mt-2 focus:border-orange-400 focus:outline-none' type="password"
                                 {...register('Newpassword', {
                                     required: 'Please enter password',
-                                    minLength: { value: 6, message: 'password is more than 5 chars' },
+                                    pattern: {
+                                        value: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/i,
+                                        message: 'Password should be contain one: upper case, lower case, new number, no white space, minimum 8 chars',
+                                    },
+                                    //minLength: { value: 6, message: 'password is more than 5 chars' },
                                 })}
                                 autoFocus
                             />
