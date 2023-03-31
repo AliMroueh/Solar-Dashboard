@@ -154,7 +154,7 @@ export default function AdminSystem(): JSX.Element {
               <img src={system.inverter.inverterImage} alt="Inverter Image"  className="h-24 m-2 w-24 object-fill"/>
               <div className="ml-4">
                 <h3 className="text-md font-medium text-xl m-2 text-white">{system.inverter.type}</h3>
-                <p className="text-sm text-gray-500">{system.numberInverter}</p>
+                <p className="text-sm text-white">{system.numberInverter}</p>
               </div>
             </div>
     
@@ -162,7 +162,7 @@ export default function AdminSystem(): JSX.Element {
               <img src={system.battery.batteryImage} alt="Battery Image" className="h-24 m-2 w-24 object-fill"/>
               <div className="ml-4">
                 <h3 className="text-md font-medium text-xl m-2 text-white">{system.battery.type}</h3>
-                <p className="text-sm text-gray-500">{system.numberBattery}</p>
+                <p className="text-sm text-white">{system.numberBattery}</p>
               </div>
             </div>
     
@@ -172,7 +172,7 @@ export default function AdminSystem(): JSX.Element {
     
               <div className="ml-4">
                 <h3 className="text-md font-medium m-2 text-xl text-white">{system.solarPanel.type}</h3>
-                <p className="text-sm text-gray-500">{system.numberSolarPanel}</p>
+                <p className="text-sm text-white">{system.numberSolarPanel}</p>
               </div>
             </div>
     
